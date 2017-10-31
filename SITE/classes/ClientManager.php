@@ -6,7 +6,7 @@
 
 
 
-class NewsManager {
+class ClientManager {
 
     //attribut
     private $db;
@@ -37,15 +37,15 @@ class NewsManager {
 //      
 //  *******************************************
     // méthode add() pour ajouter des enregistrements en base de données (insert)
-    //fonction faisant appel à la classe News, avec un objet $news
+    //fonction faisant appel à la classe Client, avec un objet $news
     //on passe l'objet news car c'est celui quon passe dans le bdr
-    public function addNews(News $news) {
+    public function addClient(Client $news) {
         try {
             //on fait le prepare et on l'affecte à la variable $req
             //on affecte à la variable $req la valeur de l'objet $news ($this->db) puis on prepare les données        
 //                $req =$this->db->prepare('
 //                    select * 
-//                    from News 
+//                    from Client 
 //                    where 
 //                    and titre = :titre 
 //                    and auteur = :auteur 
@@ -122,7 +122,7 @@ class NewsManager {
         $requete = $this->db->prepare('SELECT id, auteur, titre, contenu, date_ajout, date_modif, image FROM news WHERE id = :id');
         $requete->bindValue(':id', (int) $id, PDO::PARAM_INT);
         $requete->execute();
-        $requete->setFetchMode(PDO::FETCH_CLASS, 'News');
+        $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
         $news = $requete->fetch();
         $news->setDate_ajout(new DateTime($news->getDate_ajout()));
         $news->setDate_modif(new DateTime($news->getDate_modif()));
@@ -137,7 +137,7 @@ class NewsManager {
     //**************************************************   
     // méthode update() pour pouvoir modifier des enregistrements en base de données
     //(update) à faire sur les 3 champs, inutile de verifier
-    protected function update(News $news) {
+    protected function update(Client $news) {
          //pour mettre les date en francais dans la requete
         //  $requete->query('SET lc_time_names = \'fr_FR\'');
         $requete = $this->db->prepare('UPDATE news SET'
@@ -161,9 +161,9 @@ class NewsManager {
 //**************************************************
     // méthode save() permettant de vérifier une news isValid(), et si elle est isNew(),
     //pus l’ajoute avec addnews(), sinon la modifier avec update()
-     public function save(News $news) {
+     public function save(Client $news) {
         if ($news->isValid()) {
-            $news->isNew() ? $this->addNews($news) : $this->update($news);
+            $news->isNew() ? $this->addClient($news) : $this->update($news);
         } else {
             throw new Exception('La news doit être valide pour être enregistrée');
         }
@@ -185,19 +185,19 @@ class NewsManager {
         }  
         $requete = $this->db->query($sql);
         //avec un while on aurait mit un FETCH_ASSOC
-        $requete->setFetchMode(PDO::FETCH_CLASS, 'News');
-        $listeNews = $requete->fetchAll();
+        $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
+        $listeClient = $requete->fetchAll();
         // On parcourt notre liste de news pour pouvoir placer des instances de DateTime en guise de dates d'ajout et de modification.
-        foreach ($listeNews as $news) {
+        foreach ($listeClient as $news) {
             $news->setDate_ajout(new DateTime($news->getDate_ajout()));
             $news->setDate_modif(new DateTime($news->getDate_modif()));
             
         }
         //permet de fermer la requete
-      // var_dump($listeNews);
+      // var_dump($listeClient);
         $requete->closeCursor();
         
-        return $listeNews;
+        return $listeClient;
         
     }
 
@@ -235,7 +235,7 @@ class NewsManager {
 //             {
 //                  //On formate le nom du fichier ici...
 //                  $fichier = strtr($fichier,
-//                       'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
+//                       'À�?ÂÃÄÅÇÈÉÊËÌ�?Î�?ÒÓÔÕÖÙÚÛÜ�?àáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
 //                       'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 //                  $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
 //                  if(move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichier))
