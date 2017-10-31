@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<title>jQuery sc009</title>
+<!--  Copyright 2011, AUTHORS.txt (http://jqueryui.com/about) Dual licensed under the MIT or GPL Version 2 licenses. http://jquery.org/license  http://docs.jquery.com/UI/Datepicker  -->
+<!-- traduit et adapté par outils-web.com -->
+<!-- chargement des scripts -->	
+    <script type="text/javascript" src="scr/jquery.js"></script>
+    <script type="text/javascript" src="scr/jquery.maskedinput.js"></script>	
+</head>
+
+<body>
+<style>.txt {color: #555555; font-family: verdana; text-align: right; font-size: 12px}</style>
+<!-- Emplacement du formulaire -->
+<br /><br />
+<table border="0" cellpadding="0" cellspacing="5" align="center" width="500" bgcolor="#CCCCCC">
+	<tr><td class="txt">Date : </td><td><input id="date" type="text"  /></td></tr>
+	<tr><td class="txt">Téléphone : </td><td><input id="tel" type="text" /></td></tr>
+	<tr><td class="txt">Code postal : </td><td><input id="cp" type="text" /></td></tr>
+	<tr><td class="txt">Durée : </td><td><input id="hm" type="text" /></td></tr>
+	<tr><td colspan="2" height="20"></td></tr>
+	<tr><td class="txt" colspan="2"><i>Cliquez dans les cases de saisie afin de faire afficher le format attendu.</i></td></tr>
+</table>
+	
+<!-- Initialisation de la fonction -->		
+    <script type="text/javascript">
+        $(function() {
+            $("#date").mask("99/99/9999");
+			$("#tel").mask("(09)99 99 99 99");
+			$("#cp").mask("99999");
+			$("#hm").mask("99:99",{placeholder:"-"});
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+@charset "iso-8859-1";
+
+body, div { font-family: helvetica, verdana, arial, sans-serif }
+body { margin: 0; padding: 0; font-size: small; color: #333 }
+#main { padding: 1em; }
+#banner { padding: 15px; background-color: #06b; color: white; font-size: large; border-bottom: 1px solid #ccc; text-align: center }
+#banner a { color: white; }
+#signupForm { width: 650px; }
+#signupForm label.error {margin-left: 10px;width: auto;display: inline;}
+
+.obl {color: #000; font-weight: bold}
+
+form.cmxform {width: 650px;font-size: 1.0em;color: #333;}
+form.cmxform legend {padding-left: 0;padding: 0 2px;	font-weight: bold;	_margin: 0 -7px;}
+form.cmxform legend, form.cmxform {color: #333;}
+form.cmxform fieldset {border: none; border-top: 1px solid #000; margin-bottom: 10px; background-image: url(cmxform-fieldset.gif)}
+form.cmxform fieldset fieldset {background: none;}
+form.cmxform fieldset p, form.cmxform fieldset fieldset {padding: 5px 10px 7px;}
+form.cmxform label {width: 200px; display: inline-block; line-height: 1.8; vertical-align: top; cursor: hand; text-align: right} /* largeur des étiquettes */
+form.cmxform label.error, label.error {color: #336600;font-style: italic}
+form.cmxform fieldset p {list-style: none;padding: 5px;margin: 0;}
+
+div.error { display: none; }
+input {	border: 1px solid black; }
+input.checkbox { border: none }
+input:focus { border: 2px dotted black; }
+form.cmxform .gray * { color: gray; }

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Script jQuery Liste déroulante items écartés : Outils-web.com</title>
+<meta name="description" content="Script jQuery, La liste se déplie en slide avec un léger décalage entre les items (5 pixels) ou sans décalage" />
+<meta name="Robots" content="all"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/style3.css" />
+<script src="js/modernizr.custom.63321.js"></script>
+</head>
+<body>
+<!-- Emplacement du menu -->	
+<div class="container">	
+		<section class="main clearfix">
+			<div class="fleft">
+				<select id="cd-dropdown" name="cd-dropdown" class="cd-select">
+					<option value="-1" selected>Votre animal préféré</option>
+					<option value="1" class="icon-monkey">Singe</option>
+					<option value="2" class="icon-bear">Ours</option>
+					<option value="3" class="icon-squirrel">Ecureuil</option>
+					<option value="4" class="icon-elephant">Eléphant</option>
+				</select>
+			</div>
+		</section>
+</div><!-- /container -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.dropdown.js"></script>
+<script type="text/javascript">
+	$( function() {
+		$( '#cd-dropdown' ).dropdown( {
+		gutter : 5,
+		delay : 40,
+		rotated : 'left'
+		} );
+		});
+</script>
+</body>
+</html>
