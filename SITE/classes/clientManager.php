@@ -53,8 +53,8 @@ class ClientManager {
 //                    and date_ajout = :date_ajout');
             //pour mettre les date en francais dans la requete
               $bdd->query(" SET lc_time_names = 'fr_FR'");
-            $req = $this->db->prepare("INSERT INTO client (client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription )"
-                    . " VALUES (:nom, :prenom, :adresse, Now(), Now())");
+            $req = $this->db->prepare("INSERT INTO client (nom,  prenom, mail, adresse, cp, ville, tel, dateInscription, session_Id, newsLetterInscription )"
+                    . " VALUES (nom,  prenom, mail, adresse, cp, ville, tel, now(),session_Id,newsLetterInscription ");
 
 //  client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
 //    champs formulaire  nom  prenom mail adresse  ville cp   majeur reglement  newsletter
@@ -63,9 +63,18 @@ class ClientManager {
             //version binValue et non array car on melange des chaines de caracteres avec des entiers
             //   $req->binValue(':id', $_POST['id']);//inutile car est en auto-increment dans la base de donnée
             
-            $req->binValue(':titre', $client->Titre());
-            $req->binValue(':auteur', $client->Auteur());
-            $req->binValue(':contenu', $client->Contenu());
+            $req->binValue(':nom', $client->nom());
+            $req->binValue(':prenom', $client->prenom());
+            $req->binValue(':mail', $client->mail());
+            $req->binValue(':adresse', $client->adresse());
+            $req->binValue(':cp', $client->cp());
+            $req->binValue(':ville', $client->ville());
+            $req->binValue(':tel', $client->tel());
+            $req->binValue(':dateInscription', $client->dateInscription());
+            $req->binValue(':session_Id', $client->session_Id());
+             $req->binValue(':newsLetterInscription', $client->newsLetterInscriptionu());
+            
+            
             if ($req->exec()) {
                 echo "client correctement insérée";
             }
