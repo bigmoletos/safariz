@@ -10,7 +10,7 @@ and open the template in the editor.
         <title>Formulaire d'inscription</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
