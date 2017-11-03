@@ -14,19 +14,19 @@ class Gagnants {
     
     /* définition des getters de la classe Gagnants */
     function getGagnant_Id() {
-        return $this->getgagnant_Id;
+        return $this->gagnant_Id;
     }
 
     function getClient_Id() {
-        return $this->getclient_Id;
+        return $this->client_Id;
     }
 
     function getDateGain() {
-        return $this->getdateGain;
+        return $this->dateGain;
     }
 
     function getLot_Id() {
-        return $this->getlot_Id;
+        return $this->lot_Id;
     }
 
     /* définition des setters de la classe Gagnants */
