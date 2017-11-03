@@ -29,14 +29,15 @@ and open the template in the editor.
     </head>
 
     <body class="container" >
-        <div class="well">
+       
           <div class="bootstrap-iso">
-            <div class="container-fluid">
-                
+            <div class="container-fluid"> 
+                <div class="well">
+<!--                 <div class="well">-->
                  <div class="row" ><!--titre-->
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <h1>Inscrivez-vous ci-dessous:</h1>
-                        <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoire</p>
+                        <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
                     
                     </div>
                 </div>
