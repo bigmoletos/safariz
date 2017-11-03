@@ -53,7 +53,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
     var_dump($db);    
 
 
-
+      
  
 
 
@@ -219,18 +219,19 @@ formulaire d'inscription
 <script type="text/javascript">
     $(document).ready($(function () {
         //  $("#date").mask("99/99/9999");
-        $("#nom").mask("[a-zA-Z%-]");
+      
         $("#tel").mask("(09)99 99 99 99");
         $("#cp").mask("99999");
-
-//                                                $("#mail").mask({
+        $("#nom").mask("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+         $("#nom").regex ("");
+//                                              $("#mail").mask({
 //                                                mask: "{1,20}[.{1,20}][.{1,20}][.{1,20}]@*{1,20}[.{2,6}][.{1,3}]",
 //                                                greedy: false,
 //                                                regex: "[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+.[a-zA-Z]{2,4}",
 //                                                isComplete: function(buffer, opts) {return new RegExp(opts.regex).test(buffer.join(" "));}
 //                                                });
 //                                                
-        $("#email").mask('Regex', {regex: "[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}"});
+        //$("#email").mask('Regex', {regex: "[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{4,30}"});
 
 //fonction de controle de saisie du formulaire
 
@@ -255,7 +256,32 @@ formulaire d'inscription
 
         }
         ;
+        
+  //Si le second paramètre vaut true, cette fonction colore le champ en rouge pâle. Sinon, elle enlève le coloriage.    
+  function surligne(champ, erreur)
+        {
+           if(erreur)
+              champ.style.backgroundColor = "#fba";
+           else
+              champ.style.backgroundColor = "";
+        }
 
+//https://openclassrooms.com/courses/tout-sur-le-javascript/td-verification-d-un-formulaire
+//vérification de la longueur d'un champ
+   
+        function verifPseudo(champ)
+    {
+       if(champ.value.length < 2 || champ.value.length > 25)
+       {
+          surligne(champ, true);
+          return false;
+       }
+       else
+       {
+          surligne(champ, false);
+          return true;
+       }
+    }
 
     }));//fin function
     //fin document ready
