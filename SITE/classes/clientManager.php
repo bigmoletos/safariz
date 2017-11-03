@@ -1,10 +1,6 @@
 <?php
 
-//classe repercutant les actions de la classse client dans la base de données
-//on va faire une classe
-
-
-
+//classe repercutant les actions de la classe client dans la base de données
 
 class ClientManager {
 
@@ -19,7 +15,7 @@ class ClientManager {
 
     // methode getter
     public function getDb() {
-        return $this->db;
+        return $this->getdb;
     }
 
     //methode setter
@@ -36,6 +32,16 @@ class ClientManager {
 //      }
 //      
 //  *******************************************
+//    version  de la correction 
+//     protected function add(News $news) {
+//        $requete = $this->db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout, dateModif, image)'
+//                . 'VALUES(:auteur, :titre, :contenu, NOW(), NOW(), :image)');
+//        $requete->bindValue(':titre', $news->titre());
+//        $requete->bindValue(':auteur', $news->auteur());
+//        $requete->bindValue(':contenu', $news->contenu());
+//       $requete->bindValue(':image', $news->image());
+//        $requete->execute();
+//    }
     // méthode add() pour ajouter des enregistrements en base de données (insert)
     //fonction faisant appel à la classe Client, avec un objet $client
     //on passe l'objet client car c'est celui quon passe dans le bdr
@@ -52,31 +58,30 @@ class ClientManager {
 //                    and contenu = :contenu 
 //                    and date_ajout = :date_ajout');
             //pour mettre les date en francais dans la requete
-              $bdd->query(" SET lc_time_names = 'fr_FR'");
-            $req = $this->db->prepare("INSERT INTO client (nom,  prenom, mail, adresse, cp, ville, tel, dateInscription, session_Id, newsLetterInscription )"
-                    . " VALUES (nom,  prenom, mail, adresse, cp, ville, tel, now(),session_Id,newsLetterInscription ");
+            $this->db->query(" SET lc_time_names = 'fr_FR'");
+            //$req = $this->db->prepare("INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )"
+               //     . " VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription ");
+            $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )'
+                    . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription )');
 
-//  client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
+// champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
 //    champs formulaire  nom  prenom mail adresse  ville cp   majeur reglement  newsletter
-            
-            
-            //version binValue et non array car on melange des chaines de caracteres avec des entiers
-            //   $req->binValue(':id', $_POST['id']);//inutile car est en auto-increment dans la base de donnée
-            
-            $req->binValue(':nom', $client->nom());
-            $req->binValue(':prenom', $client->prenom());
-            $req->binValue(':mail', $client->mail());
-            $req->binValue(':adresse', $client->adresse());
-            $req->binValue(':cp', $client->cp());
-            $req->binValue(':ville', $client->ville());
-            $req->binValue(':tel', $client->tel());
-            $req->binValue(':dateInscription', $client->dateInscription());
-            $req->binValue(':session_Id', $client->session_Id());
-             $req->binValue(':newsLetterInscription', $client->newsLetterInscriptionu());
-            
-            
-            if ($req->exec()) {
-                echo "client correctement insérée";
+            //version bindValue et non array car on melange des chaines de caracteres avec des entiers
+
+            $req->bindValue(':nom', $client->getNom());
+            $req->bindValue(':prenom', $client->getPrenom());
+            $req->bindValue(':mail', $client->getMail());
+            $req->bindValue(':adresse', $client->getAdresse());
+            $req->bindValue(':cp', $client->getCp());
+            $req->bindValue(':ville', $client->getVille());
+            $req->bindValue(':tel', $client->getTel());
+            $req->bindValue(':session_Id', $client->getSession_Id());
+            $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
+            echo "<pre>";
+            var_dump($req);
+            echo "</pre>";
+            if ($req->execute()) {
+                echo "client correctement inséré";
             }
 
             //version xxxxxx   
@@ -86,6 +91,7 @@ class ClientManager {
             die('Erreur : ' . $e->getMessage());
         }
     }
+
 //********************
     //version david du add
 //    public function add2($tablo) {
@@ -105,15 +111,11 @@ class ClientManager {
 //            } 
 //        
 //        }
-    
 //    **********************
-    
-    
 //**************************************************
     // méthode load() pour pouvoir charger un enregistrement specifique depuis la base de données
     //(select) à partir d'un id
-        //id etant un entier et  non un objet (contrairement à $client) il est faux de le mettre en attribut de classe (client $id)
-
+    //id etant un entier et  non un objet (contrairement à $client) il est faux de le mettre en attribut de classe (client $id)
 //    //    public function Load($id) {
 //        $req=$this->db->prepare('SELECT * FROM client WHERE id=$id ');
 //        //on indique que l'on utilise les reusltats en tant que classe en faisant appel à la classe client
@@ -127,10 +129,9 @@ class ClientManager {
 //        //on retourne la ligne par fetch()
 //        return $resultat->fetch();       
 //    }
-    
 //version david
     public function load($id) {
-         //pour mettre les date en francais dans la requete
+        //pour mettre les date en francais dans la requete
         //  $requete->query('SET lc_time_names = \'fr_FR\'');
         $requete = $this->db->prepare('SELECT id, auteur, titre, contenu, date_ajout, date_modif, image FROM client WHERE id = :id');
         $requete->bindValue(':id', (int) $id, PDO::PARAM_INT);
@@ -139,21 +140,18 @@ class ClientManager {
         $client = $requete->fetch();
         $client->setDate_ajout(new DateTime($client->getDate_ajout()));
         $client->setDate_modif(new DateTime($client->getDate_modif()));
-       var_dump($client);
+        var_dump($client);
         return $client;
-    
     }
-    
-//**************************************************
-   
 
+//**************************************************
     //**************************************************   
     // méthode update() pour pouvoir modifier des enregistrements en base de données
     //(update) à faire sur les 3 champs, inutile de verifier
     protected function update(Client $client) {
-         //pour mettre les date en francais dans la requete
+        //pour mettre les date en francais dans la requete
         //  $requete->query('SET lc_time_names = \'fr_FR\'');
-        $requete = $this->db->prepare('UPDATE client SET'
+        $requete = $this->db->prepare('UPDATE clients SET'
                 . ' auteur = :auteur, titre = :titre, contenu = :contenu, date_modif = NOW(), image = :image '
                 . 'WHERE id = :id');
         $requete->bindValue(':titre', $client->titre());
@@ -166,36 +164,31 @@ class ClientManager {
 
     //**************************************************   
     // méthode delete() pour pouvoir supprimer des enregistrements de la base de données
-    //(delete)
-    public function delete($id) {
-        $this->db->exec('DELETE FROM client WHERE id = ' . (int) $id);
-    }
-
+//    public function delete($id) {
+//        $this->db->exec('DELETE FROM client WHERE id = ' . (int) $id);
+//    }
 //**************************************************
     // méthode save() permettant de vérifier une client isValid(), et si elle est isNew(),
     //pus l’ajoute avec addclient(), sinon la modifier avec update()
-     public function save(Client $client) {
-        if ($client->isValid()) {
-            $client->isNew() ? $this->addClient($client) : $this->update($client);
-        } else {
-            throw new Exception('La client doit être valide pour être enregistrée');
-        }
-    }
-    
-    
-     // méthode liste() pour charger les N dernieres client les plus 
+//    public function save(Client $client) {
+//        if ($client->isValid()) {
+//            $client->isNew() ? $this->addClient($client) : $this->update($client);
+//        } else {
+//            throw new Exception('La client doit être valide pour être enregistrée');
+//        }
+//    }
+    // méthode liste() pour charger les N dernieres client les plus 
     // recentes (select) N est un parametre à passer à liste ($n), mettre une limite (SELECT * FROM ma_table LIMIT 100;)
-   
     //methode getlist
-     public function getList($debut = null, $limite = null) {
-          //pour mettre les date en francais dans la requete
+    public function getList($debut = null, $limite = null) {
+        //pour mettre les date en francais dans la requete
         //  $requete->query('SET lc_time_names = \'fr_FR\'');
         $sql = 'SELECT id, auteur, titre, contenu, date_ajout, date_modif, image FROM client ORDER BY id DESC';
 
         // On vérifie l'intégrité des paramètres fournis.
         if (!is_null($debut) || !is_null($limite)) {
             $sql .= ' LIMIT ' . (int) $limite . ' OFFSET ' . (int) $debut;
-        }  
+        }
         $requete = $this->db->query($sql);
         //avec un while on aurait mit un FETCH_ASSOC
         $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
@@ -204,36 +197,26 @@ class ClientManager {
         foreach ($listeClient as $client) {
             $client->setDate_ajout(new DateTime($client->getDate_ajout()));
             $client->setDate_modif(new DateTime($client->getDate_modif()));
-            
         }
         //permet de fermer la requete
-      // var_dump($listeClient);
+        // var_dump($listeClient);
         $requete->closeCursor();
-        
+
         return $listeClient;
-        
     }
 
-    
-    
-    
-    
-    
     //methode count permet de compter le nombre de client dans la bdr
-     public function count() {
+    public function count() {
         $count = $this->db->query('SELECT COUNT(*) FROM client');
         return $count->fetchColumn();
     }
-    
+
     //**************************************************    
-    
     //methode permettant la gestion des images
-    
-        //Premiere partie tu récupère le nom de l'image :
+    //Premiere partie tu récupère le nom de l'image :
 //        $image = basename($_FILES['image']['name']);
-        //Ensuite tu fais ton système d'upload
+    //Ensuite tu fais ton système d'upload
 //Tu vérifie d'abord, si c'est bien une image comme suis :
-    
 //                    *************************
 //                $dossier = '/nom du dossier';<br> $extensions = array('.png', '.gif', '.jpg', '.jpeg');
 //             $extension = strrchr($_FILES['image']['name'], '.');
@@ -271,30 +254,23 @@ class ClientManager {
 //             }
 //
 //              *****************************
-
-
-                       
-                     //Dans une autre page :
-                     //
+    //Dans une autre page :
+    //
 //                     session_start();
-                     /*
-                     Partons sur le fait que l'ID de l'utilisateur qui upload
-                      *  l'image possède son ID dans une variable de SESSION récupérée lors de la connexion
-                     */
-             
-                     //Tu récupère donc le nom de l'image
+    /*
+      Partons sur le fait que l'ID de l'utilisateur qui upload
+     *  l'image possède son ID dans une variable de SESSION récupérée lors de la connexion
+     */
+
+    //Tu récupère donc le nom de l'image
 //                     $req = $bdd->prepare('SELECT image FROM nom_table WHERE id=?');
 //                     $req->execute(array($_SESSION['id_user']));
 //                     $donnees = $req->fetch();
-                     //Ensuite tu peux afficher l'image comme ceci
-                   
-               /***  <img src="nom du dossier/ <?php echo $donnees['image']; ?> "/>***/
+    //Ensuite tu peux afficher l'image comme ceci
+
+    /*     * *  <img src="nom du dossier/ <?php echo $donnees['image']; ?> "/>** */
 //
-        //Et ton image sera alors affichée.
-
-
-
-
+    //Et ton image sera alors affichée.
     //**************************************************   
 //methode permetttant de verifier le login utilisateur à la bdr
 //  verif login
@@ -315,8 +291,4 @@ class ClientManager {
 //        //Si la requête renvoi 0, le pseudo n'existe pas dans la base, sinon le pseudo existe.
 //    
 //
-
-    
-    }
-
-    
+}

@@ -21,6 +21,27 @@ class Client {
     private $newsLetterInscription;
 
     //constructeur
+    //    //
+    public function __construct(array $valeurs = []) {
+        if (!empty($valeurs)) { // Si on a spécifié des valeurs, alors on hydrate l'objet.
+            $this->hydrate($valeurs);
+        }
+    }
+
+    /**
+     * Méthode assignant les valeurs spécifiées aux attributs correspondant.
+     * @param $donnees array Les données à assigner
+     * @return void
+     */
+    public function hydrate($donnees) {
+        foreach ($donnees as $attribut => $valeur) {
+            $methode = 'set' . ucfirst($attribut);
+            if (method_exists($this, $methode)) {
+                $this->$methode($valeur);
+            }
+        }
+    }
+
     //methode setter
     function setClient_id($client_id) {
         $this->client_id = $client_id;
@@ -64,72 +85,65 @@ class Client {
 
     function setNewsLetterInscription($newsLetterInscription) {
         $this->newsLetterInscription = $newsLetterInscription;
-        }
-    
-        
+    }
+
     // methode getter
     function getClient_id() {
-        return $this->getclient_id;
+        return $this->client_id;
     }
 
     function getNom() {
-        return $this->getnom;
+        return $this->nom;
     }
 
     function getPrenom() {
-        return $this->getprenom;
+        return $this->prenom;
     }
 
     function getMail() {
-        return $this->getmail;
+        return $this->mail;
     }
 
     function getAdresse() {
-        return $this->getadresse;
+        return $this->adresse;
     }
 
     function getCp() {
-        return $this->getcp;
+        return $this->cp;
     }
 
     function getVille() {
-        return $this->getville;
+        return $this->ville;
     }
 
     function getTel() {
-        return $this->gettel;
+        return $this->tel;
     }
 
     function getDateInscription() {
-        return $this->getdateInscription;
+        return $this->dateInscription;
     }
 
     function getSession_Id() {
-        return $this->getsession_Id;
+        return $this->session_Id;
     }
 
     function getNewsLetterInscription() {
-        return $this->getnewsLetterInscription;
+        return $this->newsLetterInscription;
     }
 
     //methode isvalid
-      public function isValid(){
-    return !(empty($this->nom) or 
-            empty($this->prenom) or
-            empty($this->mail)  or
-            empty($this->adresse) or
-            empty($this->ville) or
-            empty($this->cp) or
-            empty($this->majeur) or
-            empty($this->adresse) 
-            );
-     }
-     
-     
-     
+    public function isValid() {
+        return !(empty($this->nom) or
+                empty($this->prenom) or
+                empty($this->mail) or
+                empty($this->adresse) or
+                empty($this->ville) or
+                empty($this->cp) or
+                empty($this->majeur) or
+                empty($this->adresse)
+                );
+    }
+
     //methode add
-    
-    
-
-
 }

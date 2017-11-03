@@ -7,6 +7,8 @@
 //}
 //spl_autoload_register('loadClass');
 
+
+//version fd
 spl_autoload_register(function($class) {
     include 'classes/' . $class . '.php';
 }
@@ -14,7 +16,8 @@ spl_autoload_register(function($class) {
 
 
 //***********version david*****
-//permet de trouvre les classes meme dans un repertoire
+//permet de trouver les classes meme dans un repertoire
+//
 //function autoload($classname) {
 //    if (file_exists($file = __DIR__ . '/' . $classname . '.php')) {
 //        require $file;
