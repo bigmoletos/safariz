@@ -6,10 +6,10 @@
         <meta name="Description" content="" />
         <meta name="Content-Type" content="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-          <link rel="stylesheet" href="style/formulaire.css"  type="text/css" charset="utf_8"/>
+        <link rel="stylesheet" href="style/formulaire.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-      
+
         <title>Formulaire Safa'Riz</title>
     </head>
 
@@ -47,41 +47,64 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-3">
-                        <div class="form-group">
-                            <label for="Password">Mot de passe</label>
-                            <input type="password" class="form-control" id="password" placeholder="Mot de passe">
-                        </div>
-                    </div>
-                    <div class="col-md-offset-1 col-md-3">
-                        <div class="form-group">
-                            <label for="Vpassword">Vérification mot de passe</label>
-                            <input type="password" class="form-control" id="vpassword" placeholder="Vérification mot de passe">
-                        </div>
-                    </div>
-                </div>
+                <!--                <div class="row">
+                                    <div class="col-md-offset-2 col-md-3">
+                                        <div class="form-group">
+                                            <label for="Password">Mot de passe</label>
+                                            <input type="password" class="form-control" id="password" placeholder="Mot de passe">
+                                        </div>
+                                    </div>-->
+                <!--                    <div class="col-md-offset-1 col-md-3">
+                                        <div class="form-group">
+                                            <label for="Vpassword">Vérification mot de passe</label>
+                                            <input type="password" class="form-control" id="vpassword" placeholder="Vérification mot de passe">
+                                        </div>
+                                    </div>-->
+            </div>
 
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-addon glyphicon glyphicon-earphone"></span>
-                            <input type="text" class="form-control" placeholder="Téléphone" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon glyphicon glyphicon-globe"></span>
-                            <input type="text" class="form-control" placeholder="Adresse" aria-describedby="basic-addon1">
-                        </div>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-earphone"></span>
+                        <input type="text" class="form-control" placeholder="Téléphone" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-globe"></span>
+                        <input type="text" class="form-control" placeholder="Adresse" aria-describedby="basic-addon1">
                     </div>
                 </div>
-
-                <br/>
-                <div class="row">
-                    <div class="col-md-offset-5 col-md-1">
-                        <button type="button" class="btn btn-primary">Envoyer mes informations</button>
-                    </div>
-                </div>
+            </div>    
+            <div class="input-group">
+                <span class="input-group-addon glyphicon glyphicon-globe"></span>
+                <input type="text" class="form-control" placeholder="CP" aria-describedby="basic-addon1">
             </div>
         </div>
-    </body>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon glyphicon glyphicon-globe"></span>
+        <input type="text" class="form-control" placeholder="Ville" aria-describedby="basic-addon1">
+    </div>
+</div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-offset-5 col-md-1">
+        <button type="button" class="btn btn-primary">Envoyer mes informations</button>
+    </div>
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+                                                $(function () {
+                                            //  $("#date").mask("99/99/9999");
+                                                    $("#tel").mask("(09)99 99 99 99");
+                                                    $("#cp").mask("99999");
+                                                            $("#mail").inputmask('Regex', { regex: "[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}");
+                                            //$("#hm").mask("99:99",{placeholder:"-"});
+                                                });
+</script>
+</body>
 </html>
