@@ -1,8 +1,9 @@
 <?php
 session_start();
+
+
 //chargement des classes
 //require('chargeurClass.php');
-
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
 require ('classes/clientManager.php');
@@ -11,14 +12,15 @@ require ('classes/client.php');
 require('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
+
 //nouvel objet de la classe ClientManager instancié 
 //par les attributs de la connexionDB() à la base donnée mysql
 $manager = new ClientManager($db);
 
 date_default_timezone_set("Europe/Paris");
 
-// champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
-// champs formulaire  nom  prenom tel mail adresse  ville cp   majeur reglement  newsletter
+// champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,ip, newsLetterInscription
+// champs formulaire  nom  prenom tel mail adresse  ville cp   majeur reglement  newsletter 
 //initialisation de la variable $form en tableau, cette variable se charge de stocker des valeurs du formulaire
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
@@ -27,41 +29,44 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
     if (!!($_POST['tel'])) {
         $form['tel'] = $_POST['tel'];
     }
-    if (isset($_POST['newsLetter'])) {
-            $form['newsLetterInscription'] = isset($_POST['newsLetter'])?1:0;
+
+    $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
+
+    if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
+        $form['nom'] = $_POST['nom'];
+        $form['prenom'] = $_POST['prenom'];
+        $form['mail'] = $_POST['mail'];
+        $form['adresse'] = $_POST['adresse'];
+        $form['ville'] = $_POST['ville'];
+        $form['cp'] = $_POST['cp'];
+//        $form['dateinscription']= now();//finalement pour rentrer la date on va utiliser la base de donnée en 
+//        mettant dateInscription en CURRENT_TIMESTAMP par defaut
+        $form['ip'] = $_SERVER['REMOTE_ADDR'];
+        $form['session_id'] = $_COOKIE['PHPSESSID'];
+
+        //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
+        $client = new Client($form);
+        //on affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
+        $manager->addClient($client);
+    } else {
+        echo 'erreur de formulaire'; // gestion des erreurs en php
     }
-        if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
-            $form['nom'] = $_POST['nom'];
-            $form['prenom'] = $_POST['prenom'];
-            $form['mail'] = $_POST['mail'];
-            $form['adresse'] = $_POST['adresse'];
-            $form['ville'] = $_POST['ville'];
-            $form['cp'] = $_POST['cp'];
-//        $form['dateinscription']= now();
-            $form['session_id'] = $_COOKIE['PHPSESSID'];
-            
-            //nouvel objet
-            $client = new Client($form);
-            $manager->addClient($client);
-        } else {
-            echo 'erreur de formulaire'; // gestion des erreurs en php
-        }
-        echo ' formulaire ok';
-        var_dump($client);
-    }//fin fonction  formulaire
-  
-    var_dump($db);    
+    echo ' formulaire ok';
+    var_dump($client);
+}//fin fonction  formulaire
+
+var_dump($db);
 
 
-      
- 
 
 
- 
+
+
+
 //var_dump($_SESSION);
 var_dump($_SERVER);
-//var_dump($_COOKIE);
-    ?>
+var_dump($_COOKIE);
+?>
 <!DOCTYPE html>
 <!--
 formulaire d'inscription 
@@ -219,11 +224,14 @@ formulaire d'inscription
 <script type="text/javascript">
     $(document).ready($(function () {
         //  $("#date").mask("99/99/9999");
-      
+
         $("#tel").mask("(09)99 99 99 99");
         $("#cp").mask("99999");
-        $("#nom").mask("aaaaaaaaaaaaaaaaaaaaaaaaaa");
-         $("#nom").regex ("");
+//        $("#nom").mask({mask: "[a-zA-Z0-9._%-]{2, 20}"});
+        $("#nom").regex("");
+        $("#nom").mask({mask: "aaaa"});
+
+
 //                                              $("#mail").mask({
 //                                                mask: "{1,20}[.{1,20}][.{1,20}][.{1,20}]@*{1,20}[.{2,6}][.{1,3}]",
 //                                                greedy: false,
@@ -256,32 +264,31 @@ formulaire d'inscription
 
         }
         ;
-        
-  //Si le second paramètre vaut true, cette fonction colore le champ en rouge pâle. Sinon, elle enlève le coloriage.    
-  function surligne(champ, erreur)
+
+        //Si le second paramètre vaut true, cette fonction colore le champ en rouge pâle. Sinon, elle enlève le coloriage.    
+        function surligne(champ, erreur)
         {
-           if(erreur)
-              champ.style.backgroundColor = "#fba";
-           else
-              champ.style.backgroundColor = "";
+            if (erreur)
+                champ.style.backgroundColor = "#fba";
+            else
+                champ.style.backgroundColor = "";
         }
 
 //https://openclassrooms.com/courses/tout-sur-le-javascript/td-verification-d-un-formulaire
 //vérification de la longueur d'un champ
-   
+
         function verifPseudo(champ)
-    {
-       if(champ.value.length < 2 || champ.value.length > 25)
-       {
-          surligne(champ, true);
-          return false;
-       }
-       else
-       {
-          surligne(champ, false);
-          return true;
-       }
-    }
+        {
+            if (champ.value.length < 2 || champ.value.length > 25)
+            {
+                surligne(champ, true);
+                return false;
+            } else
+            {
+                surligne(champ, false);
+                return true;
+            }
+        }
 
     }));//fin function
     //fin document ready

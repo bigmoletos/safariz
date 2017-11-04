@@ -18,6 +18,7 @@ class Client {
     private $tel;
     private $dateInscription;
     private $session_Id;
+    private $ip;
     private $newsLetterInscription;
 
     //constructeur
@@ -83,6 +84,10 @@ class Client {
         $this->session_Id = $session_Id;
     }
 
+    function setIp($ip) {
+        $this->ip = $ip;
+    }
+
     function setNewsLetterInscription($newsLetterInscription) {
         $this->newsLetterInscription = $newsLetterInscription;
     }
@@ -128,11 +133,15 @@ class Client {
         return $this->session_Id;
     }
 
+    function getIp() {
+        return $this->ip;
+    }
+
     function getNewsLetterInscription() {
         return $this->newsLetterInscription;
     }
 
-    //methode isvalid
+    //methode isValid verifie que les données à inserer dans le formulaire sont valides
     public function isValid() {
         return !(empty($this->nom) or
                 empty($this->prenom) or
@@ -141,9 +150,37 @@ class Client {
                 empty($this->ville) or
                 empty($this->cp) or
                 empty($this->majeur) or
+                empty($this->ip) or
                 empty($this->adresse)
                 );
+        }
+
+        //methode NouveauClient verifie que le client n'a pas deja dans la base
+        //comme il peut rejouer s'il est deja dans la base il suffira de mettre à jour la date de la nouvelle partie
+        public function NouveauClient(){
+        return empty($this->nom);
+        
+        
     }
 
-    //methode add
-}
+    //methode modification date de jeu modifie la date de la derniere partie
+         public function NouvellePartie(){
+       
+        
+        
+    }
+    
+    
+    //faire methode qui verifie que le client n'a pas déjà joué le jour même
+         public function pasDejaJoueAujourdhui(){
+       
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+}//fin classe client

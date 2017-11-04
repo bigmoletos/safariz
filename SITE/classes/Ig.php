@@ -1,6 +1,6 @@
 <?php
 
- class ig {
+ class Ig {
 
     private $erreurs = [],
             $id,
@@ -9,36 +9,60 @@
             $jour,
             $heure,
             $datetime;
+   
     
+        //methode constructeur via la fonction hydrate
+    public function __construct(array $valeurs = []) {
+        if (!empty($valeurs)) { // Si on a spécifié des valeurs, alors on hydrate l'objet.
+            $this->hydrate($valeurs);
+        }
+    }
+
+    /**
+     * Méthode assignant les valeurs spécifiées aux attributs correspondant.
+     * @param $donnees array Les données à assigner
+     * @return void
+     */
+    public function hydrate($donnees) {
+        foreach ($donnees as $attribut => $valeur) {
+            $methode = 'set' . ucfirst($attribut);
+            if (method_exists($this, $methode)) {
+                $this->$methode($valeur);
+            }
+        }
+    }
+    
+    
+    // methode getter
     function getErreurs() {
-        return $this->geterreurs;
+        return $this->erreurs;
     }
 
     function getId() {
-        return $this->getid;
+        return $this->id;
     }
 
     function getLabel() {
-        return $this->getlabel;
+        return $this->label;
     }
 
     function getTimestamp() {
-        return $this->gettimestamp;
+        return $this->timestamp;
     }
 
     function getJour() {
-        return $this->getjour;
+        return $this->jour;
     }
 
     function getHeure() {
-        return $this->getheure;
+        return $this->heure;
     }
 
     function getDatetime() {
-        return $this->getdatetime;
+        return $this->datetime;
     }
 
-   
+   // methode setter
 
     function setId($id) {
         $this->id = $id;
