@@ -55,7 +55,6 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
     var_dump($client);
 }//fin fonction  formulaire
 
-
 function securisation($champAsecuriser) {
 
     $champAsecuriser = htmlspecialchars($champAsecuriser);
@@ -66,15 +65,19 @@ function securisation($champAsecuriser) {
     //  var_dump($champAsecuriser);
     return $champAsecuriser;
 }
+//donne la date et l'heure de la session
+$TimeValidation = $_SERVER['REQUEST_TIME_FLOAT'];
+//DateTime($heureValidation);
+ $TimeValidation=date("Y-m-d H:i:s ", $TimeValidation);
+var_dump($TimeValidation);
+
+
+
+
+
+
 
 var_dump($db);
-
-
-
-
-
-
-
 //var_dump($_SESSION);
 var_dump($_SERVER);
 var_dump($_COOKIE);

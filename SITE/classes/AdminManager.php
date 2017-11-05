@@ -53,5 +53,42 @@ public function addAdmin(Admin $admin) {
         }
     }
 
-}
+    //fonction permettant de verifier le login en cours de saisie dans le formulaire 
+    //login en Ajax depuis la table administrateur
+    public function verifLogin(Admin $login) {
+      
+       $rep= $this->db->query("select login from administrateur ");
+        $tab = $req->fetchAll();
+        $q = $_REQUEST["q"];
+        $indice = "";
+        if ($q !== "") {
+            $q = strtolower($q);
+            $len = strlen($q);
+            foreach ($tab as $valeur) {
+                if (stristr($q, substr($valeur[0], 0, $len))) {
+                    if ($indice === "") {
+                        $indice = $valeur[0];
+                    } else {
+                        $indice .= ", $valeur[0]";
+                    }
+                }
+            }
+        }
+        echo $indice === "" ? "Pas de suggestion" : $indice;
+    }//fin fonction verif login
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}//fin classe
 ?>

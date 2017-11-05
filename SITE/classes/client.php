@@ -92,7 +92,7 @@ class Client {
     function setNewsLetterInscription($newsLetterInscription) {
         $this->newsLetterInscription = $newsLetterInscription;
     }
-    $clientValide
+    
              function setClientValide($clientValide) {
         $this->ClientValide = $clientValide;
     }
