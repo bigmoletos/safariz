@@ -1,0 +1,6 @@
+<FilesMatch pageLogin.php>
+AuthUserFile C:\wamp64\www\TP_SOFTEAM\softeam\PROJETS\SAFARIZ\SITE\log\.htpasswd
+AuthName "Acces restreint.  Connexion administrateur"
+AuthType Basic
+require valid-user
+</FilesMatch>

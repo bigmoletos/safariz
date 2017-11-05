@@ -47,6 +47,9 @@ public function addAdmin(Admin $admin) {
             //insertion des données dans la base     
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
+            ////pour afficher les erreurs on peut aussi tenter :
+            die(print_r( $this->db->errorInfo())); 
+            ////
         }
     }
 
