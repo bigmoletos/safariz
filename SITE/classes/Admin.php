@@ -6,6 +6,7 @@ class Admin {
             $datelastConnexion,
             $login,
             $nomAdm,
+            $email,
             $password;
 
     //methode constructeur via la fonction hydrate
@@ -50,6 +51,9 @@ class Admin {
         return $this->password;
     }
 
+     function getEmail() {
+        return $this->email;
+    }
     // methode setter
     function setAdmin_id($admin_id) {
         $this->admin_id = $admin_id;
@@ -70,7 +74,10 @@ class Admin {
     function setPassword($password) {
         $this->password = $password;
     }
-
+function setEmail($email) {
+        $this->email = $email;
+    }
+    
 }
 
 ?>

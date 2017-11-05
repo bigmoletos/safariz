@@ -28,13 +28,13 @@ public function addAdmin(Admin $admin) {
             //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
             //pour mettre les date en francais dans la requete
             $this->db->query(" SET lc_time_names = 'fr_FR'");
-            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm,  login, password)'
-                    . ' VALUES (:nomAdm, :login, :password )');
-
+            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm,  login, password, email)'
+                    . ' VALUES (:nomAdm, :login, :password, :email )');
 
             $req->bindValue(':nomAdm', $admin->getNomAdm());
             $req->bindValue(':login', $admin->getLogin());
             $req->bindValue(':password', $admin->getPassword());
+             $req->bindValue(':email', $admin->getEmail());
             echo "<pre>";
             var_dump($req);
             echo "</pre>";
