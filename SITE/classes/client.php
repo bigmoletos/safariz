@@ -20,6 +20,7 @@ class Client {
     private $session_Id;
     private $ip;
     private $newsLetterInscription;
+    private $clientValide;
 
     //constructeur
     //    //
@@ -91,6 +92,11 @@ class Client {
     function setNewsLetterInscription($newsLetterInscription) {
         $this->newsLetterInscription = $newsLetterInscription;
     }
+    $clientValide
+             function setClientValide($clientValide) {
+        $this->ClientValide = $clientValide;
+    }
+    
 
     // methode getter
     function getClient_id() {
@@ -140,7 +146,12 @@ class Client {
     function getNewsLetterInscription() {
         return $this->newsLetterInscription;
     }
-
+    
+    
+     function getClientValide() {
+        return $this->clientValide;
+    }
+    
     //methode isValid verifie que les données à inserer dans le formulaire sont valides
     public function isValid() {
         return !(empty($this->nom) or

@@ -55,6 +55,18 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
     var_dump($client);
 }//fin fonction  formulaire
 
+
+function securisation($champAsecuriser) {
+
+    $champAsecuriser = htmlspecialchars($champAsecuriser);
+    $champAsecuriser = trim($champAsecuriser);
+    $champAsecuriser = stripcslashes($champAsecuriser);
+    $champAsecuriser = strip_tags($champAsecuriser);
+    $champAsecuriser = htmlentities($champAsecuriser);
+    //  var_dump($champAsecuriser);
+    return $champAsecuriser;
+}
+
 var_dump($db);
 
 

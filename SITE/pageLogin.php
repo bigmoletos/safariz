@@ -54,7 +54,7 @@ $form = array();
 //mysql_connect("localhost", "root", "");
 //mysql_select_db("nom_db");
 //
-//  sécurisation des données
+//  sécurisation des données du formulaire
 function securisation($champAsecuriser) {
 
     $champAsecuriser = htmlspecialchars($champAsecuriser);
