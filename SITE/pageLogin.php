@@ -1,4 +1,6 @@
 <?php
+//cette page permet d'enregistrer les administrateurs dans la base de donnée
+
 session_start();
 //initialisation des variables
 $cookiepwd="";
