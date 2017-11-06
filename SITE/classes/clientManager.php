@@ -207,7 +207,7 @@ class ClientManager {
     }
 //******************************************************************************
     //va chercher la date d'inscription en fonction du mail et la compare à la date du jour
-//    si cette date est inconnue (FALSE), alors le client peut jouer ce jour
+//    si cette date est inconnue (FALSE), alors le client peut jouer ce jour. On identifie un client par son mail, que l'on considére comme unique
     public function ClientPeutJouerCejour(Client $client) {
 //        $sql = SELECT  mail, DATE(dateInscription) FROM clients WHERE mail='riz@yopmail.com'  AND DATE(dateInscription)='DATE(NOW())'; ou '20017-11-04'
 
@@ -217,8 +217,8 @@ class ClientManager {
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
 //        var_dump($result);
-        if (count($result)>=0){
-//        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
+        if (count($result)){
+//        if ($requete->rowCount()){     //compte le nbre de lignes  de date d'inscription correspondant  à la date du jour renvoyées par la requete, si aucune correspondance n'est  trouvée le client peut jouer
             return false; 
         }
         //permet de fermer la requete
@@ -226,13 +226,14 @@ class ClientManager {
     }
 
     //methode count permet de compter le nombre de client dans la bdr
-    public function count() {
-        $count = $this->db->query('SELECT COUNT(*) FROM client');
-        return $count->fetchColumn();
-    }
+//    public function count() {
+//        $count = $this->db->query('SELECT COUNT(*) FROM client');
+//        return $count->fetchColumn();
+//    }
 //*****************************************************************************
 //requete pour foyer unique, un seul foyer peut gagner un lot, on determine cette condition
-// en considérant que seule l'adresse permet d'identifier un foyer
+// en considérant que seule l'adresse permet d'identifier un foyer. Un foyer pouvant jouer chaque jour le foyer sera valide s'il est unique
+// et s'il n'a pas deja joué ce jour.
 //SELECT   `adresse`, `cp`, `ville`, DATE(dateInscription)  FROM clients WHERE adresse='1 avenue du riz rouge' and cp='13045' AND ville='SAINTE MARIE DE LA MER' AND DATE(dateInscription)='2017-11-04'
    
       public function foyerUnique(Client $client) {
@@ -245,7 +246,7 @@ class ClientManager {
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
 //        var_dump($result);
-        if (count($result)>=0){
+        if (count($result)){
 //        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
             return true; 
         }
@@ -253,6 +254,10 @@ class ClientManager {
         $requete->closeCursor();
     }
 
+    
+    
+    
+    
     //methode count permet de compter le nombre de client dans la bdr
 //    public function count() {
 //        $count = $this->db->query('SELECT COUNT(*) FROM client');

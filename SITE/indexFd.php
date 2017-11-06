@@ -25,11 +25,14 @@ date_default_timezone_set("Europe/Paris");
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
 //var_dump($_POST);
-if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verifier tous les paramétres(exist, non null, non vide...)
+
+//*************************************************************************************
+if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de verifier tous les paramétres(isset, !empty, NOT NULL ...)
     if (!!($_POST['tel'])) {
         $form['tel'] = $_POST['tel'];
     }
     $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
+
     if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
         $form['nom'] = $_POST['nom'];
         $form['prenom'] = $_POST['prenom'];
@@ -37,48 +40,45 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
         $form['adresse'] = $_POST['adresse'];
         $form['ville'] = $_POST['ville'];
         $form['cp'] = $_POST['cp'];
-//        $form['dateinscription']= now();//finalement pour rentrer la date on va utiliser la base de donnée en 
-//        mettant dateInscription en CURRENT_TIMESTAMP par defaut
-        $form['ip'] = $_SERVER['REMOTE_ADDR'];
-        $form['session_id'] = $_COOKIE['PHPSESSID'];
+//     $form['dateinscription']= now();//finalement pour rentrer la date on va utiliser la base de donnée en 
+//     mettant dateInscription en CURRENT_TIMESTAMP par defaut
+        $form['ip'] = $_SERVER['REMOTE_ADDR']; // stocke l'adresse IP
+        $form['session_id'] = $_COOKIE['PHPSESSID']; // stocke l'id de session
         //la fonction isValidFormulaire
         // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
-//     var_dump($client);
-//     var_dump($form);
-        
+     var_dump($client);
+     var_dump($form);
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
-        
-        //****************
-        //teste si le foyer est unique
-//        if($manager->foyerUnique($client)){
-//        echo "Votre foyer ne peut plus participer aujourd'hui!";
-//    
-//            } else {
-////              $manager->addClient($client);  //inscription dans la base  
-//              echo "bravo vous êtes inscrit !";
-//             
-//            }
-        //*****************
-        //on affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-         if($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)){
-        echo "vous avez deja joué aujourd'hui!";
-    
-            } else {
-              $manager->addClient($client);  //inscription dans la base  
-              echo "bravo vous êtes inscrit !";
-             
-            }
+        //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
+        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
+            echo "Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain";
+        } else {
+            $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
+            echo "bravo vous êtes inscrit ! ";
+            //intergrer ici la fonction gagné perdu
+//               if($manager->GagnePerdu($ig){
+//                     echo "Félicitation vous avez gagné  XXXX$lot";
+//               } else {
+//                     echo "Désolé vous avez perdu, retentez votre chance demain ";
+//               }
+        }
     } else {
-        echo 'erreur de formulaire'; // gestion des erreurs en php
+        echo 'erreur de saisie du formulaire'; // gestion des erreurs en php
     }
-    echo ' formulaire ok';
-    
-  
-    
+
+    echo ' </br>formulaire ok </br>';
+
+
+
 //    var_dump($client);
-    
-}//fin fonction  formulaire
+//}
+//else {
+//   echo "veuillez accepter le réglement et confirmer que vous êtes majeur"; 
+} //fin fonction  formulaire
+//*************************************************************************************
+
+
 //*/*******************************************************
 //fonction pour verifier le mail 
 //ne fonctionne pas
@@ -107,13 +107,6 @@ $TimeValidation = $_SERVER['REQUEST_TIME_FLOAT'];
 //conversion au formatDateTime($heureValidation);
 $TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
 //var_dump($TimeValidation);
-
-
-
-
-
-
-
 //var_dump($db);
 //var_dump($_SESSION);
 //var_dump($_SERVER);
