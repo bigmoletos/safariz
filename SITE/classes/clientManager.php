@@ -79,7 +79,7 @@ class ClientManager {
             $req->bindValue(':ip', $client->getIp());
             $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
             echo "<pre>";
-            var_dump($req);
+//            var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
                 echo "<br/>nouveau client correctement inséré<br/>";
@@ -141,7 +141,7 @@ class ClientManager {
         $client = $requete->fetch();
         $client->setDate_ajout(new DateTime($client->getDate_ajout()));
         $client->setDate_modif(new DateTime($client->getDate_modif()));
-        var_dump($client);
+//        var_dump($client);
         return $client;
     }
 
@@ -205,18 +205,20 @@ class ClientManager {
 
         return $listeClient;
     }
-
+//******************************************************************************
     //va chercher la date d'inscription en fonction du mail et la compare à la date du jour
 //    si cette date est inconnue (FALSE), alors le client peut jouer ce jour
-    public function dateInscription(Client $client) {
-//        $sql = SELECT  mail, DATE(dateInscription) FROM clients WHERE mail='riz@yopmail.com'  AND DATE(dateInscription)='DATE(NOW())';
+    public function ClientPeutJouerCejour(Client $client) {
+//        $sql = SELECT  mail, DATE(dateInscription) FROM clients WHERE mail='riz@yopmail.com'  AND DATE(dateInscription)='DATE(NOW())'; ou '20017-11-04'
 
-        $requete = $this->db->prepare(" SELECT mail, DATE(dateInscription) FROM clients WHERE mail= :mail  AND DATE(dateInscription)= :dateInscription");
-        $requete->bindValue(':mail', $client->mail());
-        $requete->bindValue(':dateInscription', DATE(NOW()));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
+        $requete = $this->db->prepare(" SELECT mail, DATE(dateInscription) FROM clients WHERE mail= :mail  AND DATE(dateInscription)= DATE(NOW())");
+        $requete->bindValue(':mail', $client->getMail());
+        //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
         $requete->execute();
-        //$result = $requete->fetch(PDO::FETCH_ASSOC);
-        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
+        $result = $requete->fetch(PDO::FETCH_ASSOC);
+//        var_dump($result);
+        if (count($result)>=0){
+//        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
             return false; 
         }
         //permet de fermer la requete
@@ -228,10 +230,42 @@ class ClientManager {
         $count = $this->db->query('SELECT COUNT(*) FROM client');
         return $count->fetchColumn();
     }
-
-//requete pour foyer unique
+//*****************************************************************************
+//requete pour foyer unique, un seul foyer peut gagner un lot, on determine cette condition
+// en considérant que seule l'adresse permet d'identifier un foyer
 //SELECT   `adresse`, `cp`, `ville`, DATE(dateInscription)  FROM clients WHERE adresse='1 avenue du riz rouge' and cp='13045' AND ville='SAINTE MARIE DE LA MER' AND DATE(dateInscription)='2017-11-04'
-    //**************************************************    
+   
+      public function foyerUnique(Client $client) {
+
+        $requete = $this->db->prepare(" SELECT adresse, cp, ville, DATE(dateInscription)  FROM clients WHERE adresse= :adresse and cp= :cp AND ville= :ville AND DATE(dateInscription)=DATE(NOW())") ;
+        $requete->bindValue(':adresse', $client->getAdresse());
+        $requete->bindValue(':cp', $client->getCp());
+        $requete->bindValue(':ville', $client->getVille());
+        //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
+        $requete->execute();
+        $result = $requete->fetch(PDO::FETCH_ASSOC);
+//        var_dump($result);
+        if (count($result)>=0){
+//        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
+            return true; 
+        }
+        //permet de fermer la requete
+        $requete->closeCursor();
+    }
+
+    //methode count permet de compter le nombre de client dans la bdr
+//    public function count() {
+//        $count = $this->db->query('SELECT COUNT(*) FROM client');
+//        return $count->fetchColumn();
+//    } 
+    
+    
+    
+    
+    
+    
+     
+    //    //**************************************************    
     //methode permettant la gestion des images
     //Premiere partie tu récupère le nom de l'image :
 //        $image = basename($_FILES['image']['name']);

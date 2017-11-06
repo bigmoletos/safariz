@@ -3,11 +3,11 @@ session_start();
 
 
 //chargement des classes
-//require('chargeurClass.php');
+require('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
-require ('classes/clientManager.php');
-require ('classes/client.php');
+//require ('classes/clientManager.php');
+//require ('classes/client.php');
 
 require('connexionBD.php');
 //require('admin.php');
@@ -24,14 +24,12 @@ date_default_timezone_set("Europe/Paris");
 //initialisation de la variable $form en tableau, cette variable se charge de stocker des valeurs du formulaire
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
-var_dump($_POST);
+//var_dump($_POST);
 if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verifier tous les paramétres(exist, non null, non vide...)
     if (!!($_POST['tel'])) {
         $form['tel'] = $_POST['tel'];
     }
-
     $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
-
     if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
         $form['nom'] = $_POST['nom'];
         $form['prenom'] = $_POST['prenom'];
@@ -43,30 +41,43 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
 //        mettant dateInscription en CURRENT_TIMESTAMP par defaut
         $form['ip'] = $_SERVER['REMOTE_ADDR'];
         $form['session_id'] = $_COOKIE['PHPSESSID'];
-
         //la fonction isValidFormulaire
-        // avant d'envoyer les données formulaire dans la base nous verifions que formats nom adresse cp ...sont conformes
-      if( IsEmail($form['mail'])){
+        // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
+//     var_dump($client);
+//     var_dump($form);
         
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
+        
+        //****************
+        //teste si le foyer est unique
+//        if($manager->foyerUnique($client)){
+//        echo "Votre foyer ne peut plus participer aujourd'hui!";
+//    
+//            } else {
+////              $manager->addClient($client);  //inscription dans la base  
+//              echo "bravo vous êtes inscrit !";
+//             
+//            }
+        //*****************
         //on affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-       
+         if($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)){
+        echo "vous avez deja joué aujourd'hui!";
+    
+            } else {
+              $manager->addClient($client);  //inscription dans la base  
+              echo "bravo vous êtes inscrit !";
+             
+            }
     } else {
         echo 'erreur de formulaire'; // gestion des erreurs en php
     }
     echo ' formulaire ok';
     
-    if($manager->dateInscription($client)){
-        echo "vous avez deja joué aujourd'hui!";
+  
     
-    } else {
-        echo "bravo vous êtes inscrit !";
-      $manager->addClient($client);  
-    }
+//    var_dump($client);
     
-    var_dump($client);
-    }//fin verif mail
 }//fin fonction  formulaire
 //*/*******************************************************
 //fonction pour verifier le mail 
@@ -95,7 +106,7 @@ function securisation($champAsecuriser) {
 $TimeValidation = $_SERVER['REQUEST_TIME_FLOAT'];
 //conversion au formatDateTime($heureValidation);
 $TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
-var_dump($TimeValidation);
+//var_dump($TimeValidation);
 
 
 
@@ -103,10 +114,10 @@ var_dump($TimeValidation);
 
 
 
-var_dump($db);
+//var_dump($db);
 //var_dump($_SESSION);
-var_dump($_SERVER);
-var_dump($_COOKIE);
+//var_dump($_SERVER);
+//var_dump($_COOKIE);
 ?>
 <!DOCTYPE html>
 <!--
