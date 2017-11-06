@@ -1,6 +1,6 @@
  <?php
 
-class >IgManager {
+class IgManager {
 
     /**
      * Attribut contenant l'instance reprÃ©sentant la BDD.

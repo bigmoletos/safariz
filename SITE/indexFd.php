@@ -44,16 +44,40 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//!! permet de verif
         $form['ip'] = $_SERVER['REMOTE_ADDR'];
         $form['session_id'] = $_COOKIE['PHPSESSID'];
 
+        //la fonction isValidFormulaire
+        // avant d'envoyer les données formulaire dans la base nous verifions que formats nom adresse cp ...sont conformes
+      if( IsEmail($form['mail'])){
+        
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
         //on affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-        $manager->addClient($client);
+       
     } else {
         echo 'erreur de formulaire'; // gestion des erreurs en php
     }
     echo ' formulaire ok';
+    
+    if($manager->dateInscription($client)){
+        echo "vous avez deja joué aujourd'hui!";
+    
+    } else {
+        echo "bravo vous êtes inscrit !";
+      $manager->addClient($client);  
+    }
+    
     var_dump($client);
+    }//fin verif mail
 }//fin fonction  formulaire
+//*/*******************************************************
+//fonction pour verifier le mail 
+//ne fonctionne pas
+//Cette fonction sert à vérifier la syntaxe d'un email
+//	function IsEmail($email)
+//	{
+//$var regexMail = preg_match('/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/', $email);
+//return (($value === 0) || ($value === false)) ? false : true;
+//	}
+
 
 function securisation($champAsecuriser) {
 
@@ -62,13 +86,15 @@ function securisation($champAsecuriser) {
     $champAsecuriser = stripcslashes($champAsecuriser);
     $champAsecuriser = strip_tags($champAsecuriser);
     $champAsecuriser = htmlentities($champAsecuriser);
+
     //  var_dump($champAsecuriser);
     return $champAsecuriser;
 }
+
 //donne la date et l'heure de la session
 $TimeValidation = $_SERVER['REQUEST_TIME_FLOAT'];
-//DateTime($heureValidation);
- $TimeValidation=date("Y-m-d H:i:s ", $TimeValidation);
+//conversion au formatDateTime($heureValidation);
+$TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
 var_dump($TimeValidation);
 
 

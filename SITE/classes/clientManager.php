@@ -60,7 +60,7 @@ class ClientManager {
             //pour mettre les date en francais dans la requete
             $this->db->query(" SET lc_time_names = 'fr_FR'");
             //$req = $this->db->prepare("INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )"
-               //     . " VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription ");
+            //     . " VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription ");
             $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id,ip, newsLetterInscription )'
                     . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id,:ip , :newsLetterInscription )');
 
@@ -206,12 +206,31 @@ class ClientManager {
         return $listeClient;
     }
 
+    //va chercher la date d'inscription en fonction du mail et la compare à la date du jour
+//    si cette date est inconnue (FALSE), alors le client peut jouer ce jour
+    public function dateInscription(Client $client) {
+//        $sql = SELECT  mail, DATE(dateInscription) FROM clients WHERE mail='riz@yopmail.com'  AND DATE(dateInscription)='DATE(NOW())';
+
+        $requete = $this->db->prepare(" SELECT mail, DATE(dateInscription) FROM clients WHERE mail= :mail  AND DATE(dateInscription)= :dateInscription");
+        $requete->bindValue(':mail', $client->mail());
+        $requete->bindValue(':dateInscription', DATE(NOW()));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
+        $requete->execute();
+        //$result = $requete->fetch(PDO::FETCH_ASSOC);
+        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
+            return false; 
+        }
+        //permet de fermer la requete
+        $requete->closeCursor();
+    }
+
     //methode count permet de compter le nombre de client dans la bdr
     public function count() {
         $count = $this->db->query('SELECT COUNT(*) FROM client');
         return $count->fetchColumn();
     }
 
+//requete pour foyer unique
+//SELECT   `adresse`, `cp`, `ville`, DATE(dateInscription)  FROM clients WHERE adresse='1 avenue du riz rouge' and cp='13045' AND ville='SAINTE MARIE DE LA MER' AND DATE(dateInscription)='2017-11-04'
     //**************************************************    
     //methode permettant la gestion des images
     //Premiere partie tu récupère le nom de l'image :
