@@ -1,5 +1,6 @@
 <?php
-//cette page permet d'enregistrer les administrateurs dans la base de donnée, elle est protegée par un .htaccess
+//cette page permet d'enregistrer les administrateurs 
+//dans la base de donnée, elle est protegée par un .htaccess et un .htpwd
 
 session_start();
 //initialisation des variables
