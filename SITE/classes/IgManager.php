@@ -40,5 +40,5 @@ class IgManager {
     
 
 
-
+    }
 ?>
