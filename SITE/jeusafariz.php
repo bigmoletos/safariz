@@ -76,10 +76,10 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
         //0000000000000000000000000000000000000000000000
         if ($manager->ClientPeutJouerCejour($client)) {
-            echo "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
+           $messageDejaJoueToday="</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
         } else {
             $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-            echo "</br>bravo vous êtes inscrit ! </br>";
+          $messageinscrit= "</br>bravo vous êtes inscrit ! </br>";
             //******************************
             // fonction gagné perdu
 
@@ -87,16 +87,17 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
             if ($igmanager->GagnePerdu()) { 
                 //todo fonction pour donner le nom
                 
-                echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: XXXX ";
-            } else {
-                echo "Désolé vous avez perdu, retentez votre chance demain ";
+              $messageGagne="Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
+           
+              } else {
+                $messagePerdu="Désolé vous avez perdu, retentez votre chance demain ";
             }
             //******************************
         }
         //0000000000000000000000000000000000000000000000000000
-        echo ' </br>formulaire ok </br>';
+      //  echo ' </br>formulaire ok </br>';
     } else {
-        echo '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
+        $messageChampFormulaire= '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
     }
 
 
@@ -105,7 +106,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 
 //    var_dump($client);
 } else {
-    echo "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
+    $messageReglement= "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
 } //fin fonction  formulaire
 //*************************************************************************************
 //*/*******************************************************

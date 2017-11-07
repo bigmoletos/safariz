@@ -42,7 +42,7 @@ function connexionDB() {
         
         
         $db=$connexion;
-        echo "connexion à la base de donnée:'  $bdd ' de mysql réussie";
+     //   echo "connexion à la base de donnée:'  $bdd ' de mysql réussie";
         return $db; //en dehors de la fonction il faudra faire un set $db poour l'appeler
         
         

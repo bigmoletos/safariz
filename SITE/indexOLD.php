@@ -9,20 +9,20 @@ $db = connexionDB();
 //par les attributs de la connexionDB() Ã  la base donnÃ©e mysql
 $manager = new AdminManagerJeu($db);
 $dates = $manager->ouvertureJeu();
-//var_dump($dates);
+var_dump($dates);
 date_default_timezone_set("Europe/Paris");
 
 $now = date("Y-m-d H:i:s");
 
 
 if ($now >= $dates['date_debut_jeu'] && $now <= $dates['date_fin_jeu']) {
-    $message = 'Cliquez pour participer a notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
+    $message = 'Cliquez pour participer Ã  notre jeu Safa\'Riz<br/><br/><a href="form.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
 }
 elseif ($now <= $date_debut_jeu){
-    $message = "Dï¿½solï¿½ le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous ï¿½ partir du ".$date_debut_jeu;
+    $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous Ã  partir du ".$date_debut_jeu;
 }
  else {
-    $message = "Dï¿½solï¿½ ce jeu est terminï¿½.";    
+    $message = "Désolé ce jeu est terminÃ©.";    
 }
 ?>
 

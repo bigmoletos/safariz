@@ -1,6 +1,10 @@
+<?php
+//session_start();
+?>
+
 <!doctype html>
 <html lang="fr">
-
+ 
     <head>
         <meta charset="utf-8">
         <title>Safa'riz Le Jeu</title>
@@ -22,6 +26,22 @@
         <section id="header" class="row">
             <div id="logo_safariz" class="col-12 col-md-3">
                 <a href="index.php"><img src="image/safariz.png" alt="logo safariz" height="190" width="250" responsive-image></a>
+   
+      <!--zone pour integrer les messages de retour-->   
+                
+ <?php  
+ echo (isset($messageinscrit))?$messageinscrit:""; 
+ echo (isset($messageReglement))?$messageReglement:"";
+ echo (isset($messagePerdu))?$messagePerdu:"";
+ echo (isset($messageGagne))?$messageGagne:"";
+ echo (isset($messageDejaJoueToday))?$messageDejaJoueToday:"";
+ echo (isset($messageChampFormulaire))?$messageChampFormulaire:"";
+ 
+
+ 
+ ?> 
+      <!--fin messages retour-->      
+            
             </div>
 
             <main id="content" class="col-12 col-md-9">
@@ -35,7 +55,7 @@
                         <div class="row">
                             <!--titre-->
                             <div class="col-12">
-                                <h1>Inscrivez-vous ci-dessous:</h1>
+                                <h1>Inscrivez-vous ci-dessous:  </h1>
                                 <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
 
                             </div>
@@ -45,7 +65,7 @@
                         <div class="row">
                             <!--nom et prenom-->
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <form method="post" name="inscription" action="formulaire2.php">
+                                <form method="post" name="inscription" action="jeusafariz.php">
                                     <div class="form-group ">
                                         <label class="control-label requiredField" for="nom">Nom<span class="asteriskField">*</span></label>
                                         <input class="form-control" id="nom" name="nom" type="text" placeholder="votre nom...." maxlength="48"/>
@@ -67,6 +87,7 @@
                                     <label class="control-label requiredField" for="adresse">Adresse<span class="asteriskField">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-bus"></i>
+                                    
                                         </div>
                                         <input class="form-control" id="adresse" name="adresse" placeholder="1 avenue du riz" type="text" maxlength="200"/>
                                     </div>
