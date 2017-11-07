@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Safa'riz Le Jeu</title>
+	<title>Safa'riz Le Jeu !!!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style/styleFormulaire.css" type="text/css" charset="utf_8"/>
 	<link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">

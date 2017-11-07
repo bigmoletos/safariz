@@ -1,3 +1,23 @@
+<?php
+
+date_default_timezone_set("Europe/Paris");
+$now = date("04/11/2017");
+
+
+$date_debut_jeu = date("06/11/2017");
+$date_fin_jeu = date("13/11/2017");
+
+if ($now >= $date_debut_jeu && $now <= $date_fin_jeu) {
+    $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="form.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
+}
+elseif ($now <= $date_debut_jeu){
+    $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous à partir du ".$date_debut_jeu;
+}
+ else {
+    $message = "Désolé ce jeu est terminé.";    
+}
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -32,36 +52,13 @@
 				<!-- <div class="container-fluid"> -->
 
 				<div class="well">
-					<div class="row">
+					<div id="messageIndex" class="row">
 						<!--titre-->
 						<div class="col-12">
-							<h1>Cliquez sur le bouton "jouer" pour participer à notre jeu Safa'Riz :</h1>
+							<h1><?php echo $message; ?></h1>
 						</div>
 					</div>
 
-
-					
-
-					<div id="espace"> </div>
-					<!--espace entre bouton et reglement-->
-
-					<div class="row">
-						
-						<!--                </div>-->
-						<!--
-               <br/><br/>
-                <div class="row">bouton validation-->
-
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<div class="form-group">
-								<div>
-									<a href="form.php"><button class="btn btn-primary " name="bouton" type="submit">Jouer maintenant</button>
-                                                                        <!-- bouton jouer sur page indesx -->
-								</div>
-							</div>
-						</div>
-					</div>
-					</form>
 				</div>
 				<!--</div> container.fluid-->
 			</div>

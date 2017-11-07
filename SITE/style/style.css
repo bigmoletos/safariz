@@ -16,7 +16,6 @@ body.container  {
     padding-right: 2%;
     margin-top: 4%;
 }
-
 main {
     margin-bottom: 2%;
 }
@@ -73,4 +72,12 @@ li a:hover {
     color:grey;
     text-decoration: none;
     font-size: 120%;
+}
+.jouer {
+    background-color: #f3aa5c;
+    border-color: #de815f;
+}
+#messageIndex {
+    
+    text-align: center;
 }

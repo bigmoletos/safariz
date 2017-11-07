@@ -76,7 +76,7 @@
 
                         <div class="row">
                             <!--Cp  et ville-->
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
 
                                 <div class="form-group ">
                                     <label class="control-label requiredField" for="cp">Code Postal<span class="asteriskField">*</span></label>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group ">
                                     <label class="control-label requiredField" for="ville">Ville<span class="asteriskField">*</span></label>
                                     <div class="input-group">
@@ -144,28 +144,17 @@
                                 <input type="checkbox" name="newsletter" value="ON" checked/> Inscription à la newsletter
                             </div>
                             <!--</div>-->
-
-
-                        </div>
-
-                        <div id="espace"> </div>
-                        <!--espace entre bouton et reglement-->
-
-                        <div class="row">
-
-                            <!--                </div>-->
-                            <!--
-<br/><br/>
-<div class="row">bouton validation-->
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
+                            
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <div>
                                         <button class="btn btn-primary " name="bouton" type="submit">Valider mon Inscription</button>
                                     </div>
                                 </div>
-                            </div>
+
+
                         </div>
+
+
                         </form>
                     </div>
                     <!--</div> container.fluid-->
