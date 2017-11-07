@@ -38,7 +38,7 @@ if (isset($_POST['date_debut_jeu']) && isset($_POST['date_fin_jeu'])) {
     $jeu = new AdminJeu($form);
    // var_dump($jeu);
     $manager->addJeux($jeu);  //inscription dans la base . On affecte les valeurs  de la fonction addJeu avec l'objet $jeu en argument Ã  l'objet $manager
-    echo "bravo vous avez entré un nouveau jeu";
+    echo "bravo vous avez entrï¿½ un nouveau jeu";
 } else {
     echo 'erreur de saisie du formulaire'; // gestion des erreurs en php
 }
@@ -116,7 +116,7 @@ formulaire d'inscription
                     <div class="row" ><!--titre-->
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <h1>Section Administrateur</h1>
-                            <p> Rentrez ici vos  dates de début et de fin de jeu pour votre nouveau jeu</p>
+                            <p> Rentrez ici vos  dates de dÃ©but et de fin de jeu pour votre nouveau jeu</p>
 
                         </div>
                     </div>
@@ -125,7 +125,7 @@ formulaire d'inscription
 
                     <form method="post" name="admin" action="">
                         <div class="form-group ">
-                            <label class="control-label requiredField" for="nom">date et heure de début du Jeu<span class="asteriskField">*</span></label>
+                            <label class="control-label requiredField" for="nom">date et heure de dÃ©but du Jeu<span class="asteriskField">*</span></label>
                             <input class="form-control" id="nom" name="date_debut_jeu"   type="text" placeholder="2017-11-01 00:00:00"  maxlength="48"/>
                         </div>
                         <div class="form-group ">
@@ -138,6 +138,9 @@ formulaire d'inscription
                 <div class="form-group">
                     <div>
                         <button class="btn btn-primary " name="bouton" type="submit">Ajouter un jeu</button>
+<!--                    </div>
+                      <div>-->
+                        <button class="btn btn-primary " id="synthese" name="synthese" type="submit">SynthÃ¨se du jeu</button>
                     </div>
                 </div>    
                 </form>

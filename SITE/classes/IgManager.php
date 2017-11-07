@@ -27,11 +27,11 @@ class IgManager {
         //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
-     //   var_dump($result);
+        //   var_dump($result);
         $verif = count($result);
         $verif2 = $requete->rowCount();
-    //    var_dump($verif2);
-     //   var_dump($verif);
+        //    var_dump($verif2);
+        //   var_dump($verif);
 //        var_dump($result);
 //Todo : gerer les differents lots pour une mm date
 //        suite au var_dump($result) on constate qu'il prend le premier lot à gagner dans la liste'
@@ -48,6 +48,18 @@ class IgManager {
             $requete = $this->db->prepare(" UPDATE ig SET lotDispo= '0' WHERE ID= :ID");
             $requete->bindValue(':ID', $ID);
             $requete->execute();
+            //******************
+            //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
+
+            $requete = $this->db->prepare(" SELECT client_id FROM clients ");
+            //$requete->bindValue(':ID', $ID);
+            $result = $requete->fetch(PDO::XXX); //a modifier
+            
+            
+            
+            
+            
+            //****************
             return $lot;
         } else {
             return false;
