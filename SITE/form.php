@@ -34,7 +34,7 @@
  echo (isset($messageReglement))?$messageReglement:"";
  echo (isset($messagePerdu))?$messagePerdu:"";
  echo (isset($messageGagne))?$messageGagne:"";
- echo (isset($messageDejaJoueToday))?$messageDejaJoueToday:"";
+ echo (!!($messageDejaJoueToday))?$messageDejaJoueToday:"";
  echo (isset($messageChampFormulaire))?$messageChampFormulaire:"";
  
 

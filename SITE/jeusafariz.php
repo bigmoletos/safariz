@@ -1,10 +1,16 @@
 <?php
 session_start();
 //initialisation des variables
-//$cookiepwd="";
-//$cookielog="";
-//$cookiemail="";
-//$cookienom="";
+$cookiepwd = "";
+$cookielog = "";
+$cookiemail = "";
+$cookienom = "";
+$messageinscrit="";
+$messageReglement="";
+$messagePerdu ="";
+$messageGagne="";
+$messageDejaJoueToday="";
+$messageChampFormulaire="";
 ////$_POST['pwd']="";
 ////$_POST['login']="";
 //$admin="";
@@ -14,17 +20,16 @@ session_start();
 ////creation du cookie login autologin? date d'expiration dans 1an
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
 //setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-////creation du cookie mail date d'expiration dans 5min
-//$cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-////creation du cookie nom date d'expiration dans 5min
-//$cookienom = ' ' . $_POST['nom'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, true);
-////creation du cookie nom date d'expiration dans 5min
-//$cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
+//creation du cookie mail date d'expiration dans 5min
+$cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
+setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+//creation du cookie nom date d'expiration dans 5min
+$cookienom = ' ' . $_POST['nom'] . ' '; //on créer une variable qui possède le contenu du champ login
+setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, true);
+//creation du cookie nom date d'expiration dans 5min
+$cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
+setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
 //var_dump($_COOKIE);
-
 //chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion
@@ -76,28 +81,27 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
         //0000000000000000000000000000000000000000000000
         if ($manager->ClientPeutJouerCejour($client)) {
-           $messageDejaJoueToday="</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
-        } else {
+            $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
+        } else { 
             $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-          $messageinscrit= "</br>bravo vous êtes inscrit ! </br>";
+            $messageinscrit = "</br>bravo vous êtes inscrit ! </br>";
             //******************************
             // fonction gagné perdu
 
-            $igmanager= new Igmanager($db);//nouvel objet Igmanager avec comme attribut la connexionBdd $db
-            if ($igmanager->GagnePerdu()) { 
+            $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
+            if ($lot=$igmanager->GagnePerdu()) {
                 //todo fonction pour donner le nom
-                
-              $messageGagne="Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-           
-              } else {
-                $messagePerdu="Désolé vous avez perdu, retentez votre chance demain ";
+//echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
+               $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
+            } else {
+                $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
             }
             //******************************
         }
         //0000000000000000000000000000000000000000000000000000
-      //  echo ' </br>formulaire ok </br>';
+        //  echo ' </br>formulaire ok </br>';
     } else {
-        $messageChampFormulaire= '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
+        $messageChampFormulaire = '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
     }
 
 
@@ -106,7 +110,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 
 //    var_dump($client);
 } else {
-    $messageReglement= "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
+    $messageReglement = "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
 } //fin fonction  formulaire
 //*************************************************************************************
 //*/*******************************************************
@@ -118,7 +122,6 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 //$var regexMail = preg_match('/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/', $email);
 //return (($value === 0) || ($value === false)) ? false : true;
 //	}
-
 
 function securisation($champAsecuriser) {
 
@@ -149,7 +152,7 @@ formulaire d'inscription
 <html>
     <head>
         <title>Formulaire d'inscription</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style/styleFormulaire.css" type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -160,15 +163,15 @@ formulaire d'inscription
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="style/bootstrap-iso.css"/>
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
-        
+
 
     </head>
     <body>
-            <?php include ('form.php'); ?>
-</body>
+<?php include ('form.php'); ?>
+    </body>
 </html>
 
-    
+
 
 
 

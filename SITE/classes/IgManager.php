@@ -9,7 +9,7 @@ class IgManager {
     private $db;
 
     /**
-     * Constructeur Ã©tant chargÃ© d'enregistrer l'instance de PDO dans l'attribut $db.
+     * Constructeur  chargé d'enregistrer l'instance de PDO dans l'attribut $db.
      * @param $db PDO Le DAO
      * @return void
      */
@@ -30,9 +30,6 @@ class IgManager {
         //   var_dump($result);
         $verif = count($result);
         $verif2 = $requete->rowCount();
-        //    var_dump($verif2);
-        //   var_dump($verif);
-//        var_dump($result);
 //Todo : gerer les differents lots pour une mm date
 //        suite au var_dump($result) on constate qu'il prend le premier lot à gagner dans la liste'
         if ($verif) {
@@ -51,24 +48,26 @@ class IgManager {
             //******************
             //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
 
-            $requete = $this->db->prepare(" SELECT client_id FROM clients ");
-            //$requete->bindValue(':ID', $ID);
-            $result = $requete->fetch(PDO::XXX); //a modifier
+            $requete = $this->db->prepare(" SELECT client_id, nom  FROM clients ");
+            $requete->execute();
             
-            
-            
-            
-            
+            $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
+            while($result){
+                  var_dump($result);
+                  
+            }
+          
+
             //****************
             return $lot;
         } else {
             return false;
         }
-        //permet de fermer la requete
-        $requete->closeCursor();
-    }
+       
+        $requete->closeCursor(); //permet de fermer la requete
+    }//fin gagneperdu
 
     //Todo : créer une méthode qui récupère les infos du lot (label + description) va utiliser la table lot en utilisant ID de la table ig
-}
+}//fin classe
 
 ?>

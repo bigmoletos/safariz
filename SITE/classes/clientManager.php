@@ -213,7 +213,6 @@ class ClientManager {
 
         $requete = $this->db->prepare(" SELECT mail, DATE(dateInscription) FROM clients WHERE mail= :mail  AND DATE(dateInscription)= DATE(NOW())");
         $requete->bindValue(':mail', $client->getMail());
-        //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
        // var_dump($result);
@@ -222,7 +221,7 @@ class ClientManager {
      //   var_dump($verif2);
     //   var_dump($verif);
         if ($verif2){
-            echo "vous avez  joué aujourd'hui";
+           // echo "vous avez  joué aujourd'hui";
 //        if ($requete->rowCount()){     //compte le nbre de lignes  de date d'inscription correspondant  à la date du jour renvoyées par la requete, si aucune correspondance n'est  trouvée le client peut jouer
             return true; 
         }
