@@ -10,6 +10,7 @@ class Gagnants {
     private $client_Id;
     private $dateGain;
     private $lot_Id;
+  
 
     
        //constructeur
@@ -52,6 +53,8 @@ class Gagnants {
     function getLot_Id() {
         return $this->lot_Id;
     }
+    
+  
 
     /* définition des setters de la classe Gagnants */
     function setGagnant_Id($gagnant_Id) {
@@ -70,7 +73,7 @@ class Gagnants {
         $this->lot_Id = $lot_Id;
     }
 
-    
+     
 
 }
 

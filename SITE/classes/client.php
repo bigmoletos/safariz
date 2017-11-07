@@ -153,23 +153,37 @@ class Client {
     }
     
     //methode isValid verifie que les données à inserer dans le formulaire sont valides
-    public function isValid() {
+    public function isValidForm() {
         return !(empty($this->nom) or
                 empty($this->prenom) or
                 empty($this->mail) or
                 empty($this->adresse) or
                 empty($this->ville) or
                 empty($this->cp) or
-                empty($this->majeur) or
-                empty($this->ip) or
-                empty($this->adresse)
+                empty($this->dateInscription)
                 );
         }
 
+        //methode permettant de verifier que le le client est valide
+        //pour cela il ne faut pas qu'il ait deja joué le jour meme
+         public function isValidClient() {
+        if(empty($this->dateInscription)!=date()) {
+             return !(empty($this->nom) or
+                empty($this->prenom) or
+                empty($this->mail) or
+                empty($this->clientValide) or
+                empty($this->ville) or
+                empty($this->cp) or
+                empty($this->dateInscription)
+                );
+         }
+        }
+        
         //methode NouveauClient verifie que le client n'a pas deja dans la base
         //comme il peut rejouer s'il est deja dans la base il suffira de mettre à jour la date de la nouvelle partie
         public function NouveauClient(){
-        return empty($this->nom);
+        return empty($this->mail);
+         return empty($this->dateInscription);
         
         
     }
