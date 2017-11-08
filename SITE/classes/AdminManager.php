@@ -1,4 +1,4 @@
- <?php
+<?php
 
 class AdminManager {
 
@@ -20,9 +20,10 @@ class AdminManager {
     public function setDb($db) {
         $this->db = $db;
     }
+
 // $login,            $nomAdm,            $password;
 
-public function addAdmin(Admin $admin) {
+    public function addAdmin(Admin $admin) {
         try {
             //on fait le prepare et on l'affecte à la variable $req
             //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
@@ -34,7 +35,7 @@ public function addAdmin(Admin $admin) {
             $req->bindValue(':nomAdm', $admin->getNomAdm());
             $req->bindValue(':login', $admin->getLogin());
             $req->bindValue(':password', $admin->getPassword());
-             $req->bindValue(':email', $admin->getEmail());
+            $req->bindValue(':email', $admin->getEmail());
             echo "<pre>";
             var_dump($req);
             echo "</pre>";
@@ -48,7 +49,7 @@ public function addAdmin(Admin $admin) {
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
             ////pour afficher les erreurs on peut aussi tenter :
-            die(print_r( $this->db->errorInfo())); 
+            die(print_r($this->db->errorInfo()));
             ////
         }
     }
@@ -56,8 +57,8 @@ public function addAdmin(Admin $admin) {
     //fonction permettant de verifier le login en cours de saisie dans le formulaire 
     //login en Ajax depuis la table administrateur
     public function verifLogin(Admin $login) {
-      
-       $rep= $this->db->query("select login from administrateur ");
+
+        $rep = $this->db->query("select login, from administrateur ");
         $tab = $req->fetchAll();
         $q = $_REQUEST["q"];
         $indice = "";
@@ -75,20 +76,33 @@ public function addAdmin(Admin $admin) {
             }
         }
         echo $indice === "" ? "Pas de suggestion" : $indice;
-    }//fin fonction verif login
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}//fin classe
+    }
+
+//fin fonction verif login
+    //fonction permettant de  verifier password et login lors de la connexion 
+    public function connectAdmin(Admin $admin) {
+
+        $requete = $this->db->prepare('select login, password from administrateur where login= :login AND password= :password ');
+
+        $requete->bindValue(':password', $admin->getPassword());
+        $requete->bindValue(':login', $admin->getLogin());
+        $requete->execute();
+        $result = $requete->fetch(PDO::FETCH_ASSOC);
+        var_dump($result);
+        // $tab=array();
+        //  $tab=count($result);
+//               if (count($result)){
+//                 echo 'login ok'; 
+//                  header("Location: pageAdministrateur.php");
+//             } else {
+//                echo 'pas login ok' ;  
+//             }
+        // var_dump($tab); 
+        return $result;
+    }
+
+//fin fonction connectAdmin
+}
+
+//fin classe
 ?>

@@ -52,10 +52,10 @@ class IgManager {
             $requete->execute();
             
             $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
-            while($result){
-                  var_dump($result);
+          //  while($result){
+          //        var_dump($result);
                   
-            }
+          //  }
           
 
             //****************

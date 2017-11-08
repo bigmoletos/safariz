@@ -43,12 +43,14 @@ function securisation($champAsecuriser) {
     //  var_dump($champAsecuriser);
     return $champAsecuriser;
 }
-   if (isset($_POST['log']) ) {
+$form=array();
+var_dump($_POST);
+if (isset($_POST['log']) ) {
 //if (isset($_POST['log'])) {
      if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])){ 
         $form['password'] = securisation($_POST['pwd']);
         $confirmpwd = securisation($_POST['confirmpwd']);
-             if ($form['pwd'] == $confirmpwd) {
+             if ($form['pwd'] === $confirmpwd) {
                     if( !!($_POST['login']) && !!($_POST['nomAdm']) && !!($_POST['email'])){
                      $form['login'] = securisation($_POST['login']);
                      $form['nomAdm'] = securisation($_POST['nomAdm']);
@@ -76,6 +78,7 @@ function securisation($champAsecuriser) {
        echo 'Les deux mots de passe que vous avez rentrés ne correspondent pas…';
     }
    echo ' formulaire ok';
+  header("Location: pageAministrateur.php");
     var_dump($admin);
      } //fin verif confirmation 
      else {
@@ -119,7 +122,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     <body>
         
         <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
-        <form name="administrateur" action="pageLogin.php" method="post">
+        <form name="administrateur" action="inscriptionAdmin.php" method="post">
             <label>Nom: <input type="text"  id="nomAdm" name="nomAdm"/></label><br/>
             <label>Pseudo: <input type="text"  id="login" name="login"/></label><br/>
             <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>

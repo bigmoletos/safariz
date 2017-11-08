@@ -5,12 +5,12 @@ $cookiepwd = "";
 $cookielog = "";
 $cookiemail = "";
 $cookienom = "";
-$messageinscrit="";
-$messageReglement="";
-$messagePerdu ="";
-$messageGagne="";
-$messageDejaJoueToday="";
-$messageChampFormulaire="";
+$messageinscrit = "";
+$messageReglement = "";
+$messagePerdu = "";
+$messageGagne = "";
+$messageDejaJoueToday = "";
+$messageChampFormulaire = "";
 ////$_POST['pwd']="";
 ////$_POST['login']="";
 //$admin="";
@@ -21,6 +21,8 @@ $messageChampFormulaire="";
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
 //setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie mail date d'expiration dans 5min
+
+if(isset($_POST['inscription'])){
 $cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie nom date d'expiration dans 5min
@@ -29,6 +31,7 @@ setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, tru
 //creation du cookie nom date d'expiration dans 5min
 $cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
+}
 //var_dump($_COOKIE);
 //chargement des classes
 require('chargeurClass.php');
@@ -52,6 +55,7 @@ date_default_timezone_set("Europe/Paris");
 //initialisation de la variable $form en tableau, cette variable se charge de stocker des valeurs du formulaire
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
+$statut = "";
 //var_dump($_POST);
 //*************************************************************************************
 if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de verifier tous les paramétres(isset, !empty, NOT NULL ...)
@@ -78,22 +82,28 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
         //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
-//        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
+                    //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
+       
         //0000000000000000000000000000000000000000000000
+        //methode add
         if ($manager->ClientPeutJouerCejour($client)) {
             $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
-        } else { 
+        } else {
             $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
             $messageinscrit = "</br>bravo vous êtes inscrit ! </br>";
             //******************************
             // fonction gagné perdu
 
             $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
-            if ($lot=$igmanager->GagnePerdu()) {
+            if ($lot = $igmanager->GagnePerdu()) {
                 //todo fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-               $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
+                $statut = "gagne";
+                $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
+                ($statut="gagne")? header("Location: gagne.php"):"";
             } else {
+                 $statut = "perdu";
+                 ($statut="perdu")?header("Location: perdu.php"):"";
                 $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
             }
             //******************************
@@ -140,15 +150,31 @@ $TimeValidation = $_SERVER['REQUEST_TIME_FLOAT'];
 //conversion au formatDateTime($heureValidation);
 $TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
 //var_dump($TimeValidation);
-//var_dump($db);
+
+
+//********************
+//verifications variables globales
+////var_dump($db);
 //var_dump($_SESSION);
 //var_dump($_SERVER);
 //var_dump($_COOKIE);
+//********************
+
+
+//********************
+//redirection vers la page gagne ou perdu
+//$url=$_SERVER['SCRIPT_NAME'];
+//var_dump($url);
+//($statut="gagne")? header("Location: $url/gagne.php/"):"";
+//($statut="perdu")?header("Location: $url/perdu.php/"):"";
+//********************
+
+
 ?>
-<!DOCTYPE html>
-<!--
+<!--<!DOCTYPE html>
+
 formulaire d'inscription 
--->
+
 <html>
     <head>
         <title>Formulaire d'inscription</title>
@@ -166,7 +192,9 @@ formulaire d'inscription
 
 
     </head>
-    <body>
+    <body>-->
+        
+ <?php include ('header.php'); ?>       
 <?php include ('form.php'); ?>
     </body>
 </html>
