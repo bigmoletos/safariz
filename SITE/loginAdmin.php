@@ -52,14 +52,14 @@ if (isset($_POST['logAdmin'])) {
         $form['login'] = securisation($_POST['login']);
 
         // cryptage du mot de pwd par un hachage en md5
-        //        $form['password'] = md5($form['password']);
+                 //        $form['password'] = md5($form['password']);
         $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-        //        $form['confirmpwd'] = md5($form['confirmpwd']);
-        //        var_dump($form['login']);
-        //        var_dump($form['nomAdm']);
-        //        var_dump($form['email']);
-        //        var_dump($form['pwd']);
-        //         var_dump($form['confirmpwd']);
+                    //        $form['confirmpwd'] = md5($form['confirmpwd']);
+                  //        var_dump($form['login']);
+                  //        var_dump($form['nomAdm']);
+                  //        var_dump($form['email']);
+                  //        var_dump($form['pwd']);
+                  //         var_dump($form['confirmpwd']);
         var_dump($form);
 
         //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
@@ -67,13 +67,18 @@ if (isset($_POST['logAdmin'])) {
         $admin = new Admin($form);
         var_dump($admin);
         //on affecte les valeurs  de la fonction connectAdmin avec l'objet $admin en argument à l'objet $manager
-        $verif = $manager->connectAdmin($admin);
-        var_dump($verif);
-    }//fin login nomadm email 
-    else {
+       $verif = $manager->connectAdmin($admin);
+        if($verif){
+                   echo ' connexion ok';
+                   var_dump($verif);
+   
+            } else {
         echo 'erreur de login ou de mot de passe…';
     }
-    echo ' formulaire ok';
+        
+    }//fin login nomadm email 
+   
+   // echo ' formulaire ok';
     var_dump($admin);
 }//fin fonction fomulaire isset
 
@@ -97,15 +102,15 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <title>Page login</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="style/logadmin.css"  type="text/css" charset="utf_8"/>
-        <!--        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
-                <script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>
-                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-                <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
-                <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
+        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+        <script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>

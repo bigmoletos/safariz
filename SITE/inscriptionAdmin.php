@@ -44,58 +44,58 @@ function securisation($champAsecuriser) {
     return $champAsecuriser;
 }
 $form=array();
-var_dump($_POST);
+//var_dump($_POST);
 if (isset($_POST['log']) ) {
 //if (isset($_POST['log'])) {
      if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])){ 
         $form['password'] = securisation($_POST['pwd']);
         $confirmpwd = securisation($_POST['confirmpwd']);
-             if ($form['pwd'] === $confirmpwd) {
+             if ($form['password'] == $confirmpwd) {
                     if( !!($_POST['login']) && !!($_POST['nomAdm']) && !!($_POST['email'])){
                      $form['login'] = securisation($_POST['login']);
                      $form['nomAdm'] = securisation($_POST['nomAdm']);
                      $form['email'] = securisation($_POST['email']);
-
+                    $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
              // cryptage du mot de pwd par un hachage en md5
              //        $form['password'] = md5($form['password']);
-                     $form['password']= password_hash($form['password'], PASSWORD_DEFAULT);
-             //        $form['confirmpwd'] = md5($form['confirmpwd']);
-             //        var_dump($form['login']);
-             //        var_dump($form['nomAdm']);
-             //        var_dump($form['email']);
-             //        var_dump($form['pwd']);
-             //         var_dump($form['confirmpwd']);
-                     var_dump($form);
+    $form['password']= password_hash($form['password'], PASSWORD_DEFAULT);
+                //     $form['confirmpwd'] = md5($form['confirmpwd']);
+                //    var_dump($form['login']);
+                   //  var_dump($form['nomAdm']);
+                  //   var_dump($form['email']);
+                  //   var_dump($form['password']);
+                //  var_dump($_SERVER);
+                  //   var_dump($form);
         
                                                       //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
         //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
         $admin = new Admin($form);
         //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
-        $manager->addAdmin($admin);
+        $manager->addAdmincontrolelog($admin);
        
    }//fin login nomadm email 
    else {
-       echo 'Les deux mots de passe que vous avez rentrés ne correspondent pas…';
+     //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
     }
-   echo ' formulaire ok';
-  header("Location: pageAministrateur.php");
-    var_dump($admin);
+   echo ' <br>formulaire ok<br>';
+ // header("Location: pageAministrateur.php");
+ //   var_dump($admin);
      } //fin verif confirmation 
      else {
-         echo ' formulaire incomplet veuillez verifier les champs';
+         echo ' <br>formulaire incomplet veuillez verifier les champs<br>';
       } 
      }
-     echo 'trop nul ton  formulaire est incomplet veuillez verifier les champs';
+     echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
 }//fin fonction fomulaire isset
 
 
 
-var_dump($form);
-var_dump($_POST);
+//var_dump($form);
+//var_dump($_POST);
 //var_dump($db);
 //var_dump($_SESSION);
 //var_dump($_SERVER);
-var_dump($_COOKIE);
+//var_dump($_COOKIE);
 ?>
 <!--
 Cette page permet de rajouter des administrateurs dans la base de donnée, 

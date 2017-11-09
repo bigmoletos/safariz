@@ -27,21 +27,74 @@ class AdminManager {
         try {
             //on fait le prepare et on l'affecte à la variable $req
             //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
-            //pour mettre les date en francais dans la requete
+            //pour mettre les date en francais dans la requete INSERT INTO administrateur (nomAdm,  login, password, email, dateLastConnexion)
+            //        VALUES ('fanny', 'fanny', 'fleur', 'fleur@free', 1510235228 )
             $this->db->query(" SET lc_time_names = 'fr_FR'");
-            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm,  login, password, email)'
-                    . ' VALUES (:nomAdm, :login, :password, :email )');
+            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm, login, password, email, dateLastConnexion)'
+                    . ' VALUES (:nomAdm, :login, :password, :email, :dateLastConnexion )');
 
             $req->bindValue(':nomAdm', $admin->getNomAdm());
             $req->bindValue(':login', $admin->getLogin());
             $req->bindValue(':password', $admin->getPassword());
             $req->bindValue(':email', $admin->getEmail());
+            $req->bindValue(':dateLastConnexion', $admin->getDateLastConnexion());
             echo "<pre>";
             var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
                 echo "<br/>nouvel administrateur correctement inséré<br/>";
             }
+
+            //version xxxxxx   
+            //puis on fait l'execute     
+            //insertion des données dans la base     
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+            ////pour afficher les erreurs on peut aussi tenter :
+            die(print_r($this->db->errorInfo()));
+            ////
+        }
+    }
+
+    public function addAdmincontrolelog(Admin $admin) {
+        try {
+            //on fait le prepare et on l'affecte à la variable $req
+            //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
+            //pour mettre les date en francais dans la requete INSERT INTO administrateur (nomAdm,  login, password, email, dateLastConnexion)
+            //        VALUES ('fanny', 'fanny', 'fleur', 'fleur@free', 1510235228 )
+            $this->db->query(" SET lc_time_names = 'fr_FR'");
+
+            $req = $this->db->prepare('select login from administrateur WHERE login= :login');
+            $req->bindValue(':login', $admin->getLogin());
+            $req->execute();
+            $nblog = $req->fetch(PDO::FETCH_ASSOC);
+            $nb=count($nblog);
+            var_dump($nb); 
+            if($nb){
+               echo "<pre> Veuillez entrer un nouveau login";
+            
+               var_dump($nb); 
+             echo "</pre>";
+            } else {
+                  $req = $this->db->prepare('INSERT INTO administrateur (nomAdm, login, password, email, dateLastConnexion)'
+                    . ' VALUES (:nomAdm, :login, :password, :email, :dateLastConnexion )');
+
+            $req->bindValue(':nomAdm', $admin->getNomAdm());
+            $req->bindValue(':login', $admin->getLogin());
+            $req->bindValue(':password', $admin->getPassword());
+            $req->bindValue(':email', $admin->getEmail());
+            $req->bindValue(':dateLastConnexion', $admin->getDateLastConnexion());
+            echo "<pre>";
+            var_dump($req);
+            echo "</pre>";
+            if ($req->execute()) {
+                echo "<br/>nouvel administrateur correctement inséré<br/>";
+            }
+            }
+            
+
+//            
+          
 
             //version xxxxxx   
             //puis on fait l'execute     
