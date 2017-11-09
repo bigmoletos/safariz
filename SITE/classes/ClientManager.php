@@ -1,7 +1,7 @@
 <?php
 
 //classe repercutant les actions de la classe client dans la base de données
-
+//modif le 8/11/17
 class ClientManager {
 
     //attribut
