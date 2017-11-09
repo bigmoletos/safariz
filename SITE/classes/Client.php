@@ -1,6 +1,6 @@
 <?php
 
-//construction de la classe jeu
+//construction de la classe jeu stockage des infos clients
 class Client {
 
 //les noms des attributs doivent etre identiques aux noms rentrees dans la base au moment de sa creation
