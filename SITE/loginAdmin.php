@@ -98,23 +98,51 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-        <link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>
-        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
-        <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
+        <link rel="stylesheet" href="style/logadmin.css"  type="text/css" charset="utf_8"/>
+        <!--        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+                <script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+                <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
+                <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
         <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>
     <body>
 
-        <form name="logAdmin" action="LoginAdmin.php" method="post">
-            <label>Login: <input type="text"  id="login" name="login"/></label><br/>
-            <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>
-            <input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>
-        </form>
+        <!--<div class = "container">
+                <div class="wrapper">
+                        <form action="" method="post" name="Login_Form" class="form-signin">       
+                            <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+                                  <hr class="colorgraph"><br>
+                                  
+                                  <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+                                  <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>     		  
+                                 
+                                  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Login</button>  			
+                        </form>			
+                </div>
+        </div>-->
+
+        <div class = "container">
+            <div class="wrapper">
+                <form action="" method="post" name="Login_Form" class="form-signin">       
+                    <h3 class="form-signin-heading">Bienvenue! merci de vous enregistrer</h3>
+                    <hr class="colorgraph"><br>
+
+                    <form name="logAdmin" class="form-control" action="loginAdmin.php" method="post">
+                        <label>Login: <input type="text"  id="login" name="login"/></label><br/>
+                        <label>Mot de pwd: <input type="password" class="form-control" id="pwd" name="pwd"/></label><br/>
+                        <!--<input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>-->
+                        <button class="btn btn-lg btn-primary btn-block"  name="logAdmin" value="connexion" type="Submit">Login</button>
+                    </form>
+
+                </form>			
+            </div>
+        </div>                   
+
+
         <script>
             //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
             //         deja dans la base, réalisé en AJAX
