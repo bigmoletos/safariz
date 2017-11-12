@@ -55,7 +55,7 @@ class AdminManager {
             ////
         }
     }
-
+//cette methode controle que le login n'existe pas deja dans la base de donnée
     public function addAdmincontrolelog(Admin $admin) {
         try {
             //on fait le prepare et on l'affecte à la variable $req
@@ -74,23 +74,7 @@ class AdminManager {
                echo "<pre> Veuillez entrer un nouveau login";
             
                var_dump($nb); 
-             echo "</pre>";
-            } else {
-                  $req = $this->db->prepare('INSERT INTO administrateur (nomAdm, login, password, email, dateLastConnexion)'
-                    . ' VALUES (:nomAdm, :login, :password, :email, :dateLastConnexion )');
-
-            $req->bindValue(':nomAdm', $admin->getNomAdm());
-            $req->bindValue(':login', $admin->getLogin());
-            $req->bindValue(':password', $admin->getPassword());
-            $req->bindValue(':email', $admin->getEmail());
-            $req->bindValue(':dateLastConnexion', $admin->getDateLastConnexion());
-            echo "<pre>";
-            var_dump($req);
-            echo "</pre>";
-            if ($req->execute()) {
-                echo "<br/>nouvel administrateur correctement inséré<br/>";
-            }
-            }
+            
             
 
 //            

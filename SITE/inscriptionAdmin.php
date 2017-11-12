@@ -16,8 +16,8 @@ setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, n
 require('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
-require ('classes/AdminManager.php');
-require ('classes/Admin.php');
+//require ('classes/AdminManager.php');
+//require ('classes/Admin.php');
 
 require('connexionBD.php');
 //require('admin.php');
@@ -53,6 +53,13 @@ if (isset($_POST['log']) ) {
              if ($form['password'] == $confirmpwd) {
                     if( !!($_POST['login']) && !!($_POST['nomAdm']) && !!($_POST['email'])){
                      $form['login'] = securisation($_POST['login']);
+                     $admin = new Admin($form);
+                     $manager->addAdmincontrolelog($admin);
+                     
+                     //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
+//                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
+                     
+                     
                      $form['nomAdm'] = securisation($_POST['nomAdm']);
                      $form['email'] = securisation($_POST['email']);
                     $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
@@ -71,7 +78,7 @@ if (isset($_POST['log']) ) {
         //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
         $admin = new Admin($form);
         //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
-        $manager->addAdmincontrolelog($admin);
+        $manager->addAdmin($admin);
        
    }//fin login nomadm email 
    else {
