@@ -3,7 +3,7 @@
 class Admin {
 
     private $admin_id,
-            $datelastConnexion,
+            $dateLastConnexion,
             $login,
             $nomAdm,
             $email,
@@ -35,8 +35,8 @@ class Admin {
         return $this->admin_id;
     }
 
-    function getDatelastConnexion() {
-        return $this->datelastConnexion;
+    function getDateLastConnexion() {
+        return $this->dateLastConnexion;
     }
 
     function getLogin() {
@@ -59,8 +59,8 @@ class Admin {
         $this->admin_id = $admin_id;
     }
 
-    function setDatelastConnexion($datelastConnexion) {
-        $this->datelastConnexion = $datelastConnexion;
+    function setDateLastConnexion($dateLastConnexion) {
+        $this->dateLastConnexion = $dateLastConnexion;
     }
 
     function setLogin($login) {

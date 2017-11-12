@@ -67,30 +67,29 @@ class AdminManager {
             $req = $this->db->prepare('select login from administrateur WHERE login= :login');
             $req->bindValue(':login', $admin->getLogin());
             $req->execute();
+             var_dump($req);
             $nblog = $req->fetch(PDO::FETCH_ASSOC);
-            $nb=count($nblog);
-            var_dump($nb); 
-            if($nb){
-               echo "<pre> Veuillez entrer un nouveau login";
-            
-               var_dump($nb); 
-            
-            
-
-//            
-          
-
-            //version xxxxxx   
-            //puis on fait l'execute     
-            //insertion des données dans la base     
+           var_dump($nblog);
+           var_dump($admin);
+            if($nblog==TRUE){
+               echo "<pre> Veuillez entrer un nouveau login</pre>";
+            } else {
+                 echo "<pre> ce login n'existe pas</pre>";
+               var_dump($nblog);
+               echo "VALEUR DE nblog: $nblog ---";
+               $nblog=FALSE;  
+               return $nblog;
+            }
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
             ////pour afficher les erreurs on peut aussi tenter :
             die(print_r($this->db->errorInfo()));
             ////
         }
+     $req->closeCursor();
     }
-
+    
+    
     //fonction permettant de verifier le login en cours de saisie dans le formulaire 
     //login en Ajax depuis la table administrateur
     public function verifLogin(Admin $login) {

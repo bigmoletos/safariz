@@ -1,5 +1,5 @@
 <?php
-
+//modif  fd 11 nov
 //construction de la classe jeu stockage des infos clients
 class Client {
 
