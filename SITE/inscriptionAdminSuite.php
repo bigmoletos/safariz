@@ -1,7 +1,7 @@
 <?php
 session_start();
 //initialisation des variables
-$cookiepwd = "";
+//$cookiepwd = "";
 //$cookielog = "";
 //$_POST['pwd']="";
 //$_POST['login']="";
@@ -44,52 +44,56 @@ function securisation($champAsecuriser) {
     //  var_dump($champAsecuriser);
     return $champAsecuriser;
 }
- var_dump($cookienomAdm);
-            var_dump($cookielog);
+
+var_dump($_COOKIE);
+//var_dump($cookienomAdm);
+//var_dump($cookielog);
 $form = array();
-//var_dump($_POST);
+$loginAdministrateur = $_COOKIE['cookielog'];
+$nomAdministrateur = $_COOKIE['cookienomAdm'];
+var_dump($nomAdministrateur);
+var_dump($loginAdministrateur);
+var_dump($_POST);
 //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
 //                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
 if (isset($_POST['log'])) {
     if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])) {
         $form['password'] = securisation($_POST['pwd']);
         $confirmpwd = securisation($_POST['confirmpwd']);
-        if ( !!($_POST['email'])) {
+        if (!!($_POST['email'])) {
 
             if ($form['password'] == $confirmpwd) {
-                $form['login'] = $cookielog;
-                $form['nomAdm'] = $cookienomAdm;
+                $form['login'] = $loginAdministrateur;
+                $form['nomAdm'] = $nomAdministrateur;
                 $form['email'] = securisation($_POST['email']);
                 $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
                 // cryptage du mot de pwd par un hachage en md5
                 //        $form['password'] = md5($form['password']);
                 $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-                
-//     $form['confirmpwd'] = md5($form['confirmpwd']);
-                  var_dump($form['login']);
-                 var_dump($form['nomAdm']);
+                // var_dump($form['login']);
+                // var_dump($form['nomAdm']);
                 //   var_dump($form['email']);
                 //   var_dump($form['password']);
                 //  var_dump($_SERVER);
-                   var_dump($form);
+                var_dump($form);
                 //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
                 //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
                 $admin = new Admin($form);
                 //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
                 $manager->addAdmin($admin);
-            }//fin login nomadm email 
+            }//fin verif confirmation  
             else {
                 //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
             }
-            echo ' <br>formulaire ok<br>';
+            echo ' <br> les mots de passe sont différents<br>';
             // header("Location: pageAministrateur.php");
             //   var_dump($admin);
-        } //fin verif confirmation 
+        }  //fin login email
         else {
-            echo ' <br>formulaire incomplet veuillez verifier les champs<br>';
+            echo ' <br>veuillez saisir une adresse mail valide<br>';
         }
     }
-    echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
+    echo '<br>veuillez saisir un mot de passe et le confirmer<br>';
 
     //       } //fin fonction fomulaire isset log  
     //       }////fin fonction fomulaire test !! login
@@ -127,7 +131,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 
         <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
         <form name="administrateur" action="inscriptionAdminSuite.php" method="post">
-            <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>
+            <label>mot de pwd: <input type="password"   id="pwd" name="pwd"/></label><br/>
             <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
             <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
             <input type="submit"  id="log" name="log" value="M'inscrire"/>

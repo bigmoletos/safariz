@@ -1,17 +1,17 @@
 <?php
 session_start();
 //initialisation des variables
-$cookiepwd = "";
-$cookielog = "";
+//$cookiepwd = "";
+//$cookielog = "";
 //$_POST['pwd']="";
 //$_POST['login']="";
 $admin = "";
 //creation du cookie password autopwd date d'expiration dans 5 min
 //$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('autopwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+//setcookie('cookiepwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie login autologin? date d'expiration dans 1an
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('autologin', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+//setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion
@@ -51,10 +51,10 @@ $form = array();
             //creation du cookie login autologin? date d'expiration dans 1an
             $securisationLog=securisation($_POST['login']);
             $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('autologin', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+            setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
               $securisationAdmin=securisation($_POST['nomAdm']);
              $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('autologin', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+            setcookie('cookienomAdm', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
             var_dump($cookienomAdm);
             var_dump($cookielog);
             
