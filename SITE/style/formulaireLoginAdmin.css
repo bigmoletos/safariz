@@ -10,15 +10,17 @@ and open the template in the editor.
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
-  background-color:#fff;
-  -webkit-font-smoothing: antialiased;
-  font-family: "Montserrat";
-  /*font: normal 14px Roboto,arial,sans-serif;*/
+    background-color:#fff;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Montserrat";
+    margin: 5px;
+    /*font: normal 14px Roboto,arial,sans-serif;*/
 }
 
 .container {
     padding: 25px;
     position: fixed;
+    width: 400px;
 }
 
 .form-login {
@@ -32,21 +34,51 @@ body {
     border-width: 5px;
     box-shadow:0 1px 0 #cfcfcf;
     font-family: "Montserrat";
-    
+
 }
 
 h4 { 
- border:0 solid #fff; 
- border-bottom-width:1px;
- padding-bottom:10px;
- text-align: center;
+    border:0 solid #fff; 
+    border-bottom-width:1px;
+    padding-bottom:10px;
+    text-align: center;
 }
 
+h3{
+    text-align: -webkit-center;
+}
 .form-control {
-    border-radius: 10px;
+    border-radius: 7px;
     height:25px;
+    margin: 5px;
+
 }
 
 .wrapper {
+    text-align: left;
+
+
+}
+
+button{
+    width: 200px; 
     text-align: center;
+    border-radius: 7px;
+    height:35px;
+    float: right;
+    margin-top: 15px;
+    background-color: #4cae4c;
+    color: white;
+}
+
+input {
+    float: right;
+}
+
+label{
+    height:25px;
+    margin: 5px;
+    display: flex;
+    float: right;
+
 }

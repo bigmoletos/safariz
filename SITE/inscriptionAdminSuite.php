@@ -7,8 +7,10 @@ session_start();
 //$_POST['login']="";
 $admin = "";
 //creation du cookie password autopwd date d'expiration dans 5 min
-$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('autopwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+if (isset($_POST['log'])) {
+    $cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
+    setcookie('autopwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+}
 //creation du cookie login autologin? date d'expiration dans 1an
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
 //setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
@@ -70,12 +72,12 @@ if (isset($_POST['log'])) {
                 // cryptage du mot de pwd par un hachage en md5
                 //        $form['password'] = md5($form['password']);
                 $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-                    // var_dump($form['login']);
-                    // var_dump($form['nomAdm']);
-                    //   var_dump($form['email']);
-                    //   var_dump($form['password']);
-                    //  var_dump($_SERVER);
-            //  var_dump($form);
+                // var_dump($form['login']);
+                // var_dump($form['nomAdm']);
+                //   var_dump($form['email']);
+                //   var_dump($form['password']);
+                //  var_dump($_SERVER);
+                //  var_dump($form);
                 //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
                 //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
                 $admin = new Admin($form);
@@ -118,7 +120,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
         <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
-         <link rel="stylesheet" href="style/formulaireLoginAdmin.css"  type="text/css" charset="utf_8"/>
+        <link rel="stylesheet" href="style/formulaireLoginAdminbootstrap.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -131,45 +133,103 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     <body>
 
         <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
-<!--        <form name="administrateur" action="inscriptionAdminSuite.php" method="post">
-            <label>mot de pwd: <input type="password"   id="pwd" name="pwd"/></label><br/>
-            <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
-            <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
-            <input type="submit"  id="log" name="log" value="M'inscrire"/>
-        </form>-->
+        <!--        <form name="administrateur" action="inscriptionAdminSuite.php" method="post">
+                    <label>mot de pwd: <input type="password"   id="pwd" name="pwd"/></label><br/>
+                    <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
+                    <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
+                    <input type="submit"  id="log" name="log" value="M'inscrire"/>
+                </form>-->
+
+        <!--        *///////////////////
+                <div class = "container">
+                    <div class="wrapper">
+                        <form action="" method="post" name="administrateur" class="form-signin">       
+                            <h3 class="form-signin-heading">Bienvenue. <br/>Veuillez vous enregistrer</h3>
+                            <hr class="colorgraph"><br>
         
-        <!--*///////////////////-->
-         <div class = "container">
-            <div class="wrapper">
-                <form action="" method="post" name="administrateur" class="form-signin">       
-                    <h3 class="form-signin-heading">Bienvenue! merci de vous enregistrer</h3>
-                    <hr class="colorgraph"><br>
-
-                    <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
-                        <label>mot de pwd: <input type="password" class="form-control" id="pwd" name="pwd"/></label><br/>
-                        <label>Confirmation du mot de pwd: <input type="password" class="form-control" id="confirmpwd" name="confirmpwd"/></label><br/>
-                        <label>Adresse e-mail: <input type="email" class="form-control" id="email" name="email"/></label><br/>
- <!--<input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>-->
-                        <button class="btn btn-lg btn-primary btn-block"  name="log" value="M'inscrire" type="Submit">Login</button>
-                    </form>
-
-                </form>			
-            </div>
-        </div> 
+                            <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
+                                <label>Mot de passe <input type="password" class="form-control" id="pwd" name="pwd"/></label><br/>
+                                <label>Confirmation du mot de passe: <input type="password" class="form-control" id="confirmpwd" name="confirmpwd"/></label><br/>
+                                <label>Adresse e-mail: <input type="email" class="form-control" id="email" name="email"/></label><br/>
+                 <input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>
+                                <button class="btn btn-lg btn-primary btn-block"  name="log" value="M'inscrire" type="Submit">Login</button>
+                            </form>
+        
+                        </form>			
+                    </div>
+                </div> -->
         <!--*/////////////////////-->
-        
-        
-        
-        
-        <script>
-            //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
-            //         deja dans la base, réalisé en AJAX
-            $(document).ready(
-                    function () {
-                        $("#txt").keyup(function () {
-                            $("#word").load("classes/AdminManager.php", {q: $("#txt").val()});
-                        });
-                    }); //fin document ready
-        </script>
-    </body>
+
+        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+        <!--Font Awesome (added because you use icons in your prepend/append)-->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+        <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+        <div class="bootstrap-iso">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <form method="post">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" for="pwd"> MOT DE PASSE <span class="asteriskField">* </span>
+                                </label>
+                                <div class="input-group">
+                                    
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-asterisk">        </i>
+                                    </div>
+                                    <input class="form-control" id="pwd" name="pwd" placeholder="votre mot de passe..." type="password"/>
+                                    <!--                                    <div class="input-group-addon">
+                                                                            <i class="fa fa-asterisk">
+                                                                            </i>-->
+                                <!--</div>-->
+                            </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label requiredField" for="confirmPwd"> CONFIRMATION MOT DE PASSE <span class="asteriskField"> * </span>
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-asterisk">
+                                </i>
+                            </div>
+                            <input class="form-control" id="confirmPwd" name="confirmPwd" placeholder="votre mot de passe..." type="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label requiredField" for="email" type="email">Email <span class="asteriskField">* </span>
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-at">
+                                </i>
+                            </div>
+                            <input class="form-control" id="email" name="email" placeholder="mail@xxx.xx...." type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button class="btn btn-primary btn-lg"  id="log" name="log" type="submit"> Enregistrer </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
+        //         deja dans la base, réalisé en AJAX
+        $(document).ready(
+                function () {
+                    $("#txt").keyup(function () {
+                        $("#word").load("classes/AdminManager.php", {q: $("#txt").val()});
+                    });
+                }); //fin document ready
+    </script>
+</body>
 </html>

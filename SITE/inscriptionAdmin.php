@@ -143,7 +143,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
         <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
-         <link rel="stylesheet" href="style/formulaireLoginAdmin.css"  type="text/css" charset="utf_8"/>
+         <link rel="stylesheet" href="style/formulaireLoginAdminBootstrap.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -168,24 +168,65 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         </form>-->
         
         <!--/************************-->
-       <div class = "container">
+<!--       <div class = "container">
             <div class="wrapper">
                 <form action="" method="post" name="administrateur" class="form-signin">       
-                    <h3 class="form-signin-heading">Bienvenue! merci de vous enregistrer</h3>
+                    <h3 class="form-signin-heading">Bienvenue. <br/>Veuillez vous enregistrer</h3>
                     <hr class="colorgraph"><br>
 
                     <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
                         <label>Nom: <input type="text" class="form-control" id="nomAdm" name="nomAdm"/></label><br/>
                         <label>Login: <input type="text" class="form-control" id="login" name="login"/></label><br/>
-                        <!--<input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>-->
+                        <input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>
                         <button class="btn btn-lg btn-primary btn-block"  name="veriflog" value="suivant" type="Submit">Login</button>
                     </form>
 
                 </form>			
             </div>
-        </div> 
+        </div> -->
         <!--/************************-->
-        
+        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<!--<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> -->
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="nom">
+       NOM
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="nomAdm" name="nomAdm" placeholder="votre nom..." type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="prenom">
+       LOGIN
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/>
+     </div>
+     <div class="form-group">
+      <div>
+       <button class="btn btn-primary btn-lg"   id="veriflog" name="suivant" type="submit">
+        Suivant
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
         
         
         
