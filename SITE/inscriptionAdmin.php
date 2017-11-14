@@ -55,8 +55,8 @@ $form = array();
               $securisationAdmin=securisation($_POST['nomAdm']);
              $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
             setcookie('cookienomAdm', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-            var_dump($cookienomAdm);
-            var_dump($cookielog);
+          //  var_dump($cookienomAdm);
+          //  var_dump($cookielog);
             
             if (!!($_POST['login']) && !!($_POST['nomAdm'])) {
                 $form['login'] = securisation($_POST['login']);
@@ -65,8 +65,8 @@ $form = array();
                $verificationLog= $manager->addAdmincontrolelog($LogAdmin);
           //      var_dump($form);
               //  var_dump($_POST);
-              var_dump($verificationLog);
-                var_dump($LogAdmin);
+         //     var_dump($verificationLog);
+         //     var_dump($LogAdmin);
           //      var_dump($manager);
              // $nblog-> getLogin();
           //      var_dump($nblog);
@@ -142,7 +142,8 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-        <link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>
+        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
+         <link rel="stylesheet" href="style/formulaireLoginAdmin.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -154,17 +155,43 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     </head>
     <body>
 
-        <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
-        <form name="administrateur" action="inscriptionAdmin.php" method="post">
+                                  <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
+<!--        <form name="administrateur" action="inscriptionAdmin.php" method="post">
             <label>Nom: <input type="text"  id="nomAdm" name="nomAdm"/></label><br/>
             <label>Pseudo: <input type="text"  id="login" name="login"/></label><br/>
             <br>
             <input type="submit"  id="veriflog" name="veriflog" value="suivant"/> <br>
-<!--            <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>
-            <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
-            <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
-            <input type="submit"  id="log" name="log" value="M'inscrire"/>-->
-        </form>
+                                    <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>
+                                    <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
+                                    <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
+                                    <input type="submit"  id="log" name="log" value="M'inscrire"/>
+        </form>-->
+        
+        <!--/************************-->
+       <div class = "container">
+            <div class="wrapper">
+                <form action="" method="post" name="administrateur" class="form-signin">       
+                    <h3 class="form-signin-heading">Bienvenue! merci de vous enregistrer</h3>
+                    <hr class="colorgraph"><br>
+
+                    <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
+                        <label>Nom: <input type="text" class="form-control" id="nomAdm" name="nomAdm"/></label><br/>
+                        <label>Login: <input type="text" class="form-control" id="login" name="login"/></label><br/>
+                        <!--<input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>-->
+                        <button class="btn btn-lg btn-primary btn-block"  name="veriflog" value="suivant" type="Submit">Login</button>
+                    </form>
+
+                </form>			
+            </div>
+        </div> 
+        <!--/************************-->
+        
+        
+        
+        
+        
+        
+        
         <script>
     //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
     //         deja dans la base, réalisé en AJAX

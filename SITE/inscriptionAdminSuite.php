@@ -45,15 +45,15 @@ function securisation($champAsecuriser) {
     return $champAsecuriser;
 }
 
-var_dump($_COOKIE);
+//var_dump($_COOKIE);
 //var_dump($cookienomAdm);
 //var_dump($cookielog);
 $form = array();
 $loginAdministrateur = $_COOKIE['cookielog'];
 $nomAdministrateur = $_COOKIE['cookienomAdm'];
-var_dump($nomAdministrateur);
-var_dump($loginAdministrateur);
-var_dump($_POST);
+//var_dump($nomAdministrateur);
+//var_dump($loginAdministrateur);
+//var_dump($_POST);
 //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
 //                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
 if (isset($_POST['log'])) {
@@ -70,12 +70,12 @@ if (isset($_POST['log'])) {
                 // cryptage du mot de pwd par un hachage en md5
                 //        $form['password'] = md5($form['password']);
                 $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-                // var_dump($form['login']);
-                // var_dump($form['nomAdm']);
-                //   var_dump($form['email']);
-                //   var_dump($form['password']);
-                //  var_dump($_SERVER);
-                var_dump($form);
+                    // var_dump($form['login']);
+                    // var_dump($form['nomAdm']);
+                    //   var_dump($form['email']);
+                    //   var_dump($form['password']);
+                    //  var_dump($_SERVER);
+            //  var_dump($form);
                 //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
                 //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
                 $admin = new Admin($form);
@@ -117,7 +117,8 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-        <link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>
+        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
+         <link rel="stylesheet" href="style/formulaireLoginAdmin.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -130,12 +131,36 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     <body>
 
         <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
-        <form name="administrateur" action="inscriptionAdminSuite.php" method="post">
+<!--        <form name="administrateur" action="inscriptionAdminSuite.php" method="post">
             <label>mot de pwd: <input type="password"   id="pwd" name="pwd"/></label><br/>
             <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
             <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
             <input type="submit"  id="log" name="log" value="M'inscrire"/>
-        </form>
+        </form>-->
+        
+        <!--*///////////////////-->
+         <div class = "container">
+            <div class="wrapper">
+                <form action="" method="post" name="administrateur" class="form-signin">       
+                    <h3 class="form-signin-heading">Bienvenue! merci de vous enregistrer</h3>
+                    <hr class="colorgraph"><br>
+
+                    <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
+                        <label>mot de pwd: <input type="password" class="form-control" id="pwd" name="pwd"/></label><br/>
+                        <label>Confirmation du mot de pwd: <input type="password" class="form-control" id="confirmpwd" name="confirmpwd"/></label><br/>
+                        <label>Adresse e-mail: <input type="email" class="form-control" id="email" name="email"/></label><br/>
+ <!--<input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>-->
+                        <button class="btn btn-lg btn-primary btn-block"  name="log" value="M'inscrire" type="Submit">Login</button>
+                    </form>
+
+                </form>			
+            </div>
+        </div> 
+        <!--*/////////////////////-->
+        
+        
+        
+        
         <script>
             //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
             //         deja dans la base, réalisé en AJAX
