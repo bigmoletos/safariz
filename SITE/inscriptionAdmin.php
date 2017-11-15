@@ -155,48 +155,12 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     </head>
     <body>
 
-                                  <!--<form name="administrateur" action="pageAdministrateur.php" method="post">-->
-<!--        <form name="administrateur" action="inscriptionAdmin.php" method="post">
-            <label>Nom: <input type="text"  id="nomAdm" name="nomAdm"/></label><br/>
-            <label>Pseudo: <input type="text"  id="login" name="login"/></label><br/>
-            <br>
-            <input type="submit"  id="veriflog" name="veriflog" value="suivant"/> <br>
-                                    <label>Mot de pwd: <input type="password" id="pwd" name="pwd"/></label><br/>
-                                    <label>Confirmation du mot de pwd: <input type="password"   id="confirmpwd" name="confirmpwd"/></label><br/>
-                                    <label>Adresse e-mail: <input type="email"  id="email" name="email"/></label><br/>
-                                    <input type="submit"  id="log" name="log" value="M'inscrire"/>
-        </form>-->
-        
-        <!--/************************-->
-<!--       <div class = "container">
-            <div class="wrapper">
-                <form action="" method="post" name="administrateur" class="form-signin">       
-                    <h3 class="form-signin-heading">Bienvenue. <br/>Veuillez vous enregistrer</h3>
-                    <hr class="colorgraph"><br>
-
-                    <form name="nomAdm" class="form-control" action="loginAdmin.php" method="post">
-                        <label>Nom: <input type="text" class="form-control" id="nomAdm" name="nomAdm"/></label><br/>
-                        <label>Login: <input type="text" class="form-control" id="login" name="login"/></label><br/>
-                        <input type="submit"  id="logAdmin" name="logAdmin" value="connexion"/>
-                        <button class="btn btn-lg btn-primary btn-block"  name="veriflog" value="suivant" type="Submit">Login</button>
-                    </form>
-
-                </form>			
-            </div>
-        </div> -->
-        <!--/************************-->
-        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-<!--<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> -->
-
-<!-- Inline CSS based on choices in "Settings" tab -->
-
-
 <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
 <div class="bootstrap-iso">
  <div class="container-fluid">
   <div class="row">
-   <div class="col-md-6 col-sm-6 col-xs-12">
-    <form method="post">
+   <div class="col-md-3 col-sm-3 col-xs-12">
+       <form method="post" action="inscriptionAdmin.php">
      <div class="form-group ">
       <label class="control-label requiredField" for="nom">
        NOM
@@ -217,9 +181,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
      </div>
      <div class="form-group">
       <div>
-       <button class="btn btn-primary btn-lg"   id="veriflog" name="suivant" type="submit">
-        Suivant
-       </button>
+       <button class="btn btn-primary btn-lg"  id="veriflog" name="veriflog" type="submit">Suivant</button>
       </div>
      </div>
     </form>
@@ -239,7 +201,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
-                            $("#word").load("classes/AdminManager.php", {q: $("#txt").val()});
+                            $("#login").load("classes/AdminManager.php", {q: $("#txt").val()});
                         });
                     }); //fin document ready
         </script>

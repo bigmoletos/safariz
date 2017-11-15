@@ -55,6 +55,7 @@ class AdminManager {
             ////
         }
     }
+
 //cette methode controle que le login n'existe pas deja dans la base de donnée
     public function addAdmincontrolelog(Admin $admin) {
         try {
@@ -67,18 +68,18 @@ class AdminManager {
             $req = $this->db->prepare('select login from administrateur WHERE login= :login');
             $req->bindValue(':login', $admin->getLogin());
             $req->execute();
-             var_dump($req);
+            var_dump($req);
             $nblog = $req->fetch(PDO::FETCH_ASSOC);
-           var_dump($nblog);
-           var_dump($admin);
-            if($nblog==TRUE){
-               echo "<pre> Veuillez entrer un nouveau login</pre>";
+            var_dump($nblog);
+            var_dump($admin);
+            if ($nblog == TRUE) {
+                echo "<pre> Veuillez entrer un nouveau login</pre>";
             } else {
-                 echo "<pre> ce login n'existe pas</pre>";
-               var_dump($nblog);
-               echo "VALEUR DE nblog: $nblog ---";
-               $nblog=FALSE;  
-               return $nblog;
+                echo "<pre> ce login n'existe pas</pre>";
+                var_dump($nblog);
+                echo "VALEUR DE nblog: $nblog ---";
+                $nblog = FALSE;
+                return $nblog;
             }
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
@@ -86,21 +87,28 @@ class AdminManager {
             die(print_r($this->db->errorInfo()));
             ////
         }
-     $req->closeCursor();
+        $req->closeCursor();
     }
-    
-    
+
     //fonction permettant de verifier le login en cours de saisie dans le formulaire 
     //login en Ajax depuis la table administrateur
-    public function verifLogin(Admin $login) {
+    public function verifLoginAjax(Admin $admin) {
 
-        $rep = $this->db->query("select login, from administrateur ");
+        $req = $this->db->prepare("select login, from administrateur where login= :login ");
+        $req->bindValue(':login', $admin->getLogin());
+        $req->execute();
+        var_dump($req);
         $tab = $req->fetchAll();
-        $q = $_REQUEST["q"];
+        $q = $_REQUEST["login"];
+        var_dump($q);
+        var_dump($tab);
+
         $indice = "";
         if ($q !== "") {
             $q = strtolower($q);
+            var_dump($q);
             $len = strlen($q);
+            var_dump($len);
             foreach ($tab as $valeur) {
                 if (stristr($q, substr($valeur[0], 0, $len))) {
                     if ($indice === "") {
@@ -111,7 +119,8 @@ class AdminManager {
                 }
             }
         }
-        echo $indice === "" ? "Pas de suggestion" : $indice;
+        echo $indice === "" ? $indice : "ce login existe déjà veuillez en choisir un autre";
+        return $indice;
     }
 
 //fin fonction verif login
