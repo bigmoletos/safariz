@@ -75,7 +75,7 @@ $form = array();
                 }
                 if($verificationLog===FALSE){
                     echo ' login ok ';
-                   header ("location: inscriptionAdminSuite.php");
+                   header ("location: adminInscriptionSuite.php");
                 }
 
         //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
@@ -160,7 +160,8 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-3 col-sm-3 col-xs-12">
-       <form method="post" action="inscriptionAdmin.php">
+       <h2>Inscription administrateur </h2>
+       <form method="post" action="adminInscription.php">
      <div class="form-group ">
       <label class="control-label requiredField" for="nom">
        NOM

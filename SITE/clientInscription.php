@@ -1,9 +1,12 @@
 <?php
 
 //!!!!!!!!!!!!!!!!!!
-//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
+//21nov
+//Refaire entierement cette page pour logger un client, actuellement permet d'inscrire un administrateur
 //
 //!!!!!!!!!!!!!!!!!
+
+
 
 
 session_start();
@@ -23,21 +26,21 @@ $admin = "";
 require('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
-//require ('classes/AdminManager.php');
-//require ('classes/Admin.php');
+//require ('classes/ClientManager.php');
+//require ('classes/Client.php');
 
 require('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
 
-$manager = new AdminManager($db);
+$manager = new ClientManager($db);
 
 date_default_timezone_set("Europe/Paris");
 
 // champs base de donnée admin_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,ip, newsLetterInscription
 // champs formulaire  nom  prenom tel mail adresse  ville cp   majeur reglement  newsletter 
 //initialisation de la variable $form en tableau, cette variable se charge de stocker des valeurs du formulaire
-//afin de les utiliser dans notre objet new Admin($form), grace à notre hydratation
+//afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
 
 //  sécurisation des données du formulaire
@@ -59,21 +62,21 @@ $form = array();
             $securisationLog=securisation($_POST['login']);
             $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ login
             setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-              $securisationAdmin=securisation($_POST['nomAdm']);
-             $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookienomAdm', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-          //  var_dump($cookienomAdm);
+              $securisationClient=securisation($_POST['nomClient']);
+             $cookienomClient = ' ' . $securisationClient . ' '; //on créer une variable qui possède le contenu du champ login
+            setcookie('cookienomClient', ' ' . $cookienomClient . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+          //  var_dump($cookienomClient);
           //  var_dump($cookielog);
             
-            if (!!($_POST['login']) && !!($_POST['nomAdm'])) {
+            if (!!($_POST['login']) && !!($_POST['nomClient'])) {
                 $form['login'] = securisation($_POST['login']);
-                 $form['nomAdm'] = securisation($_POST['nomAdm']);
-                $LogAdmin = new Admin($form);
-               $verificationLog= $manager->addAdmincontrolelog($LogAdmin);
+                 $form['nomClient'] = securisation($_POST['nomClient']);
+                $LogClient = new Client($form);
+               $verificationLog= $manager->addClientcontrolelog($LogClient);
           //      var_dump($form);
               //  var_dump($_POST);
          //     var_dump($verificationLog);
-         //     var_dump($LogAdmin);
+         //     var_dump($LogClient);
           //      var_dump($manager);
              // $nblog-> getLogin();
           //      var_dump($nblog);
@@ -91,11 +94,11 @@ $form = array();
 //            if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])) {
 //                $form['password'] = securisation($_POST['pwd']);
 //                $confirmpwd = securisation($_POST['confirmpwd']);
-//                if (!!($_POST['nomAdm']) && !!($_POST['email'])) {
+//                if (!!($_POST['nomClient']) && !!($_POST['email'])) {
 //
 //                    if ($form['password'] == $confirmpwd) {
 //
-//                        $form['nomAdm'] = securisation($_POST['nomAdm']);
+//                        $form['nomClient'] = securisation($_POST['nomClient']);
 //                        $form['email'] = securisation($_POST['email']);
 //                        $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
 //                        // cryptage du mot de pwd par un hachage en md5
@@ -103,16 +106,16 @@ $form = array();
 //                        $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
                         //     $form['confirmpwd'] = md5($form['confirmpwd']);
                         //    var_dump($form['login']);
-                        //  var_dump($form['nomAdm']);
+                        //  var_dump($form['nomClient']);
                         //   var_dump($form['email']);
                         //   var_dump($form['password']);
                         //  var_dump($_SERVER);
                         //   var_dump($form);
                         //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
                         //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
-                //        $admin = new Admin($form);
-                        //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
-               //         $manager->addAdmin($admin);
+                //        $admin = new Client($form);
+                        //on affecte les valeurs  de la fonction addClient avec l'objet $admin en argument à l'objet $manager
+               //         $manager->addClient($admin);
              //       }//fin login nomadm email 
               ////      else {
                         //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
@@ -150,7 +153,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
         <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
-         <link rel="stylesheet" href="style/formulaireLoginAdminBootstrap.css"  type="text/css" charset="utf_8"/>
+         <link rel="stylesheet" href="style/formulaireLoginClientBootstrap.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -167,6 +170,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-3 col-sm-3 col-xs-12">
+       <h2>Inscription jeux </h2>
        <form method="post" action="loginClient.php">
      <div class="form-group ">
       <label class="control-label requiredField" for="nom">
@@ -175,7 +179,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         *
        </span>
       </label>
-      <input class="form-control" id="nomAdm" name="nomAdm" placeholder="votre nom..." type="text"/>
+      <input class="form-control" id="nomClient" name="nomClient" placeholder="votre nom..." type="text"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="prenom">
@@ -208,7 +212,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
-                            $("#login").load("classes/AdminManager.php", {q: $("#txt").val()});
+                            $("#login").load("classes/ClientManager.php", {q: $("#txt").val()});
                         });
                     }); //fin document ready
         </script>

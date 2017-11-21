@@ -64,21 +64,21 @@ if (isset($_POST['veriflog'])) {
         $LogAdmin = new Admin($form);
         $verificationLog = $manager->addAdmincontrolelog($LogAdmin);
         //version Ajax
-         $verificationLogAjax = $manager->verifLoginAjax($LogAdmin);
-        
-                //      var_dump($form);
-                //  var_dump($_POST);
-                //     var_dump($verificationLog);
-                //     var_dump($LogAdmin);
-                //      var_dump($manager);
-                // $nblog-> getLogin();
-                //      var_dump($nblog);
+        $verificationLogAjax = $manager->verifLoginAjax($LogAdmin);
+
+        //      var_dump($form);
+        //  var_dump($_POST);
+        //     var_dump($verificationLog);
+        //     var_dump($LogAdmin);
+        //      var_dump($manager);
+        // $nblog-> getLogin();
+        //      var_dump($nblog);
         if (is_null($verificationLog)) {
             echo ' login existe deja';
         }
         if ($verificationLog === FALSE) {
             echo ' login ok ';
-            header("location: inscriptionAdminSuite.php");
+            header("location: adminInscriptionSuite.php");
         }
 
         //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
@@ -161,6 +161,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 col-xs-12">
+                        <h2>Inscription administrateur </h2>
                         <form method="post" action="inscriptionAdmin.php">
                             <div class="form-group ">
                                 <label class="control-label requiredField" for="nom">
@@ -200,8 +201,33 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
             //         deja dans la base, réalisé en AJAX  utilisant function verifLogin(Admin $admin)
 //     $LogAdmin = new Admin($form);
-         //      $verificationLog= $manager->verifLoginAjax($LogAdmin);
-               
+            //      $verificationLog= $manager->verifLoginAjax($LogAdmin);
+
+//     instanciation objet xkr (XMLHttpRequest)        
+            var xhr = new XMLHttpRequest();
+//     préparation  requête afin que cette dernière contacte la page ajax.php sur le nom de domaine 
+//     mon_site_web.com par le biais du protocole http (vous pouvez très bien utiliser d'autres protocoles, 
+//     comme HTTPS ou FTP par exemple). Tout paramètre spécifié à la requête sera transmis 
+//     par le biais de la méthode GET.
+            xhr.open('GET', 'http://mon_site_web.com/ajax.php');
+//        envoie de la requete
+            xhr.send(null);
+            
+            
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+
+
+
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {

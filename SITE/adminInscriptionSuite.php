@@ -137,6 +137,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 col-xs-12">
+                        <h2>Inscription administrateur </h2>
                         <form method="post">
                             <div class="form-group ">
                                 <label class="control-label requiredField" for="pwd"> MOT DE PASSE <span class="asteriskField">* </span>

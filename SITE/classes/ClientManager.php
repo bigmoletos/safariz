@@ -79,7 +79,7 @@ class ClientManager {
             $req->bindValue(':ip', $client->getIp());
             $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
             echo "<pre>";
-//            var_dump($req);
+// var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
                 echo "<br/>nouveau client correctement inséré<br/>";

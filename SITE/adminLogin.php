@@ -1,11 +1,9 @@
 <?php
 
 //!!!!!!!!!!!!!!!!!!
-//Refaire entierement cette page pour logger un client, actuellement permet d'inscrire un administrateur
+//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
 //
 //!!!!!!!!!!!!!!!!!
-
-
 
 
 session_start();
@@ -169,6 +167,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-3 col-sm-3 col-xs-12">
+       <h2>Login Administrateur </h2>
        <form method="post" action="loginClient.php">
      <div class="form-group ">
       <label class="control-label requiredField" for="nom">
