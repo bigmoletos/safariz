@@ -21,7 +21,7 @@ class IgManager {
     //compare la date de participation du client avec celle de l'IG en cours, si le lot est toujours en jeu (lotDispo=1)
     // le client gagne, ou si un autre lot est toujours en jeu.
     //Le client ayant gagné lotDispo passe à 0
-    function GagnePerdu() {
+    function GagnePerdu($clientid) {
         $requete = $this->db->prepare(" SELECT * FROM ig WHERE lotDispo= '1' and DATE(datetime)<=DATE(NOW())");
         //$requete->bindValue(':adresse', $client->getAdresse());
         //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
@@ -48,7 +48,9 @@ class IgManager {
             //******************
             //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
 
-            $requete = $this->db->prepare(" SELECT client_id, nom  FROM clients ");
+            $requete = $this->db->prepare( 'INSERT INTO gagnants (client_id, lot_id ) ( SELECT clients.client_id, ig.ID FROM clients, ig WHERE clients.client_id = :cid AND ig.id = :igid) ');
+            $requete->bindValue(':igid', $ID);
+            $requete->bindValue(':cid', $clientid);
             $requete->execute();
             
             $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
