@@ -194,7 +194,7 @@ formulaire d'inscription
     </head>
     <body>-->
         
- <?php include ('header.php'); ?>       
+ <?php //include ('header.php'); ?>       
 <?php include ('form.php'); ?>
     </body>
 </html>
