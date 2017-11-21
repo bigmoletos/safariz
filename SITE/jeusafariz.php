@@ -78,7 +78,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
         //la fonction isValidFormulaire
         // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
 //     var_dump($client);
-//     var_dump($form);
+     var_dump($form);
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
         //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour

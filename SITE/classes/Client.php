@@ -135,8 +135,8 @@ class Client {
         return $this->dateInscription;
     }
 
-    function getSession_Id() {
-        return $this->session_Id;
+    function getSession_id() {
+        return $this->session_id;
     }
 
     function getIp() {
