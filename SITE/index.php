@@ -13,17 +13,21 @@ $dates = $manager->ouvertureJeu();
 date_default_timezone_set("Europe/Paris");
 
 $now = date("Y-m-d H:i:s");
+//var_dump($dates);
 
+$date_debut_jeu=$dates['date_debut_jeu']  ;
+$date_fin_jeu=$dates['date_fin_jeu'];
 
-if ($now >= $dates['date_debut_jeu'] && $now <= $dates['date_fin_jeu']) {
-    $message = 'Cliquez pour participer a notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
+if ($now >= $date_debut_jeu && $now <= $date_fin_jeu) {
+    $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
 }
 elseif ($now <= $date_debut_jeu){
-    $message = "D�sol� le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous � partir du ".$date_debut_jeu;
+    $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous à partir du ".$date_debut_jeu;
 }
  else {
-    $message = "D�sol� ce jeu est termin�.";    
+    $message = "Désolé ce jeu est terminé.";    
 }
+
 ?>
 
 <!doctype html>

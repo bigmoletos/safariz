@@ -25,14 +25,17 @@ class AdminManagerJeu {
 
         $req = $this->db->prepare('SELECT `id_dates_jeux`, `date_debut_jeu`, `date_fin_jeu`'
                 . 'FROM `dates_jeux`'
-                . 'WHERE `date_debut_jeu` < now() '
-                . 'AND `date_fin_jeu` > now()');
+//                . 'WHERE `date_debut_jeu` < now() '
+//                . 'AND `date_fin_jeu` > now()'
+                 );
 
         if ($req->execute()) {
-            echo "";
+           // var_dump($req);
+           // echo "";
         }
         $req->setFetchMode(PDO::FETCH_ASSOC);
         return $req->fetch();
+       // var_dump($req);
     }
 
     public function addJeux(AdminJeu $jeu) {
@@ -51,7 +54,7 @@ class AdminManagerJeu {
          //   var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
-                echo "<br/>nouvelles dates correctement insérées en bdd<br/>";
+                echo "<br/>nouvelles dates correctement insï¿½rï¿½es en bdd<br/>";
             }
 
             //version xxxxxx   
