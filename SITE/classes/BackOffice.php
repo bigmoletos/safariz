@@ -1,4 +1,5 @@
 <?php
+//cette classe permet de gerer la partie back-Office du site 
 //Suivre en direct l’évolution des IG : nombre total, nombre restant, nombre de participants, nombre de gagnants
 
 

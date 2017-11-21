@@ -83,6 +83,9 @@ class ClientManager {
             echo "</pre>";
             if ($req->execute()) {
                 echo "<br/>nouveau client correctement inséré<br/>";
+                return $this->db->lastInsertId();
+            } else {
+                return false;
             }
 
             //version xxxxxx   

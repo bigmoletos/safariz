@@ -1,5 +1,5 @@
 <?php
-
+//cette classe permet de gerer les administrateurs
 class AdminManager {
 
     //attribut

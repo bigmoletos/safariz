@@ -89,13 +89,13 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
         if ($manager->ClientPeutJouerCejour($client)) {
             $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
         } else {
-            $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
+            $idclient = $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
             $messageinscrit = "</br>bravo vous êtes inscrit ! </br>";
             //******************************
             // fonction gagné perdu
 
             $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
-            if ($lot = $igmanager->GagnePerdu()) {
+            if ($lot = $igmanager->GagnePerdu($idclient)) {
                 //todo fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
                 $statut = "gagne";

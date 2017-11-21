@@ -1,9 +1,11 @@
 <?php
 
 //!!!!!!!!!!!!!!!!!!
-//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
+//Refaire entierement cette page pour logger un client, actuellement permet d'inscrire un administrateur
 //
 //!!!!!!!!!!!!!!!!!
+
+
 
 
 session_start();

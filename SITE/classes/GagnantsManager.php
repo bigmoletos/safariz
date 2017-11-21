@@ -3,7 +3,7 @@
 /**
  * Description de gagnants
  *modif le 8/11
- * @author JCM
+ * @author fd
  */
 
 class gagnantsManager {
@@ -17,16 +17,26 @@ class gagnantsManager {
         $this->db = $db;
     }
 
-    // methode getter
-    public function getDb() {
-        return $this->getdb;
-    }
+  
+    //fonction permettant d'inserer un nouveau gagnant dans la table gagnant
+    function addGagnant(Gagnants $gagnant){
+       try {
+        
+        
+        $req = $this->db->prepare('INSERT INTO gagnants (client_id, dateGain, lot_id )'
+                    . ' VALUES ( )');
 
-    //methode setter
-    public function setDb($db) {
-        $this->db = $db;
+        
+        
+        $req->execute();
+         } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        
     }
-
+    
+    
+    
     
     
 //    // methode permettant de savoir si un client à gagné

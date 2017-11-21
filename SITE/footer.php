@@ -12,7 +12,7 @@
             </div> 
             <nav id="menu" class="col-12 col-md-6 offset-md-3"> 
                 <ul class="list-inline" >
-                    <li><a href="pageLogin.php"/><button class="btn btn-primary " name="bouton" type="submit" alt="login">Déjà inscrit</button></a></li>
+                    <li><a href="LoginClient.php"/><button class="btn btn-primary " name="bouton" type="submit" alt="login">Déjà inscrit</button></a></li>
                     <li class="space"> | </li>
                     <li><a href="index.php"/>ACCUEIL</a></li>
                     <li class="space"> | </li>

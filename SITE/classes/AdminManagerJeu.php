@@ -1,5 +1,5 @@
 <?php
-
+//cette classe permet de gerer la partie back-Office du site 
 class AdminManagerJeu {
 
     //attribut
