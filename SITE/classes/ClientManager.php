@@ -61,8 +61,8 @@ class ClientManager {
             $this->db->query(" SET lc_time_names = 'fr_FR'");
             //$req = $this->db->prepare("INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )"
             //     . " VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription ");
-            $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id ,ip, newsLetterInscription )'
-                    . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_id,:ip , :newsLetterInscription )');
+            $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id ,ip, password, newsLetterInscription )'
+                    . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_id,:ip , :password, :newsLetterInscription )');
 
 // champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
 //    champs formulaire  nom  prenom mail adresse  ville cp   majeur reglement  newsletter
@@ -77,6 +77,7 @@ class ClientManager {
             $req->bindValue(':tel', $client->getTel());
             $req->bindValue(':session_id', $client->getSession_Id());
             $req->bindValue(':ip', $client->getIp());
+             $req->bindValue(':password', $client->getPassword());
             $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
             echo "<pre>";
 // var_dump($req);

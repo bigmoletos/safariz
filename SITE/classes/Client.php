@@ -19,6 +19,7 @@ class Client {
     private $dateInscription;
     private $session_id;
     private $ip;
+    private $password;
     private $newsLetterInscription;
     private $clientValide;
 
@@ -89,6 +90,10 @@ class Client {
         $this->ip = $ip;
     }
 
+     function setPassword($password) {
+        $this->password = $password;
+    }
+    
     function setNewsLetterInscription($newsLetterInscription) {
         $this->newsLetterInscription = $newsLetterInscription;
     }
@@ -143,6 +148,10 @@ class Client {
         return $this->ip;
     }
 
+      function getPassword() {
+        return $this->password;
+    }
+    
     function getNewsLetterInscription() {
         return $this->newsLetterInscription;
     }

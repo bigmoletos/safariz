@@ -14,7 +14,7 @@ session_start();
 //$cookiepwd = "";
 //$cookielog = "";
 //$_POST['pwd']="";
-//$_POST['login']="";
+//$_POST['password']="";
 $admin = "";
 //creation du cookie password autopwd date d'expiration dans 5 min
 //$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
@@ -59,18 +59,18 @@ $form = array();
 //var_dump($_POST);
         if (isset($_POST['veriflog'])) {
             //creation du cookie login autologin? date d'expiration dans 1an
-            $securisationLog=securisation($_POST['login']);
-            $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ login
+            $securisationLog=securisation($_POST['password']);
+            $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ password
             setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-              $securisationClient=securisation($_POST['nomClient']);
-             $cookienomClient = ' ' . $securisationClient . ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookienomClient', ' ' . $cookienomClient . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-          //  var_dump($cookienomClient);
+              $securisationClient=securisation($_POST['mailClient']);
+             $cookiemailClient = ' ' . $securisationClient . ' '; //on créer une variable qui possède le contenu du champ password
+            setcookie('cookiemailClient', ' ' . $cookiemailClient . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+          //  var_dump($cookiemailClient);
           //  var_dump($cookielog);
             
-            if (!!($_POST['login']) && !!($_POST['nomClient'])) {
-                $form['login'] = securisation($_POST['login']);
-                 $form['nomClient'] = securisation($_POST['nomClient']);
+            if (!!($_POST['password']) && !!($_POST['mailClient'])) {
+                $form['password'] = securisation($_POST['password']);
+                 $form['mailClient'] = securisation($_POST['mailClient']);
                 $LogClient = new Client($form);
                $verificationLog= $manager->addClientcontrolelog($LogClient);
           //      var_dump($form);
@@ -81,42 +81,42 @@ $form = array();
              // $nblog-> getLogin();
           //      var_dump($nblog);
                 if(is_null($verificationLog)){
-                    echo ' login existe deja';
+                    echo ' password existe deja';
                 }
                 if($verificationLog===FALSE){
-                    echo ' login ok ';
+                    echo ' password ok ';
                    header ("location: loginClientSuite.php");
                 }
 
-        //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
+        //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le password n'existe pas deja
 //                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
 //        if (isset($_POST['log'])) {
 //            if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])) {
 //                $form['password'] = securisation($_POST['pwd']);
 //                $confirmpwd = securisation($_POST['confirmpwd']);
-//                if (!!($_POST['nomClient']) && !!($_POST['email'])) {
+//                if (!!($_POST['mailClient']) && !!($_POST['email'])) {
 //
 //                    if ($form['password'] == $confirmpwd) {
 //
-//                        $form['nomClient'] = securisation($_POST['nomClient']);
+//                        $form['mailClient'] = securisation($_POST['mailClient']);
 //                        $form['email'] = securisation($_POST['email']);
 //                        $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
 //                        // cryptage du mot de pwd par un hachage en md5
 //                        //        $form['password'] = md5($form['password']);
 //                        $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
                         //     $form['confirmpwd'] = md5($form['confirmpwd']);
-                        //    var_dump($form['login']);
-                        //  var_dump($form['nomClient']);
+                        //    var_dump($form['password']);
+                        //  var_dump($form['mailClient']);
                         //   var_dump($form['email']);
                         //   var_dump($form['password']);
                         //  var_dump($_SERVER);
                         //   var_dump($form);
-                        //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
+                        //mysql_query("INSERT INTO validation VALUES('', '$password', '$pwd', '$email')");
                         //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
                 //        $admin = new Client($form);
                         //on affecte les valeurs  de la fonction addClient avec l'objet $admin en argument à l'objet $manager
                //         $manager->addClient($admin);
-             //       }//fin login nomadm email 
+             //       }//fin password nomadm email 
               ////      else {
                         //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
           //          }
@@ -125,13 +125,13 @@ $form = array();
                     //   var_dump($admin);
                // } //fin verif confirmation 
                 else {
-                    echo ' <br>formulaire incomplet veuillez entrer le login<br>';
+                    echo ' <br>formulaire incomplet veuillez entrer le password<br>';
                 }
            echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
            
        
        } //fin fonction fomulaire isset log  
-       }////fin fonction fomulaire test !! login
+       }////fin fonction fomulaire test !! password
   //              }//fin fonction fomulaire isset veriflog
 //var_dump($form);
 //var_dump($_POST);
@@ -148,7 +148,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 <!doctype html>
 <html>
     <head>
-        <title>Page login</title>
+        <title>Page login joueur</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
@@ -174,21 +174,21 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
        <form method="post" action="loginClient.php">
      <div class="form-group ">
       <label class="control-label requiredField" for="nom">
-       NOM
+       Mail
        <span class="asteriskField">
         *
        </span>
       </label>
-      <input class="form-control" id="nomClient" name="nomClient" placeholder="votre nom..." type="text"/>
+      <input class="form-control" id="mailClient" name="mailClient" placeholder="votre mail..." type="text"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="prenom">
-       LOGIN
+       Mot de passe
        <span class="asteriskField">
         *
        </span>
       </label>
-      <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/>
+      <input class="form-control" id="password" name="password" placeholder="votre password..." type="text"/>
      </div>
      <div class="form-group">
       <div>
@@ -207,12 +207,12 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         
         
         <script>
-    //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
+    //        controle de saisie dynamique du champ password afin de verifier qu'il n'existe pas
     //         deja dans la base, réalisé en AJAX
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
-                            $("#login").load("classes/ClientManager.php", {q: $("#txt").val()});
+                            $("#password").load("classes/ClientManager.php", {q: $("#txt").val()});
                         });
                     }); //fin document ready
         </script>
