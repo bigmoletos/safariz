@@ -1,4 +1,4 @@
-
+<?phpsession_start();?>
 <!doctype html>
 <html lang="fr">
 
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <form method="post" name="inscription" action="jeusafariz.php">
+            <form method="post" name="inscription" id='inscription' action="jeusafariz.php">
                 <div class="row">
                     <!--nom et prenom-->
                     <div class="col-md-6 col-sm-6 col-xs-12">
