@@ -16,7 +16,7 @@ function connexionDB() {
 
     $bdd ="safariz";//"gestion_news";// "pdo_tp1_news";
     $utilisateur = "root";
-    $motdepasse ="root";//root";
+    $motdepasse ="";//root";
     $serveur = "localhost";
     $driver = "mysql:host=$serveur;dbname=$bdd";
 

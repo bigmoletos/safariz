@@ -1,0 +1,382 @@
+[33mcommit dcd9162ce4a81c7a30cbb1b98b942212b7214d0e[m[33m ([m[1;36mHEAD -> [m[1;32mdesign[m[33m)[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Tue Nov 7 16:01:06 2017 +0100
+
+    SITE/... 3.php et style.css modifiés du 07/11 à 16h
+
+[33mcommit 9cfeea34fac2420d404116c9554e777c8514a663[m
+Merge: 39c9cdf 2737f40
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Tue Nov 7 09:26:48 2017 +0100
+
+    Merge branch 'master' of https://github.com/bigmoletos/safariz into design
+
+[33mcommit 2737f405ddda80cff92b7062d7ef28a3a6fccfc3[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Mon Nov 6 22:03:53 2017 +0100
+
+    modif classes ig et client
+    modif table ig avec ajout champ lotDispo = 1 ou 0
+    modif indexFD
+    fonction gagneperdu
+
+[33mcommit 191673ec30b028a045066f53342a10457f759538[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Mon Nov 6 17:19:41 2017 +0100
+
+    fonction foyer unique
+
+[33mcommit 39c9cdf9c81c95be6241453ab625034fdeb70cfe[m[33m ([m[1;31morigin/design[m[33m)[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Mon Nov 6 17:15:58 2017 +0100
+
+    design MAJ
+
+[33mcommit 07fbe4008738dad58d2687912601c55581bfe295[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Mon Nov 6 15:16:00 2017 +0100
+
+    fonction verif dateInscription à suivre
+
+[33mcommit be9bda342cd839acf147ec5b95f42bef4bbfd0b6[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 21:47:10 2017 +0100
+
+    introduction AJAX pour la page login
+    ajout ajax dans les ressources
+
+[33mcommit 234fa424bdbd132773bae9d8d88d8da1c8f8c0cd[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 17:13:46 2017 +0100
+
+    modification de la table client:
+    ajout du champ clientValide qui ne prendra que 0 ou 1 pour valide
+
+[33mcommit e729788deda052c7282d0c84dee8677852d32344[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 16:55:58 2017 +0100
+
+    modification de la table administrateur:
+    liaison entre les tables avec les id :
+    clients
+    lot
+    ig
+    exportation de la nouvelle base safarizApresModifLiaisons
+    
+    
+    creation fichiers
+    .htaccess et .htpwd pour bloquer l'acces à la page pageLogin.php
+
+[33mcommit 399aff4f9a84c655cc5e2115ce2b1976ffe28748[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 15:27:53 2017 +0100
+
+    modification de la table administrateur:
+    le champ login en mode unique
+    mot de passe en 255 caractéres pour accepter le hashage
+
+[33mcommit 3129a8bce142121d76d91de1790d950a3a4b599e[m
+Merge: 6c3c351 2893532
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 12:12:44 2017 +0100
+
+    Merge origin/dev
+
+[33mcommit 6c3c3517181c6966e3968034b4a32cf059c9bf5a[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 12:11:48 2017 +0100
+
+    modif pagelogin.php
+    securisation mot de passe
+
+[33mcommit 6671c6ddffd2e24d2ec3c9b0be6a3ba0d9d20ba7[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sun Nov 5 07:19:22 2017 +0100
+
+    maj safariz.sql
+
+[33mcommit b61dc48e6e6ed7fec910e63d077ecda8dbea5f06[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sat Nov 4 22:28:32 2017 +0100
+
+    modif classes:
+    admin, adminmanager,
+    ig, igmanager
+    
+    creation pages:
+    pageLogin.php
+    pageAdministrateur.php
+    
+    Modifs bdd
+    table IG date par defaut en CURRENT_TIMESTAMP
+    table administreur date par defaut en CURRENT_TIMESTAMP
+
+[33mcommit 127d03bd2e3656e2760d43cb373bf4fd04b471b7[m
+Merge: 4c6bb54 8b99ad8
+Author: Franck <32773811+bigmoletos@users.noreply.github.com>
+Date:   Sat Nov 4 17:35:27 2017 +0100
+
+    Merge pull request #1 from bigmoletos/classig
+    
+    Classig pull request classeig sur master
+
+[33mcommit 8b99ad8e760113b4da6b7d3a5e2c841617609ccf[m[33m ([m[1;31morigin/classig[m[33m)[m
+Merge: 422e57f 7598a23
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sat Nov 4 08:28:43 2017 +0100
+
+    Merge dev into classig
+
+[33mcommit 7598a233901b5fd1c91b314494139b931fef94db[m
+Merge: 444353b 74b2528
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sat Nov 4 08:15:43 2017 +0100
+
+    Merge origin/design into dev
+
+[33mcommit 444353b476746738873e72d651f2146de689ae2f[m
+Merge: 312d0d8 422e57f
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sat Nov 4 08:14:22 2017 +0100
+
+    Merge origin/classig into dev
+
+[33mcommit 312d0d8466e1753be6d6d11f72df97ed0ab793fd[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Sat Nov 4 08:02:39 2017 +0100
+
+    modif mot de passe connexionBD
+
+[33mcommit 7c4cce3cb676a4e15c4d25e70b0ee8ae987a31c7[m[33m ([m[1;31morigin/formulaire[m[33m)[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 17:47:22 2017 +0100
+
+    modif .mask champ nom dans formulaire
+
+[33mcommit 23d2280eb0ed7847ddd01b1f049612c6e56dd117[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 16:21:45 2017 +0100
+
+    modif classes , creation indexFd.php
+
+[33mcommit 74b252864fccf926b16c7f9681738edf78483249[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Fri Nov 3 16:19:54 2017 +0100
+
+    class gagnantManager.php modifié NO MORE "GET"
+
+[33mcommit 422e57f05417784d80a4eeeaf6cd602531b6112a[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 11:22:50 2017 +0100
+
+    verif form
+
+[33mcommit 6a5b124255d6967015a0845648b222cf74dbe5e2[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 11:13:56 2017 +0100
+
+    adm def
+
+[33mcommit 7871a17710d4b1e1223b94d6eb061181f42745d2[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 11:13:34 2017 +0100
+
+    adm manager
+
+[33mcommit 6801a390f495d012e1fa742b5adbf3be1fc6492f[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 11:10:51 2017 +0100
+
+    classe admin
+
+[33mcommit 61bed49010bc6a3c1c394c1449a2f47cdac2d12f[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 11:01:17 2017 +0100
+
+    igsql
+
+[33mcommit 404ebff119ca84145d75a68cb7ea9c8f91a5199c[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Fri Nov 3 11:00:33 2017 +0100
+
+    class gagnantManager.php creation
+
+[33mcommit 4e6ec075fa899c3739b7650aa9fe36f88fa8d9f8[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Fri Nov 3 10:59:42 2017 +0100
+
+    class gagnant.php creation
+
+[33mcommit ca5bb973e88bb89f71c7459d1408c34e2adc9d17[m
+Author: fanny v <fv@fv.com>
+Date:   Fri Nov 3 10:57:14 2017 +0100
+
+    ig
+
+[33mcommit 11b25ca5af9574b583183eb6a92f48b19e5d20e3[m
+Merge: 2c5919a ab99a8a
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Fri Nov 3 10:11:26 2017 +0100
+
+    Merge branch 'classes' of https://github.com/bigmoletos/safariz into design
+    pull branch classes
+
+[33mcommit 9fa378a51de7a520cc7f45c8ec4f407ad511a17b[m
+Merge: bb88d04 5e0615f
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 09:53:42 2017 +0100
+
+    Merge origin/formulaire into formulaire
+
+[33mcommit 2893532ca9b08101d2d3b2d6001cff5558d1b557[m[33m ([m[1;31morigin/dev[m[33m)[m
+Merge: 7237b0c bb88d04
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 09:43:43 2017 +0100
+
+    Merge formulaire into dev
+
+[33mcommit bb88d04225cb6e89014376b40fb3390a64d61a95[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 09:40:43 2017 +0100
+
+    correction formulaire2
+
+[33mcommit 5e0615f14ccd2c90ccd19beab5cee4a0ef7b6944[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Fri Nov 3 07:06:23 2017 +0100
+
+    modif formulaire inscription
+
+[33mcommit 7237b0c9cd8b70b50c04cee921e6767c82404275[m
+Merge: 0e31b16 ab99a8a
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 16:38:26 2017 +0100
+
+    Merge origin/classes into dev
+
+[33mcommit ab99a8a5d2466d1fc1c424374126ea4291538b02[m[33m ([m[1;31morigin/classes[m[33m)[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 16:26:55 2017 +0100
+
+    reajout
+
+[33mcommit e8fb501bfe1b34d8d72dc322bf11aeb52ea8ae95[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 16:19:08 2017 +0100
+
+    modif clientmanager
+
+[33mcommit e4c79307ede9716bebbc14db2341c278d0c509b1[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 15:38:28 2017 +0100
+
+    suppression gitignore et modif clientmanager
+
+[33mcommit 5ad806a7caceb0a9fb23c1fa311fc42c40361d51[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 14:42:14 2017 +0100
+
+    creation classe client et connexionbd
+
+[33mcommit 0a992624c0fceff009478f058aec11bf9315a18b[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 14:40:39 2017 +0100
+
+    creation classe client et connexionbd
+
+[33mcommit 0e31b16789b4e4a2e746aa57d4acf38dd7946124[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 13:34:13 2017 +0100
+
+    mise en forme formulaire, chekbox, message, reglement
+
+[33mcommit 40a18c70f0b7775dfe6e06f468c867b2c5886bcd[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 11:32:33 2017 +0100
+
+    mise en forme formulaire, chekbox, message, reglement
+
+[33mcommit 2c5919a256cb3b4e1aef0e4ce094b66be26253b8[m
+Author: JC Martinez <jan.chrim@gmail.com>
+Date:   Thu Nov 2 10:30:21 2017 +0100
+
+    Mise à jour Design
+
+[33mcommit cd3a14ea20120a6d650f7590841ff1209226d6d7[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 10:14:40 2017 +0100
+
+    creation branche formulaire et premier commit
+
+[33mcommit c96e1dd54813f5c8f02b2fb10b139b3f39242098[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Thu Nov 2 08:08:04 2017 +0100
+
+     modif formulaire inscription
+    insertion font awesome
+
+[33mcommit 4adc52c12fb18ddccfafca63147fce2abb75033d[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Wed Nov 1 22:08:17 2017 +0100
+
+     formulaire inscription
+
+[33mcommit 05d3fe95b154d20c44ab829c306500e010b3d5fd[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Wed Nov 1 08:18:33 2017 +0100
+
+    SUPPRESSION repertoire safariz  contenant un ancien .git
+
+[33mcommit 4c6bb54a6d7d528c982f51f3b04d226e7d9f9044[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 17:01:34 2017 +0100
+
+    ajout classes jeu
+
+[33mcommit 787f5b94534e00a5a491a6b8c8488c7a05c3bafe[m[33m ([m[1;31morigin/release[m[33m)[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 16:35:55 2017 +0100
+
+    ajout classes jeu
+
+[33mcommit 0548767534eebd0bc4304fee244118d67a7c1472[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 15:55:41 2017 +0100
+
+    intergration bootstrap et jquery dans le dossier style
+
+[33mcommit 98d728182b2b60b8be30673383f717d03bb76eca[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 15:52:47 2017 +0100
+
+    intergration bootstrap et jquery dans le dossier style
+
+[33mcommit d847c7ca8ccc0b8ce1a73746edc9a45598c18c69[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 15:42:16 2017 +0100
+
+    modif respertoires, creation ressources
+
+[33mcommit dfcbc3e5ee9763491dd134074c864b30aae248d9[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 15:41:18 2017 +0100
+
+    modif respertoires, creation ressources
+
+[33mcommit a9b146c0274f3c347756fa46bb7265999ca30ed2[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 31 15:36:05 2017 +0100
+
+    1er commit
+
+[33mcommit 8fc00f029f5559510ec03bdd8533d74f2dd674da[m
+Author: franck <bigmoletos@yopmail.com>
+Date:   Tue Oct 17 15:24:38 2017 +0200
+
+    Merge origin/aliou
+    1er commit
+    Conflicts:
+            repertoire _fanny/fichier1.txt
+            repertoire franck/fichier3.txt
+            repertoire isa/fichier4.txt
+            repertoire_isa/fichier4.txt

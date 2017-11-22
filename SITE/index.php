@@ -1,25 +1,25 @@
 <?php
+
 require('chargeurClass.php');
 require('connexionBD.php');
 require('classes/AdminJeu.php');
 //require('admin.php');
-$db = connexionDB();
 
+$db = connexionDB();
 //nouvel objet de la classe adminManagerjeu instancié 
 //par les attributs de la connexionDB() à la base donnée mysql
 $manager = new AdminManagerJeu($db);
 $dates = $manager->ouvertureJeu();
-//var_dump($dates);
+
 date_default_timezone_set("Europe/Paris");
 
-$now = date("Y-m-d H:i:s");
-//var_dump($dates);
+$now = date("Y-m-d");
 
 $date_debut_jeu=$dates['date_debut_jeu']  ;
 $date_fin_jeu=$dates['date_fin_jeu'];
 
 if ($now >= $date_debut_jeu && $now <= $date_fin_jeu) {
-    $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit">Jouer maintenant</button>';
+    $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit" style="color:white;">JOUER</button>';
 }
 elseif ($now <= $date_debut_jeu){
     $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous à partir du ".$date_debut_jeu;
@@ -27,7 +27,6 @@ elseif ($now <= $date_debut_jeu){
  else {
     $message = "Désolé ce jeu est terminé.";    
 }
-
 ?>
 
 <!doctype html>
@@ -58,10 +57,7 @@ elseif ($now <= $date_debut_jeu){
 
 		<main id="content" class="col-sm-12 col-md-9">
 
-
-			<!-- integration formulaire de Franck -->
-			<div class="bootstrap-iso">
-				<!-- <div class="container-fluid"> -->
+			<div class="bootstrap-iso"><!-- <div class="container-fluid"> -->
 
 				<div class="well">
 					<div id="messageIndex" class="row">
@@ -71,23 +67,12 @@ elseif ($now <= $date_debut_jeu){
 						</div>
 					</div>
 
-				</div>
-				<!--</div> container.fluid-->
-			</div>
-			</div>
-			</div>
+				</div><!--</div> container.fluid-->
+                            </div>
 			
-
-
-		</main>
-		<!-- content -->
-                </section>
+		</main><!-- content -->
+        </section>
                 
 <?php include("footer.php"); ?>
-                      
-	
-
-			
-
 </body>
 </html>

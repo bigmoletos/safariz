@@ -1,9 +1,7 @@
 <?php include("header.php"); ?>
 
 		<main id="divscroll" class="col-sm-12 col-md-9"><!-- container main pour rendre le main scrollable-->
-         
                 
-                   
 <div class="row" ><!--titre-->
     <div id="reg" class="col-12" ><h1><strong>Réglement du jeu Safa'Riz</strong></h1></div><!-- titre reg H1 --><!--titre reglement H1-->
 
