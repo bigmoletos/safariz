@@ -115,8 +115,43 @@
                             </div>
                         </div>
                     </div>
+                    <!--**********************-->
+                    <div class="col-12 text-center mt-5">
+                        <div class="form-group">
+                            <div>
+                                <p>Si vous souhaitez rejouer sans remplir à nouveau le formulaire veuillez nous indiquer un mot de passe</p>
+                                <!--<button class="btn btn-primary " name="inscriptionClient" type="submit">voulez-vous vous inscrire?</button>-->
+                            </div>
+                        </div>
+                    </div>
 
-                </div>
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        <div class="form-group ">
+                            <label class="control-label requiredField" id='password' for="password" > mot de passe 
+                                <!--<span class="asteriskField"> * </span></label>-->
+
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-envelope"></i>
+                                </div>
+                                <input class="form-control" id="password" name="password" type="password" placeholder="votre mot de passe..." maxlength="48"/>
+                            </div>
+                        </div>
+                         </div>
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" > confirmation mot de passe 
+                                    <!--<span class="asteriskField"> * </span></label>-->
+
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-envelope"></i>
+                                    </div>
+                                    <input class="form-control" id="confirmpwd" name="confirmpwd" type="password" placeholder="votre mot de passe..."  maxlength="48"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <!--************************-->                  
+<!--                </div>-->
                 <!--</div>-->
 
 

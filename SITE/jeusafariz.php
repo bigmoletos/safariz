@@ -31,8 +31,10 @@ setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, tru
 //creation du cookie nom date d'expiration dans 5min
 $cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
+$clientPassword=$cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
+setcookie('password', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, false, true);
 }
-//var_dump($_COOKIE);
+var_dump($_COOKIE);
 //chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion

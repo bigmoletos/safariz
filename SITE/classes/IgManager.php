@@ -53,7 +53,7 @@ class IgManager {
             $requete->bindValue(':cid', $clientid);
             $requete->execute();
             
-            $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
+           // $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
           //  while($result){
           //        var_dump($result);
                   
