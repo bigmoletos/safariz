@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 21 Novembre 2017 à 11:41
+-- Généré le :  Mar 07 Novembre 2017 à 16:02
 -- Version du serveur :  5.7.11
 -- Version de PHP :  5.6.18
 
@@ -32,7 +32,7 @@ CREATE TABLE `administrateur` (
   `login` varchar(48) CHARACTER SET latin1 NOT NULL,
   `password` varchar(255) CHARACTER SET latin1 NOT NULL,
   `email` varchar(48) COLLATE utf8_unicode_ci NOT NULL,
-  `dateLastConnexion` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `dateLastConnexion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -42,9 +42,7 @@ CREATE TABLE `administrateur` (
 INSERT INTO `administrateur` (`adm_id`, `nomAdm`, `login`, `password`, `email`, `dateLastConnexion`) VALUES
 (1, 'szer', 'bigmoletos', 'aze', 'bigmoletos@yopmail.com', '2017-11-05 10:28:39'),
 (2, 'eefef', 'feefefef', '116e055b63d8698142614628d179f5f9', 'dsdss@sasaa', '2017-11-05 11:26:33'),
-(3, 'hgrrgrrt', 'ooli', '$2y$10$iMUaF.EQHduZy7n3BiDm3.6kJ85jicc0MilInBvnNXDOfD.77pLSC', 'bigmoletos@yopmail.com', '2017-11-05 11:42:51'),
-(4, '  fanny  ', '  fanny  ', '$2y$10$LTr7MIoOGfIzYhBItMwyvuwWTiP1s.13gyTYdiFeDssvaZHCF7N.q', 'fleur@free.fr', '1510676138'),
-(5, '  ededed  ', '  deded  ', '$2y$10$1eDVz3mJKueRXHglKEYC.uX.bCxnSw29xCdvyyTNmIozf5uS73YiS', 'dded@free.fr', '1510730593');
+(3, 'hgrrgrrt', 'ooli', '$2y$10$iMUaF.EQHduZy7n3BiDm3.6kJ85jicc0MilInBvnNXDOfD.77pLSC', 'bigmoletos@yopmail.com', '2017-11-05 11:42:51');
 
 -- --------------------------------------------------------
 
@@ -60,10 +58,10 @@ CREATE TABLE `clients` (
   `adresse` varchar(250) CHARACTER SET latin1 NOT NULL,
   `cp` int(5) NOT NULL,
   `ville` varchar(48) CHARACTER SET latin1 NOT NULL,
-  `tel` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tel` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `ip` varchar(48) CHARACTER SET latin1 NOT NULL,
   `dateInscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `session_id` varchar(48) COLLATE utf8_unicode_ci NOT NULL,
+  `session_id` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `newsLetterInscription` tinyint(1) NOT NULL,
   `clientValide` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -98,9 +96,7 @@ INSERT INTO `clients` (`client_id`, `nom`, `prenom`, `mail`, `adresse`, `cp`, `v
 (49, 'legrand', 'david', 'oosdssd@dfdfddf', '3 route des parapluies', 13695, 'Martigues', '(04)44 44 11 14', '::1', '2017-11-07 14:59:44', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1),
 (50, 'legrand', 'david', 'gerty@gtrr.gt', '3 route des parapluies', 13695, 'Martigues', '(04)44 44 11 14', '::1', '2017-11-07 15:15:12', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1),
 (51, 'legrand', 'david', 'iopsdssd@dfdfddf', '3 route des parapluies', 13695, 'Martigues', '(04)44 44 11 14', '::1', '2017-11-07 16:16:40', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1),
-(52, 'legrand', 'david', 'sloiudssd@dfdfddf', '3 route des parapluies', 13695, 'Martigues', '(04)44 44 11 14', '::1', '2017-11-07 16:33:20', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1),
-(53, 'desmedt', 'franck', 'desmedt@free.fr', '15 route du puit vert', 97564, 'le robert', NULL, '::1', '2017-11-21 11:06:25', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1),
-(54, 'desmedt', 'franck', 'romaiuin@free.fr', '15 route du puit vert', 97564, 'le robert', NULL, '::1', '2017-11-21 11:31:34', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1);
+(52, 'legrand', 'david', 'sloiudssd@dfdfddf', '3 route des parapluies', 13695, 'Martigues', '(04)44 44 11 14', '::1', '2017-11-07 16:33:20', 'g5tenp0jm923ttfpkibgak2ne3', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -160,8 +156,8 @@ INSERT INTO `ig` (`label`, `ID`, `timestamp`, `jour`, `heure`, `datetime`, `lotD
 ('porte-clé', 3, 1509961893, '2017-11-06', '10:51:33', '2017-11-06 10:51:33', 0),
 ('casquette', 4, 1509966509, '2017-11-06', '12:08:29', '2017-11-06 12:08:29', 0),
 ('casquette', 5, 1509970961, '2017-11-06', '13:22:41', '2017-11-06 13:22:41', 0),
-('porte-clé', 6, 1509975470, '2017-11-06', '14:37:50', '2017-11-06 14:37:50', 0),
-('casquette', 7, 1509979834, '2017-11-06', '15:50:34', '2017-11-06 15:50:34', 0),
+('porte-clé', 6, 1509975470, '2017-11-06', '14:37:50', '2017-11-06 14:37:50', 1),
+('casquette', 7, 1509979834, '2017-11-06', '15:50:34', '2017-11-06 15:50:34', 1),
 ('casquette', 8, 1509984229, '2017-11-06', '17:03:49', '2017-11-06 17:03:49', 1),
 ('casquette', 9, 1509988742, '2017-11-06', '18:19:02', '2017-11-06 18:19:02', 1),
 ('casquette', 10, 1509993051, '2017-11-06', '19:30:51', '2017-11-06 19:30:51', 1),
@@ -379,12 +375,12 @@ ALTER TABLE `participation`
 -- AUTO_INCREMENT pour la table `administrateur`
 --
 ALTER TABLE `administrateur`
-  MODIFY `adm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `adm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT pour la table `dates_jeux`
 --
