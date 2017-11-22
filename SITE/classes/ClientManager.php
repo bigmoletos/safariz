@@ -1,7 +1,7 @@
 <?php
 
 //classe repercutant les actions de la classe client dans la base de données
-
+//modif le 8/11/17
 class ClientManager {
 
     //attribut
@@ -61,8 +61,8 @@ class ClientManager {
             $this->db->query(" SET lc_time_names = 'fr_FR'");
             //$req = $this->db->prepare("INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )"
             //     . " VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id, :newsLetterInscription ");
-            $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id,ip, newsLetterInscription )'
-                    . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_Id,:ip , :newsLetterInscription )');
+            $req = $this->db->prepare('INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id ,ip, newsLetterInscription )'
+                    . ' VALUES (:nom, :prenom, :mail, :adresse, :cp, :ville, :tel, :session_id,:ip , :newsLetterInscription )');
 
 // champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,newsLetterInscription
 //    champs formulaire  nom  prenom mail adresse  ville cp   majeur reglement  newsletter
@@ -75,7 +75,7 @@ class ClientManager {
             $req->bindValue(':cp', $client->getCp());
             $req->bindValue(':ville', $client->getVille());
             $req->bindValue(':tel', $client->getTel());
-            $req->bindValue(':session_Id', $client->getSession_Id());
+            $req->bindValue(':session_id', $client->getSession_Id());
             $req->bindValue(':ip', $client->getIp());
             $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
             echo "<pre>";
@@ -213,13 +213,17 @@ class ClientManager {
 
         $requete = $this->db->prepare(" SELECT mail, DATE(dateInscription) FROM clients WHERE mail= :mail  AND DATE(dateInscription)= DATE(NOW())");
         $requete->bindValue(':mail', $client->getMail());
-        //$requete->bindValue(':dateInscription', date("Y-m-d"));  //$client->dateInscription() //attention le DATE(NOW()) pourrait ne pas compatible avec toutes les bases
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
-//        var_dump($result);
-        if (count($result)){
+       // var_dump($result);
+        $verif=count($result);
+        $verif2=$requete->rowCount();
+     //   var_dump($verif2);
+    //   var_dump($verif);
+        if ($verif2){
+           // echo "vous avez  joué aujourd'hui";
 //        if ($requete->rowCount()){     //compte le nbre de lignes  de date d'inscription correspondant  à la date du jour renvoyées par la requete, si aucune correspondance n'est  trouvée le client peut jouer
-            return false; 
+            return true; 
         }
         //permet de fermer la requete
         $requete->closeCursor();

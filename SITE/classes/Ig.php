@@ -8,29 +8,30 @@ private $erreurs = [],
  $timestamp,
  $jour,
  $heure,
- $datetime;
-$lotDispo;
+ $datetime,
+ $lotDispo;
 
-//methode constructeur via la fonction hydrate
-public function __construct(array $valeurs = []) {
-if (!empty($valeurs)) { // Si on a spécifié des valeurs, alors on hydrate l'objet.
-$this->hydrate($valeurs);
-}
-}
-
-/**
- * Méthode assignant les valeurs spécifiées aux attributs correspondant.
- * @param $donnees array Les données à assigner
- * @return void
- */
-public function hydrate($donnees) {
-    foreach ($donnees as $attribut => $valeur) {
-    $methode = 'set' . ucfirst($attribut);
-        if (method_exists($this, $methode)) {
-              $this->$methode($valeur);
+ //constructeur
+    //    //
+    public function __construct(array $valeurs = []) {
+        if (!empty($valeurs)) { // Si on a spécifié des valeurs, alors on hydrate l'objet.
+            $this->hydrate($valeurs);
         }
     }
-}
+
+    /**
+     * Méthode assignant les valeurs spécifiées aux attributs correspondant.
+     * @param $donnees array Les données à assigner
+     * @return void
+     */
+    public function hydrate($donnees) {
+        foreach ($donnees as $attribut => $valeur) {
+            $methode = 'set' . ucfirst($attribut);
+            if (method_exists($this, $methode)) {
+                $this->$methode($valeur);
+            }
+        }
+    }
 
 
 // methode getter
@@ -90,14 +91,12 @@ $this->heure = $heure;
 function setDatetime($datetime) {
 $this->datetime = $datetime;
 }
-}
 
-function setLotDispo($lotDispo {
+
+function setLotDispo($lotDispo) {
 $this->lotDispo = $lotDispo;
 }
-/* }
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ }//fin classe
+
+ 
 ?>

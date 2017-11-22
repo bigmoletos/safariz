@@ -2,7 +2,7 @@
 
 /**
  * Description de gagnants
- *
+ *modif le 8/11
  * @author JCM
  */
 
@@ -48,7 +48,7 @@ class gagnantsManager {
 //        //permet de fermer la requete
 //        $requete->closeCursor();
 //    
-    }
+    
     
     function suiviGagnant() { // fonction de suivi des gagnants de lots
          

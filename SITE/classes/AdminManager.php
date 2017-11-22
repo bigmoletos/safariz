@@ -1,4 +1,4 @@
- <?php
+<?php
 
 class AdminManager {
 
@@ -20,21 +20,24 @@ class AdminManager {
     public function setDb($db) {
         $this->db = $db;
     }
+
 // $login,            $nomAdm,            $password;
 
-public function addAdmin(Admin $admin) {
+    public function addAdmin(Admin $admin) {
         try {
             //on fait le prepare et on l'affecte à la variable $req
             //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
-            //pour mettre les date en francais dans la requete
+            //pour mettre les date en francais dans la requete INSERT INTO administrateur (nomAdm,  login, password, email, dateLastConnexion)
+            //        VALUES ('fanny', 'fanny', 'fleur', 'fleur@free', 1510235228 )
             $this->db->query(" SET lc_time_names = 'fr_FR'");
-            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm,  login, password, email)'
-                    . ' VALUES (:nomAdm, :login, :password, :email )');
+            $req = $this->db->prepare('INSERT INTO administrateur (nomAdm, login, password, email, dateLastConnexion)'
+                    . ' VALUES (:nomAdm, :login, :password, :email, :dateLastConnexion )');
 
             $req->bindValue(':nomAdm', $admin->getNomAdm());
             $req->bindValue(':login', $admin->getLogin());
             $req->bindValue(':password', $admin->getPassword());
-             $req->bindValue(':email', $admin->getEmail());
+            $req->bindValue(':email', $admin->getEmail());
+            $req->bindValue(':dateLastConnexion', $admin->getDateLastConnexion());
             echo "<pre>";
             var_dump($req);
             echo "</pre>";
@@ -48,22 +51,64 @@ public function addAdmin(Admin $admin) {
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
             ////pour afficher les erreurs on peut aussi tenter :
-            die(print_r( $this->db->errorInfo())); 
+            die(print_r($this->db->errorInfo()));
             ////
         }
     }
 
+//cette methode controle que le login n'existe pas deja dans la base de donnée
+    public function addAdmincontrolelog(Admin $admin) {
+        try {
+            //on fait le prepare et on l'affecte à la variable $req
+            //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
+            //pour mettre les date en francais dans la requete INSERT INTO administrateur (nomAdm,  login, password, email, dateLastConnexion)
+            //        VALUES ('fanny', 'fanny', 'fleur', 'fleur@free', 1510235228 )
+            $this->db->query(" SET lc_time_names = 'fr_FR'");
+
+            $req = $this->db->prepare('select login from administrateur WHERE login= :login');
+            $req->bindValue(':login', $admin->getLogin());
+            $req->execute();
+            var_dump($req);
+            $nblog = $req->fetch(PDO::FETCH_ASSOC);
+            var_dump($nblog);
+            var_dump($admin);
+            if ($nblog == TRUE) {
+                echo "<pre> Veuillez entrer un nouveau login</pre>";
+            } else {
+                echo "<pre> ce login n'existe pas</pre>";
+                var_dump($nblog);
+                echo "VALEUR DE nblog: $nblog ---";
+                $nblog = FALSE;
+                return $nblog;
+            }
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+            ////pour afficher les erreurs on peut aussi tenter :
+            die(print_r($this->db->errorInfo()));
+            ////
+        }
+        $req->closeCursor();
+    }
+
     //fonction permettant de verifier le login en cours de saisie dans le formulaire 
     //login en Ajax depuis la table administrateur
-    public function verifLogin(Admin $login) {
-      
-       $rep= $this->db->query("select login from administrateur ");
+    public function verifLoginAjax(Admin $admin) {
+
+        $req = $this->db->prepare("select login, from administrateur where login= :login ");
+        $req->bindValue(':login', $admin->getLogin());
+        $req->execute();
+        var_dump($req);
         $tab = $req->fetchAll();
-        $q = $_REQUEST["q"];
+        $q = $_REQUEST["login"];
+        var_dump($q);
+        var_dump($tab);
+
         $indice = "";
         if ($q !== "") {
             $q = strtolower($q);
+            var_dump($q);
             $len = strlen($q);
+            var_dump($len);
             foreach ($tab as $valeur) {
                 if (stristr($q, substr($valeur[0], 0, $len))) {
                     if ($indice === "") {
@@ -74,21 +119,35 @@ public function addAdmin(Admin $admin) {
                 }
             }
         }
-        echo $indice === "" ? "Pas de suggestion" : $indice;
-    }//fin fonction verif login
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}//fin classe
+        echo $indice === "" ? $indice : "ce login existe déjà veuillez en choisir un autre";
+        return $indice;
+    }
+
+//fin fonction verif login
+    //fonction permettant de  verifier password et login lors de la connexion 
+    public function connectAdmin(Admin $admin) {
+
+        $requete = $this->db->prepare('select login, password from administrateur where login= :login AND password= :password ');
+
+        $requete->bindValue(':password', $admin->getPassword());
+        $requete->bindValue(':login', $admin->getLogin());
+        $requete->execute();
+        $result = $requete->fetch(PDO::FETCH_ASSOC);
+        var_dump($result);
+        // $tab=array();
+        //  $tab=count($result);
+//               if (count($result)){
+//                 echo 'login ok'; 
+//                  header("Location: pageAdministrateur.php");
+//             } else {
+//                echo 'pas login ok' ;  
+//             }
+        // var_dump($tab); 
+        return $result;
+    }
+
+//fin fonction connectAdmin
+}
+
+//fin classe
 ?>

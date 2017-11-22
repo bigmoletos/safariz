@@ -1,6 +1,6 @@
 <?php
 
-//construction de la classe jeu
+//construction de la classe jeu stockage des infos clients
 class Client {
 
 //les noms des attributs doivent etre identiques aux noms rentrees dans la base au moment de sa creation
@@ -17,7 +17,7 @@ class Client {
     private $ville;
     private $tel;
     private $dateInscription;
-    private $session_Id;
+    private $session_id;
     private $ip;
     private $newsLetterInscription;
     private $clientValide;
@@ -81,8 +81,8 @@ class Client {
         $this->dateInscription = $dateInscription;
     }
 
-    function setSession_Id($session_Id) {
-        $this->session_Id = $session_Id;
+    function setSession_id($session_id) {
+        $this->session_id = $session_id;
     }
 
     function setIp($ip) {

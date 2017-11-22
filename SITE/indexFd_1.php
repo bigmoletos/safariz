@@ -1,29 +1,6 @@
 <?php
 session_start();
-//initialisation des variables
-$cookiepwd="";
-$cookielog="";
-$cookiemail="";
-$cookienom="";
-//$_POST['pwd']="";
-//$_POST['login']="";
-$admin="";
-//creation du cookie password autopwd date d'expiration dans 5 min
-$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('autopwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//creation du cookie login autologin? date d'expiration dans 1an
-$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//creation du cookie mail date d'expiration dans 5min
-$cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//creation du cookie nom date d'expiration dans 5min
-$cookienom = ' ' . $_POST['nom'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, true);
-//creation du cookie nom date d'expiration dans 5min
-$cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
-setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
-var_dump($_COOKIE);
+
 
 //chargement des classes
 require('chargeurClass.php');
@@ -48,66 +25,41 @@ date_default_timezone_set("Europe/Paris");
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
 //var_dump($_POST);
+
 //*************************************************************************************
 if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de verifier tous les paramétres(isset, !empty, NOT NULL ...)
-    if (!!($_POST['tel'])) {
-        $form['tel'] = $_POST['tel'];
+    if (!!($_POST['tel'])) {   $form['tel'] = $_POST['tel'];
     }
     $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
 
-    if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
-        $form['nom'] = $_POST['nom'];
-        $form['prenom'] = $_POST['prenom'];
-        $form['mail'] = $_POST['mail'];
-        $form['adresse'] = $_POST['adresse'];
-        $form['ville'] = $_POST['ville'];
-        $form['cp'] = $_POST['cp'];
-//     $form['dateinscription']= now();//finalement pour rentrer la date on va utiliser la base de donnée en 
-//     mettant dateInscription en CURRENT_TIMESTAMP par defaut
-        $form['ip'] = $_SERVER['REMOTE_ADDR']; // stocke l'adresse IP
-        $form['session_id'] = $_COOKIE['PHPSESSID']; // stocke l'id de session
-        //la fonction isValidFormulaire
-        // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
-//     var_dump($client);
-//     var_dump($form);
-        //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
-        $client = new Client($form);
+    if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) 
+            && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
         //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
 //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
-        //0000000000000000000000000000000000000000000000
-        if ($manager->ClientPeutJouerCejour($client)) {
-            echo "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
-        } else {
-            $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-            echo "</br>bravo vous êtes inscrit ! </br>";
-            //******************************
-            // fonction gagné perdu
-
-            $igmanager= new Igmanager($db);//nouvel objet Igmanager avec comme attribut la connexionBdd $db
-            if ($lot = $igmanager->GagnePerdu()) { 
-                //todo fonction pour donner le nom
-                
-                echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: XXXX ".$lot;
-            } else {
-                echo "Désolé vous avez perdu, retentez votre chance demain ";
-            }
-            //******************************
-        }
-        //0000000000000000000000000000000000000000000000000000
+//            echo "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
+//        } else {
+////            $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
+//            echo "</br>bravo vous êtes inscrit !</br> ";
+            //integrer ici la fonction gagné perdu
+//               if($manager->GagnePerdu($ig){
+//                     echo "Félicitation vous avez gagné  XXXX$lot";
+//               } else {
+//                     echo "Désolé vous avez perdu, retentez votre chance demain ";
+//               }
+//        }
         echo ' </br>formulaire ok </br>';
     } else {
-        echo '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
+        echo '</br>Veuillez remplir tous les champs du  formulaire</br>'; // gestion des erreurs en php
     }
-
-
-
-
-
+    
 //    var_dump($client);
-} else {
-    echo "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
+}
+else {
+   echo "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>"; 
 } //fin fonction  formulaire
 //*************************************************************************************
+
+
 //*/*******************************************************
 //fonction pour verifier le mail 
 //ne fonctionne pas
@@ -181,7 +133,7 @@ formulaire d'inscription
 
                     <div class="row"><!--nom et prenom-->
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <form method="post" name="inscription" action="indexFd.php">
+                            <form method="post" name="inscription" action="indexFd_1.php">
                                 <div class="form-group ">
                                     <label class="control-label requiredField" for="nom">Nom<span class="asteriskField">*</span></label>
                                     <input class="form-control" id="nom" name="nom"   type="text" placeholder="votre nom...."  maxlength="48"/>
