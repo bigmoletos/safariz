@@ -45,6 +45,7 @@
 //                            var_dump($messageDejaJoueToday);
                             echo (isset($messageinscrit)) ? $messageinscrit : "";
                             echo (isset($messageReglement)) ? $messageReglement : "";
+                             echo (isset($messageMajeur)) ? $messageMajeur : "";
                             echo (isset($messagePerdu)) ? $messagePerdu : "";
                             echo (isset($messageGagne)) ? $messageGagne : "";
                             echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
@@ -55,8 +56,8 @@
 
                 </div>
             </div>
-
-            <form method="post" name="inscription" id='inscription' action="jeusafariz.php">
+ <form method="post" name="inscription" id='inscription' >
+            <!--<form method="post" name="inscription" id='inscription' action="jeusafariz.php">-->
                 <div class="row">
                     <!--nom et prenom-->
                     <div class="col-md-6 col-sm-6 col-xs-12">
