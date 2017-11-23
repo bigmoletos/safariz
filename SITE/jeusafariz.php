@@ -127,7 +127,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {
 
             $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
             if ($lot = $igmanager->GagnePerdu($idclient)) {
-                //todo fonction pour donner le nom
+                // fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
                 //   header('Location: gagne.php');
                 $statut = "gagne";

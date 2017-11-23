@@ -164,8 +164,8 @@ formulaire d'inscription
             <div class="row" ><!--titre-->
                 <div class="col-md-6 col-sm-6 col-xs-12">
 
-                    <h2>Creer un jeu</h2>
-                    <H3> Rentrez vos  dates de debut et de fin de jeu pour un nouveau jeu</H3>
+                    <h2>Créer un jeu</h2>
+                    <H3> Rentrez vos  dates de début et de fin de jeu pour un nouveau jeu</H3>
 
                 </div>
             </div>
@@ -174,7 +174,7 @@ formulaire d'inscription
 
             <form method="post" name="admin" action="">
                 <div class="form-group ">
-                    <label class="control-label requiredField" for="nom">date et heure de debut du Jeu<span class="asteriskField">*</span></label>
+                    <label class="control-label requiredField" for="nom">date et heure de début du Jeu<span class="asteriskField">*</span></label>
                     <input class="form-control" id="nom" name="date_debut_jeu"   type="datetime-local" placeholder="2017-11-01 00:00:00"  maxlength="48"/>
                 </div>
                 <div class="form-group ">
@@ -218,7 +218,7 @@ formulaire d'inscription
 
         <div class="well">
             <h2>Envoi d'un email aux gagnants</h2>
-            <h3>Séléctionnez vos déstinataires</h3>
+            <h3>Selectionnez vos destinataires</h3>
             <?php
 
             echo '<div class="table-responsive"> <form name="gagnants" method="post">
