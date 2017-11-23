@@ -7,10 +7,10 @@
 //}
 //spl_autoload_register('loadClass');
 
-
+set_include_path ( dirname(__FILE__));
 //version fd
 spl_autoload_register(function($class) {
-    include 'classes/' . $class . '.php';
+    require_once 'classes/' . $class . '.php';
 }
 );
 

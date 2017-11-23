@@ -83,7 +83,7 @@ class ClientManager {
 // var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
-                //  echo "<br/>nouveau client correctement inséré<br/>";
+              //  echo "<br/>nouveau client correctement inséré<br/>";
                 return $this->db->lastInsertId();
             } else {
                 return false;

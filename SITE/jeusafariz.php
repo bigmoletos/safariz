@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 //initialisation des variables
 $cookiepassword = "";
@@ -49,13 +50,14 @@ var_dump($_COOKIE);
 //var_dump($cookieprenom);
 //var_dump($cookienom);
 //chargement des classes
-require('chargeurClass.php');
+set_include_path ( dirname(__FILE__));
+require_once('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
 //require ('classes/clientManager.php');
 //require ('classes/client.php');
 
-require('connexionBD.php');
+require_once('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
 
@@ -124,7 +126,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
             //******************************
             // fonction gagné perdu
 
-            $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
+            $igmanager = new IgManager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
             if ($lot = $igmanager->GagnePerdu($idclient)) {
                 //todo fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
@@ -148,7 +150,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
             //******************************
         } var_dump($statut);
         //0000000000000000000000000000000000000000000000000000
-        //  echo ' </br>formulaire ok </br>';
+        
     } else {
         $messageChampFormulaire = '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
     }

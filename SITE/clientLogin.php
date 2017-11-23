@@ -24,7 +24,9 @@ require('chargeurClass.php');
 require('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
+
 $manager = new AdminManager($db);
+
 date_default_timezone_set("Europe/Paris");
 // champs base de donnée admin_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,ip, newsLetterInscription
 // champs formulaire  nom  prenom tel mail adresse  ville cp   majeur reglement  newsletter 
@@ -73,6 +75,7 @@ $form = array();
                     echo ' login ok ';
                    header ("location: loginClientSuite.php");
                 }
+
         //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
 //                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
 //        if (isset($_POST['log'])) {

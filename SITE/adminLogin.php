@@ -1,10 +1,8 @@
 <?php
 
-//!!!!!!!!!!!!!!!!!!
-//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
-//
 //!!!!!!!!!!!!!!!!!
-
+//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
+//!!!!!!!!!!!!!!!!!
 
 session_start();
 //initialisation des variables
@@ -124,7 +122,7 @@ $form = array();
                 else {
                     echo ' <br>formulaire incomplet veuillez entrer le login<br>';
                 }
-           echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
+           echo '<br>Formulaire incomplet veuillez verifier les champs<br>';
            
        
        } //fin fonction fomulaire isset log  
@@ -142,70 +140,55 @@ Cette page permet de rajouter des administrateurs dans la base de donnée,
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
 Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 -->
-<!doctype html>
-<html>
-    <head>
-        <title>Page login</title>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
-        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
-         <link rel="stylesheet" href="style/formulaireLoginAdminBootstrap.css"  type="text/css" charset="utf_8"/>
-        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
-        <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
-        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
-    </head>
-    <body>
+<?php include("header.php"); ?>
 
-<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-3 col-sm-3 col-xs-12">
-       <h2>Login Administrateur </h2>
-       <form method="post" action="loginClient.php">
-     <div class="form-group ">
-      <label class="control-label requiredField" for="nom">
-       NOM
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <input class="form-control" id="nomAdm" name="nomAdm" placeholder="votre nom..." type="text"/>
-     </div>
-     <div class="form-group ">
-      <label class="control-label requiredField" for="prenom">
-       LOGIN
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/>
-     </div>
-     <div class="form-group">
-      <div>
-       <button class="btn btn-primary btn-lg"  id="veriflog" name="veriflog" type="submit">ok</button>
-      </div>
-     </div>
-    </form>
-   </div>
-  </div>
- </div>
-</div>
-        
-        
-        
-        
-        
-        
-        <script>
+<main id="content" class="col-12 col-md-9">  
+    <div class="bootstrap-iso">
+        <!-- <div class="container-fluid"> -->
+            <div class="well">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Accès administrateur</h1>
+                        <p>Tous les champs marqués d'une <span class="asteriskField"> *</span> sont obligatoires</p>
+                        
+                        <form method="post" action="pageAdministrateur.php">                               
+
+                            <div class="col-12 col-md-6">
+                                <label class="control-label requiredField" id='mail' for="mail">Email<span class="asteriskField">*</span></label>
+                                <div class="input-group"><div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                                <input class="form-control" id="mail" name="mail" type="email" maxlength="48"  placeholder="xxxx@xxxx.xx"/></div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="control-label requiredField" for="prenom">Login<span class="asteriskField"> *</span></label>
+                                <div class="input-group"><div class="input-group-addon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+                                <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/></div>
+                            </div>
+                        </div>
+                    </div>
+                
+    <div id="espace"></div><!--espace-->
+            <div class="row">
+                    <div class="col-12">
+                <div class="col-md-7 col-sm-6 col-xs-12 text-center"><p><a href="">Login oublié ?</a></p></div>
+
+                <div class="col-md-5 col-sm-6 col-xs-12 text-center">
+                    <div class="form-group">
+                        <div><button class="btn btn-primary" id="veriflog" name="bouton" type="submit">Valider</button></div>
+                    </div>
+                </div>
+            </div>
+            </div>   
+            </form>
+        </div>
+    </div>
+</main>
+
+<?php include("footer.php"); ?>
+
+
+ <script>
     //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
-    //         deja dans la base, réalisé en AJAX
+    //        deja dans la base, réalisé en AJAX
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {

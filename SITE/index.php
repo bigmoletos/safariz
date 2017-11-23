@@ -1,8 +1,8 @@
 <?php
-
-require('chargeurClass.php');
-require('connexionBD.php');
-require('classes/AdminJeu.php');
+set_include_path ( dirname(__FILE__));
+require_once('chargeurClass.php');
+require_once('connexionBD.php');
+require_once('classes/AdminJeu.php');
 //require('admin.php');
 
 $db = connexionDB();

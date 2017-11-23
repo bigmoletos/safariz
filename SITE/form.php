@@ -1,29 +1,9 @@
-<?phpsession_start();?>
-<!doctype html>
-<html lang="fr">
-
-    <head>
-        <meta charset="utf-8">
-        <title>Safa'riz Le Jeu</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style/styleFormulaire.css" type="text/css" charset="utf_8"/>
-        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="style/style.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="style/bootstrap-iso.css"/>
-        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
-        
-    </head>
-
 <?php include("header.php"); ?>
+
 <main id="content" class="col-12 col-md-9">
 
 
-    <!-- integration formulaire de Franck -->
+    <!-- integration formulaire -->
     <div class="bootstrap-iso">
         <!-- <div class="container-fluid"> -->
 
@@ -132,7 +112,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                 </div>
-                                <input class="form-control" id="mail" name="mail" type="email" maxlength="48"/>
+                                <input class="form-control" id="mail" name="mail" type="email" maxlength="48"  placeholder="xxxx@xxxx.xx"/>
                             </div>
                         </div>
                     </div>
@@ -140,29 +120,26 @@
                     <div class="col-12 text-center mt-5">
                         <div class="form-group">
                             <div>
-                                <p>Si vous souhaitez rejouer sans remplir à nouveau le formulaire veuillez nous indiquer un mot de passe</p>
+                                <p>Si vous souhaitez rejouer sans remplir à nouveau le formulaire, merci de renseigner un mot de passe</p>
                                 <!--<button class="btn btn-primary " name="inscriptionClient" type="submit">voulez-vous vous inscrire?</button>-->
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group ">
-                            <label class="control-label requiredField" id='password' for="password" > mot de passe 
+                            <label class="control-label requiredField" id='password' for="password" >Mot de passe</label>
                                 <!--<span class="asteriskField"> * </span></label>-->
-
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                 </div>
                                 <input class="form-control" id="password" name="password" type="password" placeholder="votre mot de passe..." maxlength="48"/>
                             </div>
                         </div>
-                         </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
+                    </div>
+                        <div class="col-md-6 col-sm6 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" > confirmation mot de passe 
-                                    <!--<span class="asteriskField"> * </span></label>-->
-
+                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" >Confirmez votre mot de passe</label>
+                                    <!--<span class="asteriskField"> * </span>-->
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                     </div>
@@ -175,38 +152,27 @@
 <!--                </div>-->
                 <!--</div>-->
 
-
-
                 <div class="row">
                     <!--majeur et bouton validation-->
                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <input type="checkbox" id="majeur" name="majeur" value="ON" onClick=""/> je reconnais être majeur<span class="asteriskField">*</span>
+                        <input type="checkbox" id="majeur" name="majeur" value="ON" onClick=""/> Je reconnais être majeur<span class="asteriskField">*</span>
                     </div>
                     <!--</div>-->
 
                     <!--reglement-->
                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <input type="checkbox" name="reglement" value="ON"/> j'accepte le règlement du jeu<span class="asteriskField">*</span>
+                        <input type="checkbox" name="reglement" value="ON"/> J'accepte le règlement du jeu<span class="asteriskField">*</span>
                     </div>
                     <!--</div>-->
 
                     <!--newsletter-->
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <input type="checkbox" name="newsletter" value="ON" checked/> Inscription à la newsletter
-                    </div>
-                    <!--</div>-->
-
-
+                    </div><!--</div>-->
                 </div>
-
-                <div id="espace"> </div>
-                <!--espace entre bouton et reglement-->
-
                 <div class="row">
-
                     <!--</div>-->
                     <!--<br/><br/><div class="row">bouton validation-->
-
                     <div class="col-12 text-center mt-5">
                         <div class="form-group">
                             <div>
@@ -253,7 +219,6 @@
                 }
             }
         }
-
         //fonction verification mail
         function verifiermail(email) {
             if ((email_add.indexOf("@") != 1) && (email_add.indexOf(".") != 2)) {
@@ -263,11 +228,8 @@
                 return false
             }
             ;
-
         }
         ;
-
-
     }));//fin function
     //fin document ready
 </script>
