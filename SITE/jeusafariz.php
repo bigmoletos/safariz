@@ -7,6 +7,7 @@ $cookiemail = "";
 $cookienom = "";
 $messageinscrit = "";
 $messageReglement = "";
+$messageMajeur= "";
 $messagePerdu = "";
 $messageGagne = "";
 $messageDejaJoueToday = "";
@@ -25,9 +26,10 @@ $messageChampFormulaire = "";
 if(isset($_POST['bouton'])){
 //suppression cookie
 setcookie('messageGagne');
+setcookie('cookieprenom');
 //suppression valeur cookie
 unset($_COOKIE['messageGagne']);    
-    
+    unset($_COOKIE['prenom']);    
     
 $cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
@@ -44,8 +46,8 @@ setcookie('password', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, 
 var_dump($_POST);
 
 var_dump($_COOKIE);
-var_dump($cookieprenom);
-var_dump($cookienom);
+//var_dump($cookieprenom);
+//var_dump($cookienom);
 //chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion
@@ -157,7 +159,10 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
 
 //    var_dump($client);
 } else {
-    $messageReglement = "</br>veuillez accepter le réglement et confirmer que vous êtes majeur</br>";
+   ! isset($_POST['majeur'])? $messageMajeur= "</br>veuillez  confirmer que vous êtes majeur</br>": $messageMajeur= "";
+  ! isset($_POST['reglement'])? $messageReglement=  "</br>veuillez accepter le réglement </br>": $messageReglement= "";
+   var_dump($messageMajeur);
+   var_dump($messageReglement);
 } //fin fonction  formulaire
 //*************************************************************************************
 //*/*******************************************************
