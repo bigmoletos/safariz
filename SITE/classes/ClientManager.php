@@ -77,13 +77,13 @@ class ClientManager {
             $req->bindValue(':tel', $client->getTel());
             $req->bindValue(':session_id', $client->getSession_Id());
             $req->bindValue(':ip', $client->getIp());
-             $req->bindValue(':password', $client->getPassword());
+            $req->bindValue(':password', $client->getPassword());
             $req->bindValue(':newsLetterInscription', $client->getNewsLetterInscription());
             echo "<pre>";
 // var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
-              //  echo "<br/>nouveau client correctement inséré<br/>";
+                //  echo "<br/>nouveau client correctement inséré<br/>";
                 return $this->db->lastInsertId();
             } else {
                 return false;
@@ -134,19 +134,31 @@ class ClientManager {
 //        //on retourne la ligne par fetch()
 //        return $resultat->fetch();       
 //    }
-//version david
-    public function load($id) {
-        //pour mettre les date en francais dans la requete
-        //  $requete->query('SET lc_time_names = \'fr_FR\'');
-        $requete = $this->db->prepare('SELECT id, auteur, titre, contenu, date_ajout, date_modif, image FROM client WHERE id = :id');
-        $requete->bindValue(':id', (int) $id, PDO::PARAM_INT);
+    //cette methode permet de verifier le lgin et mot de passe d'un client
+    public function clientLogin(Client $client) {
+      //  $result=array();
+//        select mail, password FROM clients WHERE password='root' AND mail='riz@riz.r'
+        $requete = $this->db->prepare('select  nom, prenom, password FROM clients WHERE  mail= :mail ');
+//        $requete->bindValue(':password', $client->getPassword());
+        $requete->bindValue(':mail', $client->getMail());
         $requete->execute();
-        $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
-        $client = $requete->fetch();
-        $client->setDate_ajout(new DateTime($client->getDate_ajout()));
-        $client->setDate_modif(new DateTime($client->getDate_modif()));
-//        var_dump($client);
-        return $client;
+  //     var_dump($requete).
+    //   var_dump($client);
+     $result = $requete->fetch(PDO::FETCH_ASSOC);
+   //   $result = $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
+    //   $result= $requete->fetchAll();
+    //  var_dump($result);
+     //   $verif2 = $requete->rowCount();
+     //   var_dump($verif2);
+    //    var_dump($result['password']);
+        if ($result) {
+          //  echo 'mot de passe trouvé <br>';
+            return $result;
+            $requete->closeCursor();
+        }
+//echo 'mot de passe non trouvé <br>';
+        return FALSE;
+        $requete->closeCursor();
     }
 
 //**************************************************
@@ -209,6 +221,7 @@ class ClientManager {
 
         return $listeClient;
     }
+
 //******************************************************************************
     //va chercher la date d'inscription en fonction du mail et la compare à la date du jour
 //    si cette date est inconnue (FALSE), alors le client peut jouer ce jour. On identifie un client par son mail, que l'on considére comme unique
@@ -219,15 +232,15 @@ class ClientManager {
         $requete->bindValue(':mail', $client->getMail());
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
-       // var_dump($result);
-        $verif=count($result);
-        $verif2=$requete->rowCount();
-     //   var_dump($verif2);
-    //   var_dump($verif);
-        if ($verif2){
-           // echo "vous avez  joué aujourd'hui";
+        // var_dump($result);
+        $verif = count($result);
+        $verif2 = $requete->rowCount();
+        //   var_dump($verif2);
+        //   var_dump($verif);
+        if ($verif2) {
+            // echo "vous avez  joué aujourd'hui";
 //        if ($requete->rowCount()){     //compte le nbre de lignes  de date d'inscription correspondant  à la date du jour renvoyées par la requete, si aucune correspondance n'est  trouvée le client peut jouer
-            return true; 
+            return true;
         }
         //permet de fermer la requete
         $requete->closeCursor();
@@ -243,10 +256,10 @@ class ClientManager {
 // en considérant que seule l'adresse permet d'identifier un foyer. Un foyer pouvant jouer chaque jour le foyer sera valide s'il est unique
 // et s'il n'a pas deja joué ce jour.
 //SELECT   `adresse`, `cp`, `ville`, DATE(dateInscription)  FROM clients WHERE adresse='1 avenue du riz rouge' and cp='13045' AND ville='SAINTE MARIE DE LA MER' AND DATE(dateInscription)='2017-11-04'
-   
-      public function foyerUnique(Client $client) {
 
-        $requete = $this->db->prepare(" SELECT adresse, cp, ville, DATE(dateInscription)  FROM clients WHERE adresse= :adresse and cp= :cp AND ville= :ville AND DATE(dateInscription)=DATE(NOW())") ;
+    public function foyerUnique(Client $client) {
+
+        $requete = $this->db->prepare(" SELECT adresse, cp, ville, DATE(dateInscription)  FROM clients WHERE adresse= :adresse and cp= :cp AND ville= :ville AND DATE(dateInscription)=DATE(NOW())");
         $requete->bindValue(':adresse', $client->getAdresse());
         $requete->bindValue(':cp', $client->getCp());
         $requete->bindValue(':ville', $client->getVille());
@@ -254,30 +267,19 @@ class ClientManager {
         $requete->execute();
         $result = $requete->fetch(PDO::FETCH_ASSOC);
 //        var_dump($result);
-        if (count($result)){
+        if (count($result)) {
 //        if ($requete->rowCount()){     //compte le nbre de lignes renvoyées par la requete, si aucune ligne le client peut jouer
-            return true; 
+            return true;
         }
         //permet de fermer la requete
         $requete->closeCursor();
     }
 
-    
-    
-    
-    
     //methode count permet de compter le nombre de client dans la bdr
 //    public function count() {
 //        $count = $this->db->query('SELECT COUNT(*) FROM client');
 //        return $count->fetchColumn();
 //    } 
-    
-    
-    
-    
-    
-    
-     
     //    //**************************************************    
     //methode permettant la gestion des images
     //Premiere partie tu récupère le nom de l'image :
