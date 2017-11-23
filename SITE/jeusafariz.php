@@ -1,7 +1,8 @@
 <?php
+
 session_start();
 //initialisation des variables
-$cookiepwd = "";
+$cookiepassword = "";
 $cookielog = "";
 $cookiemail = "";
 $cookienom = "";
@@ -11,18 +12,24 @@ $messagePerdu = "";
 $messageGagne = "";
 $messageDejaJoueToday = "";
 $messageChampFormulaire = "";
-////$_POST['pwd']="";
+////$_POST['password']="";
 ////$_POST['login']="";
 //$admin="";
-////creation du cookie password autopwd date d'expiration dans 5 min
-//$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('autopwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+////creation du cookie password autopassword date d'expiration dans 5 min
+//$cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
+//setcookie('autopassword', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 ////creation du cookie login autologin? date d'expiration dans 1an
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('autologin', ' ' . $cookiepwd . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+//setcookie('autologin', ' ' . $cookiepassword . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie mail date d'expiration dans 5min
 
-if(isset($_POST['inscription'])){
+if(isset($_POST['bouton'])){
+//suppression cookie
+setcookie('messageGagne');
+//suppression valeur cookie
+unset($_COOKIE['messageGagne']);    
+    
+    
 $cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie nom date d'expiration dans 5min
@@ -33,16 +40,18 @@ $cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui poss�
 setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
 $clientPassword=$cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
 setcookie('password', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, false, true);
+
 }
-var_dump($_COOKIE);
+
 //chargement des classes
-require('chargeurClass.php');
+set_include_path ( dirname(__FILE__));
+require_once('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
 //require ('classes/clientManager.php');
 //require ('classes/client.php');
 
-require('connexionBD.php');
+require_once('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
 
@@ -65,7 +74,22 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
         $form['tel'] = $_POST['tel'];
     }
     $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
-
+//*********************
+//gestion mot de passe
+   if (!!($_POST['password']) && !!($_POST['confirmpwd'])) {
+        $form['password'] = securisation($_POST['password']);
+        $confirmpwd = securisation($_POST['confirmpwd']);  
+        
+         if ($form['password'] == $confirmpwd) {
+                // cryptage du mot de pwd par un hachage en md5
+                $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT); 
+        
+        
+         }  
+        
+   }//fin if (!!($_POST['password']) && !!($_POST['confirmpwd']))
+    
+//*********************    
     if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
         $form['nom'] = $_POST['nom'];
         $form['prenom'] = $_POST['prenom'];
@@ -80,7 +104,7 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
         //la fonction isValidFormulaire
         // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
 //     var_dump($client);
-     var_dump($form);
+    // var_dump($form);
         //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
         $client = new Client($form);
         //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
@@ -92,26 +116,36 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {//  !! permet de ver
             $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
         } else {
             $idclient = $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-            $messageinscrit = "</br>bravo vous êtes inscrit ! </br>";
+            $messageinscrit = "</br>bravo vous participation au jeu est validée ! </br>";
             //******************************
             // fonction gagné perdu
 
-            $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
+            $igmanager = new IgManager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
             if ($lot = $igmanager->GagnePerdu($idclient)) {
                 //todo fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-                $statut = "gagne";
-                $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-                ($statut="gagne")? header("Location: gagne.php"):"";
+                
+              //   header('Location: gagne.php');
+            
+               $prenom= $form['prenom'];
+               $nom= $form['nom'];
+               //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
+                $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant:</br> $lot ";
+               $cookieMessageGagne=$messageGagne;
+                setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
+                header("Location: http://safariz.bucotic.com/gagne.php");
+				die('header("Location: gagne.php");');
+				exit;
+				
             } else {
-                 $statut = "perdu";
-                 ($statut="perdu")?header("Location: perdu.php"):"";
+                //header("Location: perdu.php");
+				die('header("Location: perdu.php");');
                 $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
             }
             //******************************
         }
         //0000000000000000000000000000000000000000000000000000
-        //  echo ' </br>formulaire ok </br>';
+        
     } else {
         $messageChampFormulaire = '</br></br>Veuillez remplir tous les champs du  formulaire</br></br>'; // gestion des erreurs en php
     }
@@ -172,33 +206,10 @@ $TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
 //********************
 
 
-?>
-<!--<!DOCTYPE html>
-
-formulaire d'inscription 
-
-<html>
-    <head>
-        <title>Formulaire d'inscription</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style/styleFormulaire.css" type="text/css" charset="utf_8"/>
-        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="style/style.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="style/bootstrap-iso.css"/>
-        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
-
-
-    </head>
-    <body>-->
-        
- <?php //include ('header.php'); ?>       
+?>       
+<?php //include ('header.php'); ?>
 <?php include ('form.php'); ?>
-    </body>
+</body>
 </html>
 
 

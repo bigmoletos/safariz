@@ -1,10 +1,47 @@
 <?php
-//cette classe permet de gerer la partie back-Office du site 
+
 class AdminJeu {
 
     private $date_debut_jeu,
-            $date_fin_jeu,
-            $id_dates_jeu;
+        $date_fin_jeu,
+        $id_dates_jeu,
+        $count_gagnants,
+        $gagnants,
+        $gagantscsv,
+        $participantscsv,
+        $count_clients;
+
+    function getCount_gagnants() {
+        return $this->count_gagnants;
+    }
+    function getCount_clients() {
+        return $this->count_clients;
+    }
+
+    function setCount_gagnants($count_gagnants) {
+        $this->count_gagnants = $count_gagnants;
+    }
+    function setCount_clients($count_clients) {
+        $this->count_clients = $count_clients;
+    }
+
+    function getGagnants() {
+        return $this->gagnants;
+    }
+    function getClients() {
+        return $this->clients;
+    }
+
+    function setGagnants($gagnants) {
+        $this->gagnants = $gagnants;
+    }
+    function getCreatecsv() {
+        return $this->gagantscsv;
+    }
+    function getCreatecsvparticipants() {
+        return $this->participantscsv;
+    }
+
 
     //methode constructeur via la fonction hydrate
     public function __construct(array $dates = []) {
