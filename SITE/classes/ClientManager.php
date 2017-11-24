@@ -138,7 +138,7 @@ class ClientManager {
     public function clientLogin(Client $client) {
       //  $result=array();
 //        select mail, password FROM clients WHERE password='root' AND mail='riz@riz.r'
-        $requete = $this->db->prepare('select  nom, prenom, password FROM clients WHERE  mail= :mail ');
+        $requete = $this->db->prepare('select  * password FROM clients WHERE  mail= :mail ');
 //        $requete->bindValue(':password', $client->getPassword());
         $requete->bindValue(':mail', $client->getMail());
         $requete->execute();

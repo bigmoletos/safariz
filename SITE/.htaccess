@@ -1,0 +1,6 @@
+<FilesMatch adminInscription.php>
+AuthUserFile C:\UwAmp\www\TP_SOFTEAM\softeam\PROJETS\SAFARIZ\SITE\log\.htpasswd
+AuthName "Acces restreint.  Connexion administrateur"
+AuthType Basic
+require valid-user
+</FilesMatch>

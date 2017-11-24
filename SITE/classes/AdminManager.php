@@ -147,7 +147,36 @@ class AdminManager {
     }
 
 //fin fonction connectAdmin
-}
 
+
+//cette methode permet de verifier le lgin et mot de passe d'un client
+    public function adminLogin(Admin $admin) {
+      //  $result=array();
+//        select mail, password FROM clients WHERE password='root' AND mail='riz@riz.r'
+        $requete = $this->db->prepare('select  nomAdm, login, password FROM administrateur WHERE  email= :email ');
+//        $requete->bindValue(':password', $client->getPassword());
+        $requete->bindValue(':email', $admin->getEmail());
+        $requete->execute();
+  //     var_dump($requete).
+    //   var_dump($client);
+     $result = $requete->fetch(PDO::FETCH_ASSOC);
+   //   $result = $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
+    //   $result= $requete->fetchAll();
+    //  var_dump($result);
+     //   $verif2 = $requete->rowCount();
+     //   var_dump($verif2);
+    //    var_dump($result['password']);
+        if ($result) {
+          //  echo 'mot de passe trouvé <br>';
+            return $result;
+            $requete->closeCursor();
+        }
+//echo 'mot de passe non trouvé <br>';
+        return FALSE;
+        $requete->closeCursor();
+    }
+
+
+}
 //fin classe
 ?>

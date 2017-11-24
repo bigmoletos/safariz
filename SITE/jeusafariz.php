@@ -12,10 +12,12 @@ $messagePerdu = "";
 $messageGagne = "";
 $messageDejaJoueToday = "";
 $messageChampFormulaire = "";
-$_POST['majeur']="";
-$_POST['reglement']="";
-////$_POST['password']="";
-////$_POST['login']="";
+//$_POST['majeur']="";
+//$_POST['reglement']="";
+//$_POST['tel']="";
+//$_POST['password']="";
+//$_POST['login']="";
+//$_POST['nom']="";
 //$admin="";
 ////creation du cookie password autopassword date d'expiration dans 5 min
 //$cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
@@ -44,9 +46,9 @@ if (isset($_POST['bouton'])) {
     $clientPassword = $cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
     setcookie('password', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, false, true);
 }
-var_dump($_POST);
+//var_dump($_POST);
 
-var_dump($_COOKIE);
+//var_dump($_COOKIE);
 //var_dump($cookieprenom);
 //var_dump($cookienom);
 //chargement des classes
@@ -72,7 +74,7 @@ date_default_timezone_set("Europe/Paris");
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
 $form = array();
 $statut = "";
-var_dump($_POST);
+//var_dump($_POST);
 //*************************************************************************************
 //if (isset($_POST['majeur'])) {
 //  } else {
@@ -232,7 +234,7 @@ formulaire d'inscription
     </head>
     <body>-->
 
-<?php //include ('header.php');   ?>
+<?php //include ('header.php');?>
 <?php include ('form.php'); ?>
 </body>
 </html>

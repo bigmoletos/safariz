@@ -1,15 +1,11 @@
 <?php
-
-//!!!!!!!!!!!!!!!!!
-//Refaire entierement cette page pour logger un admin, actuellement permet d'inscrire un administrateur
-//!!!!!!!!!!!!!!!!!
-
 session_start();
+
 //initialisation des variables
 //$cookiepwd = "";
 //$cookielog = "";
 //$_POST['pwd']="";
-//$_POST['login']="";
+//$_POST['password']="";
 $admin = "";
 //creation du cookie password autopwd date d'expiration dans 5 min
 //$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
@@ -52,147 +48,180 @@ function securisation($champAsecuriser) {
 
 $form = array();
 //var_dump($_POST);
-        if (isset($_POST['veriflog'])) {
-            //creation du cookie login autologin? date d'expiration dans 1an
-            $securisationLog=securisation($_POST['login']);
-            $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-              $securisationAdmin=securisation($_POST['nomAdm']);
-             $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookienomAdm', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-          //  var_dump($cookienomAdm);
-          //  var_dump($cookielog);
-            
-            if (!!($_POST['login']) && !!($_POST['nomAdm'])) {
-                $form['login'] = securisation($_POST['login']);
-                 $form['nomAdm'] = securisation($_POST['nomAdm']);
-                $LogAdmin = new Admin($form);
-               $verificationLog= $manager->addAdmincontrolelog($LogAdmin);
-          //      var_dump($form);
-              //  var_dump($_POST);
-         //     var_dump($verificationLog);
-         //     var_dump($LogAdmin);
-          //      var_dump($manager);
-             // $nblog-> getLogin();
-          //      var_dump($nblog);
-                if(is_null($verificationLog)){
-                    echo ' login existe deja';
-                }
-                if($verificationLog===FALSE){
-                    echo ' login ok ';
-                   header ("location: loginClientSuite.php");
-                }
+if (isset($_POST['veriflog'])) {
+    //creation du cookie login autologin? date d'expiration dans 1an
+    $securisationLog = securisation($_POST['password']);
+    $cookielog = ' ' . $securisationLog . ' '; //on créer une variable qui possède le contenu du champ password
+    setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+    $securisationAdmin = securisation($_POST['mailAdmin']);
+    $cookiemailAdmin = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ password
+    setcookie('cookiemailAdmin', ' ' . $cookiemailAdmin . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+    //  var_dump($cookiemailAdmin);
+    //  var_dump($cookielog);
 
-        //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
+    if (!!($_POST['password']) && !!($_POST['mailAdmin'])) {
+        $form['password'] = securisation($_POST['password']);
+
+        $form['email'] = securisation($_POST['mailAdmin']);
+        $LogAdmin = new Admin($form);
+        $verificationLog = $manager->adminLogin($LogAdmin);
+        //     var_dump($verificationLog);
+        $hash = $verificationLog['password'];
+        $nomAdm = $verificationLog['nomAdm'];
+        $login = $verificationLog['login'];
+        //    var_dump($hash);
+        if (password_verify($form['password'], $hash)) {
+
+            //   echo "mot de passe ok Bonjour $prenom $nom  nous vous souhaitons bonne chance!</br>";
+            $messageLoginAdmin = "Bonjour $login nous vous souhaitons une bonne journée!</br>  ";
+            $cookiemessageLoginAdmin = $messageLoginAdmin;
+            setcookie('messageLoginAdmin', ' ' . $cookiemessageLoginAdmin . ' ', time() + 5 * 60, null, null, false, true);
+            // var_dump($cookiemessageLoginAdmin);
+
+            header("location:pageAdministrateur.php");
+        } else {
+            echo 'mot de passe incorrect veuillez le ressaisir';
+        }
+        //   var_dump($form);
+        //  var_dump($_POST);
+        // var_dump($verificationLog);
+        // var_dump($LogAdmin);
+        // var_dump($manager);
+        // $nblog-> getLogin();
+        //      var_dump($nblog);
+        //    if (is_null($verificationLog)) {
+        //        echo ' password existe deja';
+        //    }
+        //    if ($verificationLog === FALSE) {
+        //        echo ' password ok ';
+        //        //  header ("location: loginAdminSuite.php");
+    }
+
+    //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le password n'existe pas deja
 //                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
 //        if (isset($_POST['log'])) {
 //            if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])) {
 //                $form['password'] = securisation($_POST['pwd']);
 //                $confirmpwd = securisation($_POST['confirmpwd']);
-//                if (!!($_POST['nomAdm']) && !!($_POST['email'])) {
+//                if (!!($_POST['mailAdmin']) && !!($_POST['email'])) {
 //
 //                    if ($form['password'] == $confirmpwd) {
 //
-//                        $form['nomAdm'] = securisation($_POST['nomAdm']);
+//                        $form['mailAdmin'] = securisation($_POST['mailAdmin']);
 //                        $form['email'] = securisation($_POST['email']);
 //                        $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
 //                        // cryptage du mot de pwd par un hachage en md5
 //                        //        $form['password'] = md5($form['password']);
 //                        $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-                        //     $form['confirmpwd'] = md5($form['confirmpwd']);
-                        //    var_dump($form['login']);
-                        //  var_dump($form['nomAdm']);
-                        //   var_dump($form['email']);
-                        //   var_dump($form['password']);
-                        //  var_dump($_SERVER);
-                        //   var_dump($form);
-                        //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
-                        //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
-                //        $admin = new Admin($form);
-                        //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
-               //         $manager->addAdmin($admin);
-             //       }//fin login nomadm email 
-              ////      else {
-                        //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
-          //          }
-          //          echo ' <br>formulaire ok<br>';
-                    // header("Location: pageAministrateur.php");
-                    //   var_dump($admin);
-               // } //fin verif confirmation 
-                else {
-                    echo ' <br>formulaire incomplet veuillez entrer le login<br>';
-                }
-           echo '<br>Formulaire incomplet veuillez verifier les champs<br>';
-           
-       
-       } //fin fonction fomulaire isset log  
-       }////fin fonction fomulaire test !! login
-  //              }//fin fonction fomulaire isset veriflog
+    //     $form['confirmpwd'] = md5($form['confirmpwd']);
+    //    var_dump($form['password']);
+    //  var_dump($form['mailAdmin']);
+    //   var_dump($form['email']);
+    //   var_dump($form['password']);
+    //  var_dump($_SERVER);
+    //   var_dump($form);
+    //mysql_query("INSERT INTO validation VALUES('', '$password', '$pwd', '$email')");
+    //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
+    //        $admin = new Admin($form);
+    //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
+    //         $manager->addAdmin($admin);
+    //       }//fin password nomadm email 
+    ////      else {
+    //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
+    //          }
+    //          echo ' <br>formulaire ok<br>';
+    // header("Location: pageAministrateur.php");
+    //   var_dump($admin);
+    // } //fin verif confirmation 
+//        else {
+//            echo ' <br>formulaire incomplet veuillez entrer le password<br>';
+//        }
+//        echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
+//    } //fin fonction fomulaire isset log  
+}////fin fonction fomulaire test !! password
+//              }//fin fonction fomulaire isset veriflog
 //var_dump($form);
 //var_dump($_POST);
 //var_dump($db);
 //var_dump($_SESSION);
 //var_dump($_SERVER);
 //var_dump($_COOKIE);
-        ?>
+?>
 <!--
 Cette page permet de rajouter des administrateurs dans la base de donnée, 
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
 Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 -->
-<?php include("header.php"); ?>
+<!doctype html>
+<html>
+    <head>
+        <title>Page login joueur</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
+        <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
+        <link rel="stylesheet" href="style/formulaireLoginClientBootstrap.css"  type="text/css" charset="utf_8"/>
+        <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <script type="text/javascript" src="style/JQueryFiles/jquery.maskedinput-master/dist/jquery.maskedinput.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+    </head>
+    <body>
 
-<main id="content" class="col-12 col-md-9">  
-    <div class="bootstrap-iso">
-        <!-- <div class="container-fluid"> -->
-            <div class="well">
+        <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+        <div class="bootstrap-iso">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <h1>Accès administrateur</h1>
-                        <p>Tous les champs marqués d'une <span class="asteriskField"> *</span> sont obligatoires</p>
-                        
-                        <form method="post" action="pageAdministrateur.php">                               
-
-                            <div class="col-12 col-md-6">
-                                <label class="control-label requiredField" id='mail' for="mail">Email<span class="asteriskField">*</span></label>
-                                <div class="input-group"><div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-                                <input class="form-control" id="mail" name="mail" type="email" maxlength="48"  placeholder="xxxx@xxxx.xx"/></div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <h2>Login administrateur </h2>
+                        <form method="post" action="adminLogin.php">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" for="nom">
+                                    Mail
+                                    <span class="asteriskField">
+                                        *
+                                    </span>
+                                </label>
+                                <input class="form-control" id="mailAdmin" name="mailAdmin" placeholder="votre mail..." type="text" required/>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <label class="control-label requiredField" for="prenom">Login<span class="asteriskField"> *</span></label>
-                                <div class="input-group"><div class="input-group-addon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
-                                <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/></div>
+                            <div class="form-group ">
+                                <label class="control-label requiredField" for="prenom">
+                                    Mot de passe
+                                    <span class="asteriskField">
+                                        *
+                                    </span>
+                                </label>
+                                <input class="form-control" id="password" name="password" placeholder="votre password..." type="password" required/>
                             </div>
-                        </div>
-                    </div>
-                
-    <div id="espace"></div><!--espace-->
-            <div class="row">
-                    <div class="col-12">
-                <div class="col-md-7 col-sm-6 col-xs-12 text-center"><p><a href="">Login oublié ?</a></p></div>
+                            <div class="form-group">
+                                <div>
+                                    <button class="btn btn-primary btn-lg"  id="veriflog" name="veriflog" type="submit">ok</button>
+                                </div>
+                            </div>
 
-                <div class="col-md-5 col-sm-6 col-xs-12 text-center">
-                    <div class="form-group">
-                        <div><button class="btn btn-primary" id="veriflog" name="bouton" type="submit">Valider</button></div>
+                            <a href="adminInscription.php"/>inscription nouvel administrateur</a>
+                        </form>
                     </div>
                 </div>
             </div>
-            </div>   
-            </form>
         </div>
-    </div>
-</main>
-
-<?php include("footer.php"); ?>
 
 
- <script>
-    //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
-    //        deja dans la base, réalisé en AJAX
+
+
+
+
+        <script>
+            //        controle de saisie dynamique du champ password afin de verifier qu'il n'existe pas
+            //         deja dans la base, réalisé en AJAX
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
-                            $("#login").load("classes/AdminManager.php", {q: $("#txt").val()});
+                            $("#password").load("classes/AdminManager.php", {q: $("#txt").val()});
                         });
                     }); //fin document ready
         </script>

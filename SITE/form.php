@@ -129,9 +129,9 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 col-sm-5 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" id='password' for="password" > mot de passe 
+                                <label class="control-label requiredField" id='password' for="password" > Mot de passe </label>
                                     <!--<span class="asteriskField"> * </span></label>-->
 
                                     <div class="input-group">
@@ -141,9 +141,9 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" > confirmation mot de passe 
+                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" > Confirmation mot de passe </label> 
                                     <!--<span class="asteriskField"> * </span></label>-->
 
                                     <div class="input-group">

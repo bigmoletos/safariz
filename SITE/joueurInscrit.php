@@ -6,6 +6,7 @@ require_once('classes/AdminJeu.php');
 //require('admin.php');
 
 $db = connexionDB();
+$manager = new ClientManager($db);
 //nouvel objet de la classe adminManagerjeu instancié 
 //par les attributs de la connexionDB() à la base donnée mysql
 //$manager = new AdminManagerJeu($db);
@@ -13,11 +14,17 @@ $db = connexionDB();
 
 date_default_timezone_set("Europe/Paris");
 
+$LogClient = new Client($form);
+
 var_dump($_COOKIE);
 
- $client = new Client($form);
-$idclient = $manager->addClient($client); 
-
+ if ($manager->ClientPeutJouerCejour($client)) {
+            $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
+        } else {
+ 
+ $LogClient = new Client($form);
+        $verificationLog = $manager->clientLogin($LogClient);
+   
    $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
             if ($lot = $igmanager->GagnePerdu($idclient)) {
                 // fonction pour donner le nom
@@ -27,6 +34,7 @@ $idclient = $manager->addClient($client);
                 //    var_dump($statut);
                 $prenom = $form['prenom'];
                 $nom = $form['nom'];
+                var_dump($form);
                 //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
                 $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant:</br> $lot ";
                 $cookieMessageGagne = $messageGagne;
@@ -48,7 +56,7 @@ $idclient = $manager->addClient($client);
 
 //if ($now >= $date_debut_jeu && $now <= $date_fin_jeu) {
     $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit" style="color:white;">JOUER</button>';
-//}
+}
 //elseif ($now <= $date_debut_jeu){
 //    $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous à partir du ".$date_debut_jeu;
 //}
