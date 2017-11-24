@@ -142,9 +142,13 @@ if (isset($_POST['majeur']) && isset($_POST['reglement'])) {
                 setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
 
                 ($statut = "gagne") ? header("Location:gagne.php") : "";
+                die('header("Location: gagne.php");');
+				exit;
             } else {
                 $statut = "perdu";
                 ($statut = "perdu") ? header("Location:perdu.php") : "";
+                 die('header("Location: perdu.php");');
+				exit;
                 $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
             }
             //******************************

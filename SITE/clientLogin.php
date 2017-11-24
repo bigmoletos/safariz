@@ -70,15 +70,18 @@ if (isset($_POST['veriflog'])) {
         $nom = $verificationLog['nom'];
         $prenom = $verificationLog['prenom'];
        // var_dump($hash);
+       var_dump($verificationLog);
         if (password_verify($form['password'], $hash)) {
 
             //   echo "mot de passe ok Bonjour $prenom $nom  nous vous souhaitons bonne chance!</br>";
-            $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui!</br>  ";
+            $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui !</br>  ";
             $cookiemessageLoginClient = $messageLoginClient;
             setcookie('messageLoginClient', ' ' . $cookiemessageLoginClient . ' ', time() + 5 * 60, null, null, false, true);
-           // var_dump($cookiemessageLoginClient);
-
-            header("location: jeusafariz.php");
+         //   var_dump($cookiemessageLoginClient);
+            var_dump($_COOKIE);
+            header('location: joueurInscrit.php');
+            die('header("Location: joueurInscrit.php");');
+            exit;
         } else {
             $cookiemessageLoginClientKo = "mot de passe incorrect veuillez le ressaisir";
            // var_dump($cookiemessageLoginClientKo);
@@ -108,11 +111,11 @@ if (isset($_POST['veriflog'])) {
         <!-- <div class="container-fluid"> -->
         <div class="well">
             <div class="row">
-                <div class="col-12">
+                <!--<div class="col-12">-->
                     <div class="col-8">
                         <h1>Accès participant</h1>
                         <p>Tous les champs marqués d'une <span class="asteriskField"> *</span> sont obligatoires</p>
-
+                    </div>
                         <div class="col-4"><!--zone pour integrer les messages de retour-->        
                             <div id="message_retour" >               
                                 <p> 
@@ -135,7 +138,8 @@ if (isset($_POST['veriflog'])) {
                                     ?>
                                 </p>
                             </div><!--fin messages retour-->
-                        </div> 
+                         </div> 
+                        <!--</div>-->
                         <form method="post" action="clientLogin.php">                               
 
                             <div class="col-12 col-md-6">
@@ -148,7 +152,7 @@ if (isset($_POST['veriflog'])) {
                                 <div class="input-group"><div class="input-group-addon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
                                     <input class="form-control" id="password" name="password" placeholder="votre mot de passe..." type="password" minlength="3" maxlength="48" required/></div>
                             </div>
-                    </div>
+<!--                    </div>-->
                 </div>
                 <br>
                 <div id="espace"></div><!--espace-->
