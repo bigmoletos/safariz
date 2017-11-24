@@ -71,14 +71,18 @@ if (isset($_POST['veriflog'])) {
         $prenom = $verificationLog['prenom'];
        // var_dump($hash);
        var_dump($verificationLog);
+           $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui !</br>  ";
+            $cookiemessageLoginClient = $messageLoginClient;
+            setcookie('messageLoginClient', ' ' . $cookiemessageLoginClient . ' ', time() + 5 * 60, null, null, false, true);
+         var_dump($_COOKIE);
         if (password_verify($form['password'], $hash)) {
 
             //   echo "mot de passe ok Bonjour $prenom $nom  nous vous souhaitons bonne chance!</br>";
-            $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui !</br>  ";
-            $cookiemessageLoginClient = $messageLoginClient;
-            setcookie('messageLoginClient', ' ' . $cookiemessageLoginClient . ' ', time() + 5 * 60, null, null, false, true);
+//            $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui !</br>  ";
+//            $cookiemessageLoginClient = $messageLoginClient;
+//            setcookie('messageLoginClient', ' ' . $cookiemessageLoginClient . ' ', time() + 5 * 60, null, null, false, true);
          //   var_dump($cookiemessageLoginClient);
-            var_dump($_COOKIE);
+            
             header('location: joueurInscrit.php');
             die('header("Location: joueurInscrit.php");');
             exit;
