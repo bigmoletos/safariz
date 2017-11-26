@@ -6,19 +6,8 @@ session_start();
 //$_POST['pwd']="";
 //$_POST['login']="";
 $admin = "";
-//creation du cookie password autopwd date d'expiration dans 5 min
-//$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('cookiepwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//creation du cookie login autologin? date d'expiration dans 1an
-//$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
-//setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion
-// a enlever si l'autoload fonctionne
-//require ('classes/AdminManager.php');
-//require ('classes/Admin.php');
-
 require('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
@@ -47,89 +36,43 @@ function securisation($champAsecuriser) {
 
 $form = array();
 //var_dump($_POST);
-        if (isset($_POST['veriflog'])) {
-            //creation du cookie login autologin? date d'expiration dans 1an
-            $securisationLog=securisation($_POST['login']);
-            $cookielog = ' ' . $securisationLog. ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-              $securisationAdmin=securisation($_POST['nomAdm']);
-             $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
-            setcookie('cookienomAdm', ' ' . $cookienomAdm . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-          //  var_dump($cookienomAdm);
-          //  var_dump($cookielog);
-            
-            if (!!($_POST['login']) && !!($_POST['nomAdm'])) {
-                $form['login'] = securisation($_POST['login']);
-                 $form['nomAdm'] = securisation($_POST['nomAdm']);
-                $LogAdmin = new Admin($form);
-               $verificationLog= $manager->addAdmincontrolelog($LogAdmin);
-          //      var_dump($form);
-              //  var_dump($_POST);
-         //     var_dump($verificationLog);
-         //     var_dump($LogAdmin);
-          //      var_dump($manager);
-             // $nblog-> getLogin();
-          //      var_dump($nblog);
-                if(is_null($verificationLog)){
-                    echo ' login existe deja';
-                }
-                if($verificationLog===FALSE){
-                    echo ' login ok ';
-                   header ("location: adminInscriptionSuite.php");
-                }
+//verificatin formulaire
+if (isset($_POST['veriflog'])) {
+    //creation du cookie login et nomAdmin date d'expiration dans 1an
+    $securisationLog = securisation($_POST['login']);
+    $cookieLog = $_COOKIE['cookielog']; //on créer une variable qui possède le contenu du champ login
+    setcookie('cookielog', $securisationLog, time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+    $securisationAdmin = securisation($_POST['nomAdm']);
+//    $cookienomAdm = ' ' . $securisationAdmin . ' '; //on créer une variable qui possède le contenu du champ login
+    setcookie('cookienomAdm', $securisationAdmin, time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+//    var_dump($_POST);
 
-        //********integrer ci desssous le formulaire en 2 étapes une pour verifier que le login n'existe pas deja
-//                     si c'est le cas on affiche la suite du formulaire avec les zones mot de passe et confirmation mot de passe'
-//        if (isset($_POST['log'])) {
-//            if (!!($_POST['pwd']) && !!($_POST['confirmpwd'])) {
-//                $form['password'] = securisation($_POST['pwd']);
-//                $confirmpwd = securisation($_POST['confirmpwd']);
-//                if (!!($_POST['nomAdm']) && !!($_POST['email'])) {
-//
-//                    if ($form['password'] == $confirmpwd) {
-//
-//                        $form['nomAdm'] = securisation($_POST['nomAdm']);
-//                        $form['email'] = securisation($_POST['email']);
-//                        $form['dateLastConnexion'] = ($_SERVER['REQUEST_TIME']);
-//                        // cryptage du mot de pwd par un hachage en md5
-//                        //        $form['password'] = md5($form['password']);
-//                        $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
-                        //     $form['confirmpwd'] = md5($form['confirmpwd']);
-                        //    var_dump($form['login']);
-                        //  var_dump($form['nomAdm']);
-                        //   var_dump($form['email']);
-                        //   var_dump($form['password']);
-                        //  var_dump($_SERVER);
-                        //   var_dump($form);
-                        //mysql_query("INSERT INTO validation VALUES('', '$login', '$pwd', '$email')");
-                        //nouvel objet  $admin de la classe admin prenant les valeurs du tableau $form
-                //        $admin = new Admin($form);
-                        //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
-               //         $manager->addAdmin($admin);
-             //       }//fin login nomadm email 
-              ////      else {
-                        //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';
-          //          }
-          //          echo ' <br>formulaire ok<br>';
-                    // header("Location: pageAministrateur.php");
-                    //   var_dump($admin);
-               // } //fin verif confirmation 
-                else {
-                    echo ' <br>formulaire incomplet veuillez entrer le login<br>';
-                }
-           echo '<br>trop nul ton  formulaire est incomplet veuillez verifier les champs<br>';
-           
-       
-       } //fin fonction fomulaire isset log  
-       }////fin fonction fomulaire test !! login
-  //              }//fin fonction fomulaire isset veriflog
+    if (!!($_POST['login']) && !!($_POST['nomAdm'])) {
+        $form['login'] = securisation($_POST['login']);
+        $form['nomAdm'] = securisation($_POST['nomAdm']);
+        //on verifie que le login n'est pas deja dans la base
+        $LogAdmin = new Admin($form);
+        $verificationLog = $manager->AdminControleLog($LogAdmin);
+        if ($verificationLog) {
+//              var_dump($_POST);
+//            var_dump($verificationLog);
+//            var_dump($LogAdmin);
+//            var_dump($manager);
+            $messageLoginExiste = "le login :  $cookieLog, existe déjà dans la base, veuillez en saisir un autre ";
+        } else {
+            // echo ' login ok ';
+            header("location: adminInscriptionSuite.php");
+        }
+    } //fin fonction fomulaire isset log  
+}////fin fonction fomulaire test !! login
+//              }//fin fonction fomulaire isset veriflog
 //var_dump($form);
 //var_dump($_POST);
 //var_dump($db);
 //var_dump($_SESSION);
 //var_dump($_SERVER);
 //var_dump($_COOKIE);
-        ?>
+?>
 <!--
 Cette page permet de rajouter des administrateurs dans la base de donnée, 
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
@@ -138,12 +81,12 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 <!doctype html>
 <html>
     <head>
-        <title>Page login</title>
+        <title>Page login administrateur</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
         <!--<link rel="stylesheet" href="style/styleFormulaire.css"  type="text/css" charset="utf_8"/>-->
-         <link rel="stylesheet" href="style/formulaireLoginAdminBootstrap.css"  type="text/css" charset="utf_8"/>
+        <link rel="stylesheet" href="style/formulaireLoginAdminBootstrap.css"  type="text/css" charset="utf_8"/>
         <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
         <!--<script src="style/jqueryFiles/jquery-3.2.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -152,53 +95,137 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
 
-<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-3 col-sm-3 col-xs-12">
-       <h2>Inscription administrateur </h2>
-       <form method="post" action="adminInscription.php">
-     <div class="form-group ">
-      <label class="control-label requiredField" for="nom">
-       NOM
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <input class="form-control" id="nomAdm" name="nomAdm" placeholder="votre nom..." type="text"/>
-     </div>
-     <div class="form-group ">
-      <label class="control-label requiredField" for="prenom">
-       LOGIN
-       <span class="asteriskField">
-        *
-       </span>
-      </label>
-      <input class="form-control" id="login" name="login" placeholder="votre login..." type="text"/>
-     </div>
-     <div class="form-group">
-      <div>
-       <button class="btn btn-primary btn-lg"  id="veriflog" name="veriflog" type="submit">Suivant</button>
-      </div>
-     </div>
-    </form>
-   </div>
-  </div>
- </div>
-</div>
-        
-        
-        
-        
-        
-        
+        <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+        <div class="bootstrap-iso">
+            <!-- <div class="container-fluid"> -->
+
+            <div class="well">
+                <div class="row">
+                    <!--titre-->
+                    <div class="col-8">
+                        <h1>Inscrivez un nouvel Administrateur ci-dessous :</h1>
+                        <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
+                    </div>
+                    <div class="col-4">
+                        <!--zone pour integrer les messages de retour-->        
+                        <div id="message_retour" >               
+                            <p> 
+                                <?php
+//                                echo (isset($messageinscrit)) ? $messageinscrit : "";
+//                                echo (isset($messageMail)) ? $messageMail : "";
+//                                echo (isset($messageReglement)) ? $messageReglement : "";
+//                                echo (isset($messageMajeur)) ? $messageMajeur : "";
+//                                echo (isset($messagePerdu)) ? $messagePerdu : "";
+//                                echo (isset($messageGagne)) ? $messageGagne : "";
+//                                echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
+//                                echo (isset($messageChampFormulaire)) ? $messageChampFormulaire : "";
+                                echo (isset($messageLoginExiste)) ? $messageLoginExiste : "";
+//                                echo (isset($messageConfirmationMotPasse)) ? $messageConfirmationMotPasse : "";
+                                ?>
+                            </p>
+                        </div><!--fin messages retour-->
+
+                    </div>
+
+                </div>
+
+                <form method="post" action="adminInscription.php" onsubmit="return verifForm(this)">
+                    <div class="row">
+                        <!--nom et prenom-->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                            <div class="form-group ">
+                                <label class="control-label requiredField" for="nom">Nom<span class="asteriskField">*</span></label>
+                                <input class="form-control" id="nomAdm" name="nomAdm" type="text" placeholder="votre nom...." minlength="2" maxlength="48" onblur="verifNom(this)" required/>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" for="login">login<span class="asteriskField"> * </span></label>
+                                <input class="form-control" id="login" name="login" type="text" placeholder="votre login...." minlength="2" maxlength="48" onblur="verifPrenom(this)" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-5">
+                        <div class="form-group">
+                            <div>
+                                <button class="btn btn-primary " name="veriflog" type="submit">Suivant</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <script>
-    //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
-    //         deja dans la base, réalisé en AJAX
+
+            //function qui change le fond en rouge si erreur de saisie d'un champ
+            function surligne(champ, erreur)
+            {
+                if (erreur)
+                    champ.style.backgroundColor = "#fba";
+                else
+                    champ.style.backgroundColor = "";
+            }
+
+
+//function de verification du champ nom
+            function verifNom(champ)
+            {
+                if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+                {
+                    surligne(champ, true);
+//            str.charAt(0).toUpperCase();
+//           champ=champ.charAt(0).toUpperCase() + champ.substring(1).toLowerCase();
+
+                    return false;
+                } else
+                {
+                    surligne(champ, false);
+                    return true;
+                }
+            }
+//function de verification du champ login
+            function verifPrenom(champ)
+            {
+                if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+                {
+                    surligne(champ, true);
+                    return false;
+                } else
+                {
+                    surligne(champ, false);
+                    return true;
+                }
+            }
+
+
+            //verif complete des champs du formulaire
+            function verifForm(f)
+            {
+                var nomOk = verifNom(f.nom);
+                var loginOk = verifLogin(f.login);
+
+                if (nomOk && loginOk)
+                    return true;
+                else
+                {
+                    alert("Veuillez remplir correctement tous les champs");
+                    return false;
+                }
+            }
+
+
+            //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
+            //         deja dans la base, réalisé en AJAX
             $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
@@ -207,4 +234,5 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                     }); //fin document ready
         </script>
     </body>
+    <?php include("footer.php"); ?>
 </html>

@@ -80,10 +80,10 @@ if (isset($_POST['veriflog'])) {
 
             header("location:pageAdministrateur.php");
         } else {
-            $messageverifMotPasse= 'mot de passe incorrect veuillez le ressaisir';
-//            echo 'mot de passe incorrect veuillez le ressaisir';
+            echo 'mot de passe incorrect veuillez le ressaisir';
         }
     }
+
 }////fin fonction fomulaire test !! password
 //              }//fin fonction fomulaire isset veriflog
 //var_dump($form);
@@ -101,7 +101,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 <!doctype html>
 <html>
     <head>
-        <title>Page login administrateur</title>
+        <title>Page login joueur</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
@@ -115,87 +115,87 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="style/style.css">
+         <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
-        <main id="content" class="col-9 col-md-9">
+<main id="content" class="col-9 col-md-9">
 
-            <div class="bootstrap-iso">
-                <!-- <div class="container-fluid"> -->
+        <div class="bootstrap-iso">
+            <!-- <div class="container-fluid"> -->
 
-                <div class="well">
-                    <div class="row">
-                        <!--titre-->
-                        <div class="col-8">
-                            <h2>Pour vous connecter veuillez saisir votre login et votre mot de passe Administrateur </h2>
-                            <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
-                        </div>
-                        <div class="col-4">
-                            <!--zone pour integrer les messages de retour-->        
-                            <div id="message_retour" >               
-                                <p> 
-                                    <?php
+            <div class="well">
+                <div class="row">
+                    <!--titre-->
+                    <div class="col-8">
+                        <h1>Pour vous connecter veuillez saisir votre login et mot de passe Administrateur </h1>
+                        <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
+                    </div>
+                    <div class="col-4">
+                        <!--zone pour integrer les messages de retour-->        
+                        <div id="message_retour" >               
+                            <p> 
+                                <?php
 //                                echo (isset($messageinscrit)) ? $messageinscrit : "";
 //                                echo (isset($messageMail)) ? $messageMail : "";
 //                                echo (isset($messageReglement)) ? $messageReglement : "";
-                                    //                                echo (isset($messageMajeur)) ? $messageMajeur : "";
-                                    //                                echo (isset($messagePerdu)) ? $messagePerdu : "";
+    //                                echo (isset($messageMajeur)) ? $messageMajeur : "";
+    //                                echo (isset($messagePerdu)) ? $messagePerdu : "";
 //                                echo (isset($messageGagne)) ? $messageGagne : "";
 //                                echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
 //                                echo (isset($messageChampFormulaire)) ? $messageChampFormulaire : "";
 //                                echo (isset($messageLoginExiste)) ? $messageLoginExiste : "";
-                                echo (isset($messageverifMotPasse)) ? $messageverifMotPasse : "";
-                                    ?>
-                                </p>
-                            </div><!--fin messages retour-->
-
-                        </div>
+//                                echo (isset($messageConfirmationMotPasse)) ? $messageConfirmationMotPasse : "";
+                                ?>
+                            </p>
+                        </div><!--fin messages retour-->
 
                     </div>
 
-                    <form method="post" action="adminLogin.php" onsubmit="return verifForm(this)">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group ">
-                                    <label class="control-label requiredField" id='mail' for="mail"> Email <span class="asteriskField"> * </span></label>
+                </div>
 
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-envelope"></i>
-                                        </div>
-                                        <input class="form-control" id="mailAdmin" name="mailAdmin" type="email"  placeholder="xxx@xxx.xx"  minlength="6" maxlength="48" onblur="verifMail(this)" required/>
+                <form method="post" action="adminLogin.php" onsubmit="return verifForm(this)">
+                <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" id='mail' for="mail"> Email <span class="asteriskField"> * </span></label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                     </div>
+                                    <input class="form-control" id="email" name="email" type="email"  placeholder="xxx@xxx.xx"  minlength="6" maxlength="48" onblur="verifMail(this)" required/>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group ">
-                                    <label class="control-label requiredField" id='passwordA' for="password" > Mot de passe </label>
-                                        <!--<span class="asteriskField"> * </span></label>-->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group ">
+                                <label class="control-label requiredField" id='passwordA' for="password" > Mot de passe </label>
+                                    <!--<span class="asteriskField"> * </span></label>-->
 
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                         </div>
                                         <input class="form-control" id="password" name="password" type="password" placeholder="votre mot de passe..." minlength="5" maxlength="48" onblur="return verifPassword(this)"/>
                                     </div>
-                                </div>
                             </div>
                         </div>
+                     </div>
                         <div id="espace"> </div>
-                        <!--espace entre bouton et reglement-->
-                        <div class="row">
-                            <div class="col-12 text-center mt-5">
-                                <div class="form-group">
-                                    <div>
-                                        <button class="btn btn-primary " name="veriflog" type="submit">Suivant</button>
-                                    </div>
-                                </div>
+                    <!--espace entre bouton et reglement-->
+            <div class="row">
+                        <div class="col-12 text-center mt-5">
+                        <div class="form-group">
+                            <div>
+                                <button class="btn btn-primary " name="veriflog" type="submit">Suivant</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+                </form>
             </div>
-            <!--</div>-->
-        </main>
+        </div>
+   <!--</div>-->
+    </main>
         <script>
 
             //function qui change le fond en rouge si erreur de saisie d'un champ
@@ -207,41 +207,41 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                     champ.style.backgroundColor = "";
             }
 
-            //function de verification du champ mail
-            function verifMail(champ)
-            {
-                var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-                if (!regex.test(champ.value))
-                {
-                    // var messageMail= "Veuillez remplir correctement  le champ mail ";
-                    //    alert("Veuillez remplir correctement  le champ mail ");
-                    //  document.write(messageMail);
+  //function de verification du champ mail
+    function verifMail(champ)
+    {
+        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+        if (!regex.test(champ.value))
+        {
+            // var messageMail= "Veuillez remplir correctement  le champ mail ";
+            //    alert("Veuillez remplir correctement  le champ mail ");
+            //  document.write(messageMail);
 
-                    return false;
-                } else
-                {
-                    surligne(champ, false);
-                    ;
-                    return true;
-                }
-            }
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            ;
+            return true;
+        }
+    }
 
 
 //function de verification du champ  password
-            function verifPassword(champ)
-            {
-                if (champ.value.length < 5 || champ.value.length > 25)
+    function verifPassword(champ)
+    {
+        if (champ.value.length < 5 || champ.value.length > 25)
 //        var regex = /^[a-zA-Z._ -]{2, 25}$/;
 //        if (!regex.test(champ.value))
-                {
-                    surligne(champ, true);
-                    return false;
-                } else
-                {
-                    surligne(champ, false);
-                    return true;
-                }
-            }
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }  
 //function de verification du champ login
             function verifPrenom(champ)
             {
@@ -263,9 +263,9 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
             function verifForm(f)
             {
                 var mailOk = verifMail(f.email);
-                var verifPasswordOk = verifPassword(f.password)
+        var verifPasswordOk= verifPassword(f.password)
 
-                if (mailOk && verifPasswordOk)
+        if (mailOk && verifPasswordOk )
                     return true;
                 else
                 {

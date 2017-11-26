@@ -39,12 +39,11 @@ class AdminManager {
             $req->bindValue(':email', $admin->getEmail());
             $req->bindValue(':dateLastConnexion', $admin->getDateLastConnexion());
             echo "<pre>";
-            var_dump($req);
+//            var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
-                echo "<br/>nouvel administrateur correctement inséré<br/>";
+//                echo "<br/>nouvel administrateur correctement inséré<br/>";
             }
-
             //version xxxxxx   
             //puis on fait l'execute     
             //insertion des données dans la base     
@@ -57,7 +56,7 @@ class AdminManager {
     }
 
 //cette methode controle que le login n'existe pas deja dans la base de donnée
-    public function addAdmincontrolelog(Admin $admin) {
+    public function AdminControleLog(Admin $admin) {
         try {
             //on fait le prepare et on l'affecte à la variable $req
             //on affecte à la variable $req la valeur de l'objet $admin ($this->db) puis on prepare les données        
@@ -68,19 +67,31 @@ class AdminManager {
             $req = $this->db->prepare('select login from administrateur WHERE login= :login');
             $req->bindValue(':login', $admin->getLogin());
             $req->execute();
-            var_dump($req);
+//            var_dump($req);
             $nblog = $req->fetch(PDO::FETCH_ASSOC);
-            var_dump($nblog);
-            var_dump($admin);
-            if ($nblog == TRUE) {
-                echo "<pre> Veuillez entrer un nouveau login</pre>";
-            } else {
-                echo "<pre> ce login n'existe pas</pre>";
-                var_dump($nblog);
-                echo "VALEUR DE nblog: $nblog ---";
-                $nblog = FALSE;
-                return $nblog;
-            }
+//            var_dump($nblog);
+//            var_dump($admin);
+//            SSSSSSSSSSSSSSS
+            $verif = count($nblog);
+      $verif2 = $req->rowCount();
+//       var_dump($verif2);
+//        var_dump($verif);
+        if ($verif2) {
+            // echo "vous avez  joué aujourd'hui";
+//        if ($requete->rowCount()){     //compte le nbre de lignes  de date d'inscription correspondant  à la date du jour renvoyées par la requete, si aucune correspondance n'est  trouvée le client peut jouer
+            return TRUE;
+//            SSSSSSSSSSSSSSSSS
+//            if ($nblog == TRUE) {
+//            //    echo "<pre> Veuillez entrer un nouveau login</pre>";
+//            } else {
+//             //   echo "<pre> ce login n'existe pas</pre>";
+//                var_dump($nblog);
+//            //    echo "VALEUR DE nblog: $nblog ---";
+//                $nblog = FALSE;
+//                return $nblog;
+          } else {
+               return FALSE;
+          }
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
             ////pour afficher les erreurs on peut aussi tenter :
