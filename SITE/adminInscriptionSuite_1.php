@@ -115,7 +115,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 <!doctype html>
 <html>
     <head>
-        <title>Page login suite</title>
+        <title>Page login administrateur suite</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">-->
@@ -131,48 +131,58 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>
     <body>
+ <main id="content" class="col-9 col-md-9">
 
-        <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+        <!-- integration formulaire de Franck -->
         <div class="bootstrap-iso">
-            <div class="container-fluid">
+            <!-- <div class="container-fluid"> -->
+
+            <div class="well">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <h2>Inscription administrateur </h2>
-                         <form method="post" name="inscriptionAdmin" id='inscriptionAdmin'  onsubmit="return verifForm(this)">
-                            <div class="form-group"> 
-                                <label class="control-label requiredField" for="pwdA"> MOT DE PASSE <span class="asteriskField">* </span>
-                                </label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-asterisk">        </i>
-                                    </div>
-                                    <input class="form-control" id="pwd" name="pwd" placeholder="votre mot de passe..." type="password" minlength="5" maxlength="48"  onblur="return verifPassword(this)"  required/>
-                                </div>
-                            </div>
+                    <!--titre-->
+                    <div class="col-8">
+                        <h1>Inscrivez un nouvel Administrateur ci-dessous :</h1>
+                        <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
+                    </div>
+                    <div class="col-4">
+                        <!--zone pour integrer les messages de retour-->        
+                        <div id="message_retour" >               
+                            <p> 
+                                <?php
+//                                echo (isset($messageinscrit)) ? $messageinscrit : "";
+//                                echo (isset($messageMail)) ? $messageMail : "";
+//                                echo (isset($messageReglement)) ? $messageReglement : "";
+//                                echo (isset($messageMajeur)) ? $messageMajeur : "";
+//                                echo (isset($messagePerdu)) ? $messagePerdu : "";
+//                                echo (isset($messageGagne)) ? $messageGagne : "";
+//                                echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
+//                                echo (isset($messageChampFormulaire)) ? $messageChampFormulaire : "";
+//                                echo (isset($messageLoginClient)) ? $messageLoginClient : "";
+//                                echo (isset($messageConfirmationMotPasse)) ? $messageConfirmationMotPasse : "";
+                                ?>
+                            </p>
+                        </div><!--fin messages retour-->
+
+                    </div>
+                    
+                </div>
+                <form method="post" name="inscriptionAdmin" id='inscriptionAdmin'  onsubmit="return verifForm(this)">
+                    <!--<form method="post" name="inscription" id='inscription' action="jeusafariz.php">-->
+
+                    <div class="row">
+                        <div class="col-md-7 col-sm-7 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" for="confirmpwdA"> CONFIRMATION MOT DE PASSE <span class="asteriskField"> * </span>
-                                </label>
+                                <label class="control-label requiredField" id='mail' for="mail"> Email <span class="asteriskField"> * </span></label>
+
                                 <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-asterisk">
-                                        </i>
+                                    <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                     </div>
-                                    <input class="form-control" id="confirmpwd" name="confirmpwd" placeholder="votre mot de passe..." type="password" minlength="5" maxlength="48"  onblur="return verifConfirmPassword2(this)"  required/>
+                                    <input class="form-control" id="mail" name="mail" type="email"  placeholder="xxx@xxx.xx"  minlength="6" maxlength="48" onblur="verifMail(this)" required/>
                                 </div>
                             </div>
-                            <div class="form-group ">
-                                <label class="control-label requiredField" for="email" type="email">Email <span class="asteriskField">* </span>
-                                </label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-at">
-                                        </i>
-                                    </div>
-                                    <input class="form-control" id="email" name="email" placeholder="xxxx@xxx.xxxx...." type="email" onblur="verifMail(this)"   required/>
-                                </div>
-                            </div>
-                             <!--(((((((((((((((((((((((((((((((-->
-                               <div class="col-md-6 col-sm-6 col-xs-12">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group ">
                                 <label class="control-label requiredField" id='passwordA' for="password" > Mot de passe </label>
                                     <!--<span class="asteriskField"> * </span></label>-->
@@ -196,18 +206,34 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                                     </div>
                             </div>
                         </div>
-                             <!--((((((((((((((((((((((((((((-->
-                             
+                    </div>  
+
+                    <div id="espace"> </div>
+                    <!--espace entre bouton et reglement-->
+
+                    <div class="row">
+
+                        <!--</div>-->
+                        <!--<br/><br/><div class="row">bouton validation-->
+
+                        <div class="col-12 text-center mt-5">
                             <div class="form-group">
                                 <div>
-                                    <button class="btn btn-primary btn-lg"  id="log" name="log" type="submit"> Enregistrer </button>
+                                    <button class="btn btn-primary " name="log" type="submit">Valider l'inscription</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+        <!--</div> container.fluid-->
+
+        <!-- fin formulaire de Franck -->
+
+    </main>
+    <!-- content -->
+<!--</section>-->
 
 
         <script>
@@ -262,10 +288,9 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
     }  
     
     //function de verification du champ  confirmpassword
-    function verifPassword(champ)
     function verifConfirmPassword2(champ)
 {  
-   if(champ.value != document.getElementById('pwd').value)
+   if(champ.value != document.getElementById('password').value)
    {
       document.getElementById("confirmpwdA").innerHTML = "vos mots de passe sont différents veuillez les ressaisir";
 //      confirmpwd.setCustomValidity("vos mots de passe sont différents veuillez les ressaisir");
@@ -289,7 +314,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         var verifConfirmPasswordOk= verifConfirmPassword2(f.confirmpwd)
         var verifPasswordOk= verifPassword(f.pwd)
 
-        if (mailOk  verifPasswordOk && verifConfirmPasswordOk )
+        if (mailOk && verifPasswordOk && verifConfirmPasswordOk )
             return true;
         else
         {

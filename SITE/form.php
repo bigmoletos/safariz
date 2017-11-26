@@ -250,6 +250,130 @@ include("header.php"); ?>
         }
     }
 
+//function de verification du champ tel
+    function verifTel(champ)
+    {
+        var regex = /[0-9._-]{10, 15}/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ ville
+    function verifVille(champ)
+    {
+//        if (champ.value.length < 2 || champ.value.length > 25)
+        var regex = /[a-zA-Z._-]{2, 25}/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ adresse
+    function verifAdresse(champ)
+    {
+        if (champ.value.length < 5 || champ.value.length > 40)
+//        var regex = /^[a-zA-Z0-9._-]{5, 40}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ CP
+    function verifCp(champ)
+    {
+        var regex = /^[0-9]{4, 5}$/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ nom
+    function verifNom(champ)
+    {
+        if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+//            str.charAt(0).toUpperCase();
+//           champ=champ.charAt(0).toUpperCase() + champ.substring(1).toLowerCase();
+
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ prenom
+    function verifPrenom(champ)
+    {
+        if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
+//function de verification de la checkbox reglement
+    function verifReglement(champ)
+    {
+        if (champ.value = "")
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
+////function de verification de la checkbox majeur
+    function verifMajeur(champ)
+    {
+        if (champ.value = "")
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
 //function de verification du champ  password
     function verifPassword(champ)
     {
@@ -265,6 +389,48 @@ include("header.php"); ?>
             return true;
         }
     }
+//function de verification du champ confirmation password
+//    function verifConfirmPassword(champ)
+//    {
+//        if (champ.value.length < 5 || champ.value.length > 25) 
+////        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+////        if (!regex.test(champ.value))
+//
+//        {
+////           password.setCustomValidity("vos mots de passe sont différents veuillez les ressaisir");
+////           document.getElementById("confirmpwd").innerHTML = "vos mots de passe sont différents veuillez les ressaisir";
+//            surligne(champ, true);
+//            return false;
+//        } else
+//        {
+//            surligne(champ, false);
+//            return true;
+//        }
+//    }
+
+/////////////////////////////////
+//verif format confirmation mot de passe
+
+//function verifConfirmPassword3(champ) {
+//    
+//    var confirm = document.getElementById("confirmpwd");
+//    var password=document.getElementById("password");
+////  document.getElementById('confirmpwd').innerHTML = confirm;
+//    
+//        if(champ.value == document.getElementByClassName('password')[0]){
+////        document.getElementById("confirmpwd").innerHTML = confirm.validationMessage;
+//        
+//            document.getElementById("confirmpwd").innerHTML = "vos mots de passe sont ok";
+//            surligne(champ, true);
+//            return true;
+//    } else {
+//        document.getElementById("confirmpwd").innerHTML = "vos mots de passe sont différents veuillez les ressaisir";
+//        surligne(champ, false);
+//            return false;
+//    } 
+//} 
+//////////////////////////////
+//::::::::::::::::::::::::::::
 function verifConfirmPassword2(champ)
 {  
    if(champ.value != document.getElementById('password').value)
@@ -289,11 +455,19 @@ function verifConfirmPassword2(champ)
     //verif complete des champs du formulaire
     function verifForm(f)
     {
+        var cpOk = verifCp(f.cp);
+        var villeOk = verifVille(f.ville);
+        var adresseOk = verifAdresse(f.adresse);
+        var nomOk = verifNom(f.nom);
+        var prenomOk = verifPrenom(f.prenom);
         var mailOk = verifMail(f.email);
+        var telOk = verifTel(f.tel);
+        var reglementOk = verifReglement(f.reglement);
+        var majeurOk = verifMajeur(f.majeur);
         var verifConfirmPasswordOk= verifConfirmPassword2(f.confirmpwd)
         var verifPasswordOk= verifPassword(f.password)
 
-        if (mailOk && verifPasswordOk && verifConfirmPasswordOk )
+        if (cpOk && mailOk && adresseOk && telOk && nomOk && prenomOk && villeOk && reglementOk && majeurOk && verifPasswordOk && verifConfirmPassword2Ok )
             return true;
         else
         {
