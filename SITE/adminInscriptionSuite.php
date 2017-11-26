@@ -138,26 +138,26 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                 <div class="row">
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <h2>Inscription administrateur </h2>
-                        <form method="post">
-                            <div class="form-group ">
-                                <label class="control-label requiredField" for="pwd"> MOT DE PASSE <span class="asteriskField">* </span>
+                         <form method="post" name="inscriptionAdmin" id='inscriptionAdmin'  onsubmit="return verifForm(this)">
+                            <div class="form-group"> 
+                                <label class="control-label requiredField" for="pwdA"> MOT DE PASSE <span class="asteriskField">* </span>
                                 </label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-asterisk">        </i>
                                     </div>
-                                    <input class="form-control" id="pwd" name="pwd" placeholder="votre mot de passe..." type="password"/>
+                                    <input class="form-control" id="pwd" name="password" placeholder="votre mot de passe..." type="password" onblur="return verifPassword(this)" required/>
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label class="control-label requiredField" for="confirmpwd"> CONFIRMATION MOT DE PASSE <span class="asteriskField"> * </span>
+                                <label class="control-label requiredField" for="confirmpwdA"> CONFIRMATION MOT DE PASSE <span class="asteriskField"> * </span>
                                 </label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-asterisk">
                                         </i>
                                     </div>
-                                    <input class="form-control" id="confirmpwd" name="confirmpwd" placeholder="votre mot de passe..." type="password"/>
+                                    <input class="form-control" id="confirmpwd" name="confirmpwd" placeholder="votre mot de passe..." type="password" onblur="return verifConfirmPassword2(this)"  required/>
                                 </div>
                             </div>
                             <div class="form-group ">
@@ -168,7 +168,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                                         <i class="fa fa-at">
                                         </i>
                                     </div>
-                                    <input class="form-control" id="email" name="email" placeholder="xxxx@xxx.xxxx...." type="email"/>
+                                    <input class="form-control" id="email" name="email" placeholder="xxxx@xxx.xxxx...." type="email" onblur="verifMail(this)"   required/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -186,7 +186,195 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <script>
             //        controle de saisie dynamique du champ login afin de verifier qu'il n'existe pas
             //         deja dans la base, réalisé en AJAX
-            $(document).ready(
+      //function qui change le fond en rouge si erreur de saisie d'un champ
+    function surligne(champ, erreur)
+    {
+        if (erreur)
+            champ.style.backgroundColor = "#fba";
+        else
+            champ.style.backgroundColor = "";
+    }
+
+    //function de verification du champ mail
+    function verifMail(champ)
+    {
+        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+        if (!regex.test(champ.value))
+        {
+            // var messageMail= "Veuillez remplir correctement  le champ mail ";
+            //    alert("Veuillez remplir correctement  le champ mail ");
+            //  document.write(messageMail);
+
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            ;
+            return true;
+        }
+    }
+
+//function de verification du champ tel
+    function verifTel(champ)
+    {
+        var regex = /[0-9._-]{10, 15}/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ ville
+    function verifVille(champ)
+    {
+//        if (champ.value.length < 2 || champ.value.length > 25)
+        var regex = /[a-zA-Z._-]{2, 25}/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ adresse
+    function verifAdresse(champ)
+    {
+        if (champ.value.length < 5 || champ.value.length > 40)
+//        var regex = /^[a-zA-Z0-9._-]{5, 40}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ CP
+    function verifCp(champ)
+    {
+        var regex = /^[0-9]{4, 5}$/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ nom
+    function verifNom(champ)
+    {
+        if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+//            str.charAt(0).toUpperCase();
+//           champ=champ.charAt(0).toUpperCase() + champ.substring(1).toLowerCase();
+
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+//function de verification du champ prenom
+    function verifPrenom(champ)
+    {
+        if (champ.value.length < 2 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
+//function de verification de la checkbox reglement
+    function verifReglement(champ)
+    {
+        if (champ.value = "")
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
+////function de verification de la checkbox majeur
+    function verifMajeur(champ)
+    {
+        if (champ.value = "")
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }
+
+//function de verification du champ  password
+    function verifPassword(champ)
+    {
+        if (champ.value.length < 5 || champ.value.length > 25)
+//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
+//        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            return false;
+        } else
+        {
+            surligne(champ, false);
+            return true;
+        }
+    }  
+    
+    function verifConfirmPassword2(champ)
+{  
+   if(champ.value != document.getElementById('password').value)
+   {
+      document.getElementById("confirmpwdA").innerHTML = "vos mots de passe sont différents veuillez les ressaisir";
+//      confirmpwd.setCustomValidity("vos mots de passe sont différents veuillez les ressaisir");
+//            alert("MDP different");
+      surligne(champ, true);
+      return false;
+   }
+   else
+   {
+      document.getElementById("confirmpwdA").innerHTML = "vos mots de passe sont identiques ";
+//            alert("MDP similaire");
+      surligne(champ, false);
+      return true;
+   }
+}
+    
+    
+    $(document).ready(
                     function () {
                         $("#txt").keyup(function () {
                             $("#word").load("classes/AdminManager.php", {q: $("#txt").val()});

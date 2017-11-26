@@ -12,6 +12,10 @@ $messagePerdu = "";
 $messageGagne = "";
 $messageDejaJoueToday = "";
 $messageChampFormulaire = "";
+$verif=FALSE;
+
+$_POST[] = "";
+//var_dump($_POST);
 //$_POST['majeur']="";
 //$_POST['reglement']="";
 //$_POST['tel']="";
@@ -35,45 +39,44 @@ if (isset($_POST['bouton'])) {
     unset($_COOKIE['messageGagne']);
     unset($_COOKIE['prenom']);
 
-    $cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ login
-    setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
+    $cookiemail = ' ' . $_POST['mail'] . ' '; //on créer une variable qui possède le contenu du champ mail
+    setcookie('mail', ' ' . $cookiemail . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'mail' avec la variable $cookiemail
 //creation du cookie nom date d'expiration dans 5min
-    $cookienom = ' ' . $_POST['nom'] . ' '; //on créer une variable qui possède le contenu du champ login
+    $cookienom = ' ' . $_POST['nom'] . ' ';
     setcookie('nom', ' ' . $cookienom . ' ', time() + 5 * 60, null, null, false, true);
 //creation du cookie nom date d'expiration dans 5min
-    $cookieprenom = ' ' . $_POST['prenom'] . ' '; //on créer une variable qui possède le contenu du champ login
+    $cookieprenom = ' ' . $_POST['prenom'] . ' ';
     setcookie('prenom', ' ' . $cookieprenom . ' ', time() + 5 * 60, null, null, false, true);
-    $clientPassword = $cookiepassword = ' ' . $_POST['password'] . ' '; //on créer une variable qui possède le contenu du champ login
+    $clientPassword = $cookiepassword = ' ' . $_POST['password'] . ' ';
     setcookie('password', ' ' . $cookiepassword . ' ', time() + 5 * 60, null, null, false, true);
-}
+//}fin verif bouton
 //var_dump($_POST);
-
 //var_dump($_COOKIE);
 //var_dump($cookieprenom);
 //var_dump($cookienom);
 //chargement des classes
-require('chargeurClass.php');
+    require('chargeurClass.php');
 //chargement de la connexion
 // a enlever si l'autoload fonctionne
 //require ('classes/clientManager.php');
 //require ('classes/client.php');
 
-require('connexionBD.php');
+    require('connexionBD.php');
 //require('admin.php');
-$db = connexionDB();
+    $db = connexionDB();
 
 //nouvel objet de la classe ClientManager instancié 
 //par les attributs de la connexionDB() à la base donnée mysql
-$manager = new ClientManager($db);
+    $manager = new ClientManager($db);
 
-date_default_timezone_set("Europe/Paris");
+    date_default_timezone_set("Europe/Paris");
 
 // champs base de donnée client_id, nom,  prenom, mail, adresse, cp, ville, tel, dateInscription,session_Id,ip, newsLetterInscription
 // champs formulaire  nom  prenom tel mail adresse  ville cp   majeur reglement  newsletter 
 //initialisation de la variable $form en tableau, cette variable se charge de stocker des valeurs du formulaire
 //afin de les utiliser dans notre objet new Client($form), grace à notre hydratation
-$form = array();
-$statut = "";
+    $form = array();
+    $statut = "";
 //var_dump($_POST);
 //*************************************************************************************
 //if (isset($_POST['majeur'])) {
@@ -81,108 +84,117 @@ $statut = "";
 //             $messageMajeur = "</br>veuillez  confirmer que vous êtes majeur</br>";
 //  }
 //    if (isset($_POST['reglement'])) {//  !! permet de verifier tous les paramétres(isset, !empty, NOT NULL ...)
-if (isset($_POST['majeur']) && isset($_POST['reglement'])) {
-    if (!!($_POST['tel'])) {
-        $form['tel'] = $_POST['tel'];
-    }
-    $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
-//*********************
-//gestion mot de passe
-    if (!!($_POST['password']) && !!($_POST['confirmpwd'])) {
-        $form['password'] = securisation($_POST['password']);
-        $confirmpwd = securisation($_POST['confirmpwd']);
-
-        if ($form['password'] == $confirmpwd) {
-            // cryptage du mot de pwd par un hachage en md5
-            $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
+    if (isset($_POST['majeur']) && isset($_POST['reglement'])) {
+        if (!!($_POST['tel'])) {
+            $form['tel'] = $_POST['tel'];
         }
-    }//fin if (!!($_POST['password']) && !!($_POST['confirmpwd']))
+        $form['newsLetterInscription'] = isset($_POST['newsLetter']) ? 1 : 0; //ternaire pour mettre  1  si le client est ok pour la newsletter et 0 s'il n'est pas d'accord
+//*********************
+
+//        if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
+
+//gestion du mot de passe facultatif
+//    if (!!($_POST['password']) && !!($_POST['confirmpwd'])) {
+         //   var_dump($_POST['password']);
+        //    var_dump($_POST['confirmpwd']);
+
+            if (isset($_POST['password'])) {
+                    $motDePasseVide=FALSE;
+          //      var_dump($_POST['password']);
+          //      var_dump($_POST['confirmpwd']);
+          //      var_dump($_POST);
+                //verifie que les 2 mots de passe sont identiques
+                if ($_POST['password'] == $_POST['confirmpwd']) {
+                    $verif=TRUE;
+                   // var_dump($_POST['password']);
+                   // var_dump($_POST['confirmpwd']);
+                   // var_dump($verif);
+                    
+                    $form['password'] = securisation($_POST['password']);
+                    // $confirmpwd = securisation($_POST['confirmpwd']);
+                    // cryptage du mot de pwd par un hachage en md5
+                    $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
+                } else {
+                     echo 'Vos mots de passe sont différents, veuillez les ressaisir';
+                    $messageConfirmationMotPasse = "Vos mots de passe sont différents, veuillez les ressaisir ";
+                    //  $cookiemessageConfirmationMotPasse = $messageConfirmationMotPasse;
+                    //    setcookie('messageConfirmationMotPasse', ' ' . $cookiemessageConfirmationMotPasse . ' ', time() + 5 * 60, null, null, false, true);
+                }
+            }//fin if (!!($_POST['password']) && !!($_POST['confirmpwd']))            
 //*********************    
-    if (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp'])) {
-        $form['nom'] = $_POST['nom'];
-        $form['prenom'] = $_POST['prenom'];
-        $form['mail'] = $_POST['mail'];
-        $form['adresse'] = $_POST['adresse'];
-        $form['ville'] = $_POST['ville'];
-        $form['cp'] = $_POST['cp'];
-//     $form['dateinscription']= now();//finalement pour rentrer la date on va utiliser la base de donnée en 
-//     mettant dateInscription en CURRENT_TIMESTAMP par defaut
-        $form['ip'] = $_SERVER['REMOTE_ADDR']; // stocke l'adresse IP
-        $form['session_id'] = $_COOKIE['PHPSESSID']; // stocke l'id de session
-        //la fonction isValidFormulaire
-        // avant d'envoyer les données formulaire dans la base nous verifions que les formats nom adresse cp ...sont conformes
-//     var_dump($client);
-        // var_dump($form);
-        //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
-        $client = new Client($form);
-        //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
-        //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
-        //0000000000000000000000000000000000000000000000
-        //methode add
-        if ($manager->ClientPeutJouerCejour($client)) {
-            $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
-        } else {
-            $idclient = $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
-            $messageinscrit = "</br>bravo vous participation au jeu est validée ! </br>";
-            //******************************
-            // fonction gagné perdu
+            if ((!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp']) && $motDePasseVide==TRUE) || (!!($_POST['nom']) && !!($_POST['prenom']) && !!($_POST['mail']) && !!($_POST['adresse']) && !!($_POST['ville']) && !!($_POST['cp']) && $verif==TRUE)){
+            $form['nom'] = $_POST['nom'];
+            $form['prenom'] = $_POST['prenom'];
+            $form['mail'] = $_POST['mail'];
+            $form['adresse'] = $_POST['adresse'];
+            $form['ville'] = $_POST['ville'];
+            $form['cp'] = $_POST['cp'];
+            $form['ip'] = $_SERVER['REMOTE_ADDR']; // stocke l'adresse IP
+            $form['session_id'] = $_COOKIE['PHPSESSID']; // stocke l'id de session
+            //     var_dump($client);
+          //  var_dump($form);
+            
+            //nouvel objet  $client de la classe client prenant les valeurs du tableau $form
+            $client = new Client($form);
 
-            $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
-            if ($lot = $igmanager->GagnePerdu($idclient)) {
-                // fonction pour donner le nom
-//echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-                //   header('Location: gagne.php');
-                $statut = "gagne";
-                //    var_dump($statut);
-                $prenom = $form['prenom'];
-                $nom = $form['nom'];
-                //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
-                $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant:</br> $lot ";
-                $cookieMessageGagne = $messageGagne;
-                setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
-
-                ($statut = "gagne") ? header("Location:gagne.php") : "";
-                die('header("Location: gagne.php");');
-				exit;
+            //condition vérifiant que le foyer est unique et que le joueur n'a pas déjà joué ce jour
+            //        if ($manager->foyerUnique($client) && $manager->ClientPeutJouerCejour($client)) {
+                   
+            // //0000000000000000000000000000000000000000000000
+            //on verifie que le client n'a pas deja ce joué ce jour
+            if ($manager->ClientPeutJouerCejour($client)) {
+                $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
             } else {
-                $statut = "perdu";
-                ($statut = "perdu") ? header("Location:perdu.php") : "";
-                 die('header("Location: perdu.php");');
-				exit;
-                $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
-            }
-            //******************************
-        } var_dump($statut);
+                $idclient = $manager->addClient($client);  //inscription dans la base . On affecte les valeurs  de la fonction addClient avec l'objet $client en argument à l'objet $manager
+                $messageinscrit = "</br>bravo vous participation au jeu est validée ! </br>";
+                //******************************
+                // fonction gagné perdu
 
-        //0000000000000000000000000000000000000000000000000000
-        //  echo ' </br>formulaire ok </br>';
-//    If (isset($_POST['majeur'])) {
-//        
-//    } else {
-//        $messageMajeur = "</br>veuillez  confirmer que vous êtes majeur</br>";
-//    }
-//    if (isset($_POST['majeur']) && isset($_POST['reglement'])) {///  !! permet de verifier tous les paramétres(isset, !empty, NOT NULL ...)         
-    }
-} else {
-    (!isset($_POST['majeur']) && isset($_POST['bouton']) ) ? $messageMajeur = "</br>veuillez  confirmer que vous êtes majeur</br>" : $messageMajeur = "";
-    (!isset($_POST['reglement']) && isset($_POST['bouton']) ) ? $messageReglement = "</br>veuillez accepter le réglement </br>" : $messageReglement = "";
-}
+                $igmanager = new Igmanager($db); //nouvel objet Igmanager avec comme attribut la connexionBdd $db
+                if ($donneeClient = $igmanager->GagnePerdu($idclient)) {
+                    //  var_dump($donneeClient);
+                    $lot = $donneeClient['lot'];
+                    // var_dump($lot);
 
-//  }  else {
-//             $messageMajeur = "</br>veuillez  confirmer que vous êtes majeur</br>";
+                    $statut = "gagne";
+                    //    var_dump($statut);
+                    $prenom = $form['prenom'];
+                    $nom = $form['nom'];
+                    //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
+                    $messageGagne = "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant:</br> $lot ";
+                    $cookieMessageGagne = $messageGagne;
+                    setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
+
+                   ($statut = "gagne") ? header("Location:gagne.php") : "";
+                    die('header("Location: gagne.php");');
+                    exit;
+                } else {
+                    $statut = "perdu";
+                   ($statut = "perdu") ? header("Location:perdu.php") : "";
+                    die('header("Location: perdu.php");');
+                    exit;
+                    $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
+                }
+                //******************************
+                //  } //var_dump($statut);
+                //0000000000000000000000000000000000000000000000000000
+            }//fin verif formulaire
+//        } else {
+//            echo 'Vos mots de passe sont différents, veuillez les ressaisir';
+//            $messageConfirmationMotPasse = "Vos mots de passe sont différents, veuillez les ressaisir ";
+//            $cookiemessageConfirmationMotPasse = $messageConfirmationMotPasse;
+//            setcookie('messageConfirmationMotPasse', ' ' . $cookiemessageConfirmationMotPasse . ' ', time() + 5 * 60, null, null, false, true);
+//        }
+//                }
 //
-//    } //fin fonction  formulaire
-//*************************************************************************************
-//*/*******************************************************
-//fonction pour verifier le mail 
-//ne fonctionne pas
-//Cette fonction sert à vérifier la syntaxe d'un email
-//	function IsEmail($email)
-//	{
-//$var regexMail = preg_match('/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/', $email);
-//return (($value === 0) || ($value === false)) ? false : true;
-//	}
-
+   }//fin verif confirmation  password
+    else {
+        (!isset($_POST['majeur']) && isset($_POST['bouton']) ) ? $messageMajeur = "</br>veuillez  confirmer que vous êtes majeur</br>" : $messageMajeur = "";
+        (!isset($_POST['reglement']) && isset($_POST['bouton']) ) ? $messageReglement = "</br>veuillez accepter le réglement </br>" : $messageReglement = "";
+    }
+            }//fin verif  regglement majeur
+//}//fin verif formulaire
+}//fin bouton
 function securisation($champAsecuriser) {
 
     $champAsecuriser = htmlspecialchars($champAsecuriser);
@@ -215,9 +227,7 @@ $TimeValidation = date("Y-m-d H:i:s ", $TimeValidation);
 //($statut="perdu")?header("Location: $url/perdu.php/"):"";
 //********************
 ?>
-<!--<!DOCTYPE html>
-
-formulaire d'inscription 
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -236,11 +246,10 @@ formulaire d'inscription
 
 
     </head>
-    <body>-->
+    <body>
 
-<?php //include ('header.php');?>
-<?php include ('form.php'); ?>
-</body>
+        <?php include ('form.php'); ?>
+    </body>
 </html>
 
 

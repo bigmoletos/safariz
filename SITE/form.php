@@ -1,7 +1,7 @@
-<?php include("header.php"); ?>
+<?
+include("header.php"); ?>
 
     <main id="content" class="col-12 col-md-9">
-
 
         <!-- integration formulaire de Franck -->
         <div class="bootstrap-iso">
@@ -32,7 +32,13 @@
                                 echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
                                 echo (isset($messageChampFormulaire)) ? $messageChampFormulaire : "";
                                 echo (isset($messageLoginClient)) ? $messageLoginClient : "";
-                                 echo (isset($_COOKIE['messageLoginClient'])) ? $_COOKIE['messageLoginClient'] : "";
+                                echo (isset($messageConfirmationMotPasse)) ? $messageConfirmationMotPasse : "";
+//                                 echo (isset($_COOKIE['messageLoginClient'])) ? $_COOKIE['messageLoginClient'] : "";
+//                                 echo (isset($_COOKIE['messageLoginClientKo'])) ? $_COOKIE['messageLoginClientKo'] : "";
+//                                 echo (isset($_SESSION['messageLoginClient'])) ? $_SESSION['messageLoginClient'] : "";
+//                                 echo (isset($_SESSION['messageLoginClientKo'])) ? $_SESSION['messageLoginClientKo'] : "";
+                                 
+                                 
                                 ?>
                             </p>
                         </div><!--fin messages retour-->
@@ -115,7 +121,7 @@
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                     </div>
-                                    <input class="form-control" id="mail" name="mail" type="email"  placeholder="xxx@xxx.xx"  minlength="6" maxlength="48" onblur="verifMail(this)"required/>
+                                    <input class="form-control" id="mail" name="mail" type="email"  placeholder="xxx@xxx.xx"  minlength="6" maxlength="48" onblur="verifMail(this)" required/>
                                 </div>
                             </div>
                         </div>
@@ -131,25 +137,25 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" id='password' for="password" > Mot de passe </label>
+                                <label class="control-label requiredField" id='passwordA' for="password" > Mot de passe </label>
                                     <!--<span class="asteriskField"> * </span></label>-->
 
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                         </div>
-                                        <input class="form-control" id="password" name="password" type="password" placeholder="votre mot de passe..." minlength="5" maxlength="48"/>
+                                        <input class="form-control" id="password" name="password" type="password" placeholder="votre mot de passe..." minlength="5" maxlength="48" onblur="return verifPassword(this)"/>
                                     </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group ">
-                                <label class="control-label requiredField" id='confirmpwd' for="confirmpwd" > Confirmation mot de passe </label> 
+                                <label class="control-label requiredField" id='confirmpwdA' for="confirmpwd" > Confirmation mot de passe </label> 
                                     <!--<span class="asteriskField"> * </span></label>-->
 
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-envelope"></i>
                                         </div>
-                                        <input class="form-control" id="confirmpwd" name="confirmpwd" type="password" placeholder="votre mot de passe..."  minlength="5" maxlength="48"/>
+                                        <input class="form-control" id="confirmpwd" name="confirmpwd" type="password" placeholder="votre mot de passe..."  minlength="5" maxlength="48" onblur="return verifConfirmPassword2(this)"/>
                                     </div>
                             </div>
                         </div>
@@ -244,86 +250,10 @@
         }
     }
 
-//function de verification du champ tel
-    function verifTel(champ)
+//function de verification du champ  password
+    function verifPassword(champ)
     {
-        var regex = /[0-9._-]{10, 15}/;
-        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-//function de verification du champ ville
-    function verifVille(champ)
-    {
-//        if (champ.value.length < 2 || champ.value.length > 25)
-        var regex = /[a-zA-Z._-]{2, 25}/;
-        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-//function de verification du champ adresse
-    function verifAdresse(champ)
-    {
-        if (champ.value.length < 5 || champ.value.length > 40)
-//        var regex = /^[a-zA-Z0-9._-]{5, 40}$/;
-//        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-//function de verification du champ CP
-    function verifCp(champ)
-    {
-        var regex = /^[0-9]{4, 5}$/;
-        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-//function de verification du champ nom
-    function verifNom(champ)
-    {
-        if (champ.value.length < 2 || champ.value.length > 25)
-//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
-//        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-//            str.charAt(0).toUpperCase();
-//           champ=champ.charAt(0).toUpperCase() + champ.substring(1).toLowerCase();
-
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-//function de verification du champ prenom
-    function verifPrenom(champ)
-    {
-        if (champ.value.length < 2 || champ.value.length > 25)
+        if (champ.value.length < 5 || champ.value.length > 25)
 //        var regex = /^[a-zA-Z._ -]{2, 25}$/;
 //        if (!regex.test(champ.value))
         {
@@ -335,53 +265,35 @@
             return true;
         }
     }
-
-//function de verification de la checkbox reglement
-    function verifReglement(champ)
-    {
-        if (champ.value = "")
-//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
-//        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
-
-////function de verification de la checkbox majeur
-    function verifMajeur(champ)
-    {
-        if (champ.value = "")
-//        var regex = /^[a-zA-Z._ -]{2, 25}$/;
-//        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
+function verifConfirmPassword2(champ)
+{  
+   if(champ.value != document.getElementById('password').value)
+   {
+      document.getElementById("confirmpwdA").innerHTML = "vos mots de passe sont différents veuillez les ressaisir";
+//      confirmpwd.setCustomValidity("vos mots de passe sont différents veuillez les ressaisir");
+//            alert("MDP different");
+      surligne(champ, true);
+      return false;
+   }
+   else
+   {
+      document.getElementById("confirmpwdA").innerHTML = "vos mots de passe sont identiques ";
+//            alert("MDP similaire");
+      surligne(champ, false);
+      return true;
+   }
+}
+//:::::::::::::::::::::::::::::::::
+    
 
     //verif complete des champs du formulaire
     function verifForm(f)
     {
-        var cpOk = verifCp(f.cp);
-        var villeOk = verifVille(f.ville);
-        var adresseOk = verifAdresse(f.adresse);
-        var nomOk = verifNom(f.nom);
-        var prenomOk = verifPrenom(f.prenom);
         var mailOk = verifMail(f.email);
-        var telOk = verifTel(f.tel);
-        var reglementOk = verifReglement(f.reglement);
-        var majeurOk = verifMajeur(f.majeur);
+        var verifConfirmPasswordOk= verifConfirmPassword2(f.confirmpwd)
+        var verifPasswordOk= verifPassword(f.password)
 
-        if (cpOk && mailOk && adresseOk && telOk && nomOk && prenomOk && villeOk && reglementOk && majeurOk)
+        if (mailOk && verifPasswordOk && verifConfirmPasswordOk )
             return true;
         else
         {
@@ -432,13 +344,17 @@
 //        }
 
 //        //fonction verification mail
+//        ***********************************
 //         //message personnilsé sur les mails
-        var email = document.getElementById("mail");
-        email.addEventListener("keyup", function (event) {
-            if (email.validity.typeMismatch) {
-                email.setCustomValidity("Nous voudrions une adresse e-mail.");
-            }
-        });
+//         
+//        var email = document.getElementById("mail");
+//        email.addEventListener("keyup", function (event) {
+//            if (email.validity.typeMismatch) {
+//                email.setCustomValidity("Nous voudrions une adresse e-mail.");
+//            }
+//        });
+//        
+//        **********************************
 //        //function qui change le fond en rouge si erreur de saisie d'un champ
 //        function surligne(champ, erreur)
 //        {

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Description de gagnants
- *modif le 8/11
+ * modif le 8/11
  * @author fd
  */
 class Gagnants {
@@ -10,10 +11,9 @@ class Gagnants {
     private $client_Id;
     private $dateGain;
     private $lot_Id;
-  
+    private $id_dates_jeux;
 
-    
-       //constructeur
+    //constructeur
     //    //
     public function __construct(array $valeurs = []) {
         if (!empty($valeurs)) { // Si on a spécifié des valeurs, alors on hydrate l'objet.
@@ -35,9 +35,8 @@ class Gagnants {
         }
     }
 
-    
-    
     /* définition des getters de la classe Gagnants */
+
     function getGagnant_Id() {
         return $this->gagnant_Id;
     }
@@ -53,10 +52,12 @@ class Gagnants {
     function getLot_Id() {
         return $this->lot_Id;
     }
-    
-  
 
+      function getId_dates_jeux() {
+        return $this->id_dates_jeux;
+    }
     /* définition des setters de la classe Gagnants */
+
     function setGagnant_Id($gagnant_Id) {
         $this->gagnant_Id = $gagnant_Id;
     }
@@ -72,8 +73,9 @@ class Gagnants {
     function setLot_Id($lot_Id) {
         $this->lot_Id = $lot_Id;
     }
-
-     
-
+    
+  function setId_dates_jeux( $id_dates_jeux) {
+        $this-> id_dates_jeux=  $id_dates_jeux;
+    }
+    
 }
-

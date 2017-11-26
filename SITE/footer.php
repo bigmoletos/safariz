@@ -1,12 +1,5 @@
 
-<div>
-            <div id="logos" class="col-md-3">
-            <ul class="list-inline" >
-                <li class="col-md-6"><img src="image/logo_riz_camargues.png" alt="riz de camargues" height="121" width="106" responsive-image></li>
-                <li class="col-md-6"><img src="image/protegee.png" alt="indication géographique protégée" height="121" width="85" responsive-image></li>
-             </ul>
-            </div> 
-    </div>
+
 <footer> 
     <section id="listnav" class="row">
             <div class="offset-3 col-9">
@@ -26,3 +19,11 @@
             </div>
     </section>
 </footer>
+<div>
+            <div id="logos" class="col-md-3">
+            <ul class="list-inline" >
+                <li class="col-md-6"><img src="image/logo_riz_camargues.png" alt="riz de camargues" height="121" width="106" responsive-image></li>
+                <li class="col-md-6"><img src="image/protegee.png" alt="indication géographique protégée" height="121" width="85" responsive-image></li>
+             </ul>
+            </div> 
+    </div>

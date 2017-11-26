@@ -53,7 +53,7 @@ $form = array();
 //
 //recharge la page 
 if( !empty($_POST) )
-  echo '<script>window.location.href("clientLogin.php")</script>';
+  echo '<script>window.location.href("clientLogin_2.php")</script>';
 
 //if (isset($_POST['accesClient'])) {
 if (isset($_POST['veriflog'])) {
@@ -185,7 +185,7 @@ if (isset($_POST['veriflog'])) {
                             </div><!--fin messages retour-->
                         </div> 
                         <!--</div>-->
-                        <form method="post" name="accesClient" id='accesClient'  action=clientLogin.php onsubmit="return verifForm(this)">                               
+                        <form method="post" name="accesClient" id='accesClient'  action=clientLogin_2.php onsubmit="return verifForm(this)">                               
 
                             <div class="col-12 col-md-6">
                                 <label class="control-label requiredField" id='mail' for="mail">Email<span class="asteriskField">*</span></label>

@@ -83,7 +83,7 @@ class ClientManager {
 // var_dump($req);
             echo "</pre>";
             if ($req->execute()) {
-              //  echo "<br/>nouveau client correctement inséré<br/>";
+                //  echo "<br/>nouveau client correctement inséré<br/>";
                 return $this->db->lastInsertId();
             } else {
                 return false;
@@ -97,62 +97,28 @@ class ClientManager {
         }
     }
 
-//********************
-    //version david du add
-//    public function add2($tablo) {
-//        try { $req = $this->db->prepare(""
-//                . "INSERT INTO client(titre, auteur, contenu,date_ajout, date_modif ) "
-//                . "VALUES (?, ?, ?,?, ?)");
-//       //on execute dans un tableau
-//            $req->execute(array(
-//                $tablo['titre'],
-//                $tablo['auteur'],
-//                $tablo['contenu'],
-//                $tablo['date_ajout'],
-//                $tablo['date_modif'], ));
-//       
-//        echo "l'insertion s'est magnifiquement bien passée";
-//             } catch (Exception $e) { echo $e->getMessage();
-//            } 
-//        
-//        }
-//    **********************
 //**************************************************
-    // méthode load() pour pouvoir charger un enregistrement specifique depuis la base de données
-    //(select) à partir d'un id
-    //id etant un entier et  non un objet (contrairement à $client) il est faux de le mettre en attribut de classe (client $id)
-//    //    public function Load($id) {
-//        $req=$this->db->prepare('SELECT * FROM client WHERE id=$id ');
-//        //on indique que l'on utilise les reusltats en tant que classe en faisant appel à la classe client
-//       
-//               
-//               
-//        
-//        $req->setFetchMode (PDO::FETCH_CLASS, 'client');
-//       //on execute la requete
-//        $resultat=$req->execute();
-//        //on retourne la ligne par fetch()
-//        return $resultat->fetch();       
-//    }
     //cette methode permet de verifier le lgin et mot de passe d'un client
     public function clientLogin(Client $client) {
-      //  $result=array();
+        //  $result=array();
 //        select mail, password FROM clients WHERE password='root' AND mail='riz@riz.r'
-        $requete = $this->db->prepare('select  *  FROM clients WHERE  mail= :mail ');
+        $requete = $this->db->prepare('select client_id, nom,  prenom, mail, adresse, cp, ville, tel,  password, newsLetterInscription  FROM clients WHERE  mail= :mail ');
 //        $requete->bindValue(':password', $client->getPassword());
         $requete->bindValue(':mail', $client->getMail());
+//        $req->bindValue(':session_id', $client->getSession_Id());
+//        $req->bindValue(':ip', $client->getIp());
         $requete->execute();
-  //     var_dump($requete).
-    //   var_dump($client);
-     $result = $requete->fetch(PDO::FETCH_ASSOC);
-   //   $result = $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
-    //   $result= $requete->fetchAll();
-    //  var_dump($result);
-     //   $verif2 = $requete->rowCount();
-     //   var_dump($verif2);
-    //    var_dump($result['password']);
+        //     var_dump($requete).
+        //   var_dump($client);
+        $result = $requete->fetch(PDO::FETCH_ASSOC);
+        //   $result = $requete->setFetchMode(PDO::FETCH_CLASS, 'Client');
+        //   $result= $requete->fetchAll();
+        //  var_dump($result);
+        //   $verif2 = $requete->rowCount();
+        //   var_dump($verif2);
+        //    var_dump($result['password']);
         if ($result) {
-          //  echo 'mot de passe trouvé <br>';
+            //  echo 'mot de passe trouvé <br>';
             return $result;
             $requete->closeCursor();
         }
