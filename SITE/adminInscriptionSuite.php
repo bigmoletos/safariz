@@ -35,6 +35,7 @@ date_default_timezone_set("Europe/Paris");
 $form = array();
 
 //  sécurisation des données du formulaire
+
 function securisation($champAsecuriser) {
 
     $champAsecuriser = htmlspecialchars($champAsecuriser);
