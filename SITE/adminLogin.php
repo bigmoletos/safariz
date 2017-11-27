@@ -93,6 +93,7 @@ if (isset($_POST['veriflog'])) {
 //var_dump($_SERVER);
 //var_dump($_COOKIE);
 ?>
+<?php include("header.php"); ?>
 <!--
 Cette page permet de rajouter des administrateurs dans la base de donnée, 
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
@@ -118,7 +119,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
-        <main id="content" class="col-9 col-md-9">
+        <main id="content" class="col-12 col-md-9">
 
             <div class="bootstrap-iso">
                 <!-- <div class="container-fluid"> -->
@@ -126,11 +127,11 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                 <div class="well">
                     <div class="row">
                         <!--titre-->
-                        <div class="col-8">
+                        <div class="col-12">
                             <h2>Pour vous connecter veuillez saisir votre login et votre mot de passe Administrateur </h2>
                             <p>Tous les champs marqués d'une <span class="asteriskField">*</span> sont obligatoires</p>
-                        </div>
-                        <div class="col-4">
+                        <!--</div>-->
+                        <div class="col-12 col-md-6">
                             <!--zone pour integrer les messages de retour-->        
                             <div id="message_retour" >               
                                 <p> 
@@ -155,7 +156,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 
                     <form method="post" action="adminLogin.php" onsubmit="return verifForm(this)">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-12 col-sm-6 col-xs-12">
                                 <div class="form-group ">
                                     <label class="control-label requiredField" id='mail' for="mail"> Email <span class="asteriskField"> * </span></label>
 
@@ -167,7 +168,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-12 col-sm-6 col-xs-12">
                                 <div class="form-group ">
                                     <label class="control-label requiredField" id='passwordA' for="password" > Mot de passe </label>
                                         <!--<span class="asteriskField"> * </span></label>-->
@@ -180,6 +181,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                                 </div>
                             </div>
                         </div>
+                        </div>
                         <div id="espace"> </div>
                         <!--espace entre bouton et reglement-->
                         <div class="row">
@@ -190,12 +192,13 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                                     </div>
                                 </div>
                             </div>
+                         </div>
                         </div>
                     </form>
                       <a href="adminInscription.php"/>inscription nouvel administrateur</a>
                 </div>
             </div>
-            <!--</div>-->
+            </div>
         </main>
         <script>
 

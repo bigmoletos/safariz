@@ -78,6 +78,7 @@ Cette page permet de rajouter des administrateurs dans la base de donnée,
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
 Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 -->
+<?php include("header.php"); ?>
 <!doctype html>
 <html>
     <head>
@@ -98,7 +99,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
         <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
-
+ <main id="content" class="col-9 col-md-9">
         <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
         <div class="bootstrap-iso">
             <!-- <div class="container-fluid"> -->
@@ -151,6 +152,8 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                             </div>
                         </div>
                     </div>
+                    <div id="espace"> </div>
+                    <div id="espace2"> </div>
                     <div class="col-12 text-center mt-5">
                         <div class="form-group">
                             <div>
@@ -161,6 +164,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                 </form>
             </div>
         </div>
+ </main>
         <script>
 
             //function qui change le fond en rouge si erreur de saisie d'un champ

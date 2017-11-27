@@ -112,6 +112,7 @@ Cette page permet de rajouter des administrateurs dans la base de donnée,
 elle  est protégée par le fichier .htaccess et .htpwd se trouvant dans le repertoire log
 Elle verifie que les données du formulaire sont ok et crypte le mot de passe
 -->
+<?php include("header.php"); ?>
 <!doctype html>
 <html>
     <head>

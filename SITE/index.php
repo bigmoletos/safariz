@@ -32,6 +32,7 @@ elseif ($now <= $date_debut_jeu){
 <!doctype html>
 <html lang="fr">
 
+    
 <head>
 	<meta charset="utf-8">
 	<title>Safa'riz Le Jeu</title>
