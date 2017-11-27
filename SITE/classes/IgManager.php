@@ -33,7 +33,7 @@ class IgManager {
     //compare la date de participation du client avec celle de l'IG en cours, si le lot est toujours en jeu (lotDispo=1)
     // le client gagne, ou si un autre lot est toujours en jeu.
     //Le client ayant gagné lotDispo passe à 0
-    function GagnePerdu($clientid) {
+    function GagnePerdu($client_id) {
         $id_dates_jeux = $this->GetCurrentIG();
 //        var_dump($id_dates_jeux);
         $requete = $this->db->prepare(" SELECT * FROM ig WHERE lotDispo= '1' and DATE(datetime)<=DATE(NOW())");
@@ -54,7 +54,7 @@ class IgManager {
             $donneeClient = array();
             $donneeClient['ID'] = $ID;
             $donneeClient['lot'] = $lot;
-            $donneeClient['clientid'] = $clientid;
+            $donneeClient['client_id'] = $client_id;
             var_dump($donneeClient);
             // var_dump($lot);
             // var_dump($ID);
@@ -67,17 +67,17 @@ class IgManager {
             //******************
             //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
             //   var_dump($ID);
-            //  var_dump($clientid);
+            //  var_dump($client_id);
 
             $requete = $this->db->prepare('INSERT INTO gagnants (client_id, lot_id, id_dates_jeux ) ( SELECT clients.client_id, ig.ID, dates_jeux.id_dates_jeux FROM clients, ig, dates_jeux WHERE clients.client_id = :cid AND ig.id = :igid AND dates_jeux.id_dates_jeux = :id_dates_jeux) ');
             $requete->bindValue(':igid', $ID);
-            $requete->bindValue(':cid', $clientid);
+            $requete->bindValue(':cid', $client_id);
             $requete->bindValue(':id_dates_jeux', $id_dates_jeux);
             $requete->execute();
-
+            var_dump($requete);
             // $result = $requete->fetch(PDO::FETCH_ASSOC); //a modifier
             //  while($result){
-            //     var_dump($result);
+             var_dump($result);
             //  }
             //****************
             return $donneeClient;
@@ -91,33 +91,34 @@ class IgManager {
 
 //fin gagneperdu
 
-    function enregistreGagnant($clientid) {
+    function enregistreGagnant($client_id) {
         //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
         
         $id_dates_jeux = $this->GetCurrentIG();
         var_dump($id_dates_jeux);
         
-        $donneeClient = $this->GagnePerdu($clientid);
+        $donneeClient = $this->GagnePerdu($client_id);
         $ID = $donneeClient['ID'];
         var_dump($ID);
         
-        $clientid=$donneeClient['clientid'];
-//        $clientid = $this->GagnePerdu($clientid);
-        var_dump($clientid);
+        $client_id=$donneeClient['client_id'];
+//        $client_id = $this->GagnePerdu($client_id);
+        var_dump($client_id);
 
         $requete = $this->db->prepare('INSERT INTO gagnants (client_id, lot_id, id_dates_jeux ) ( SELECT clients.client_id, ig.ID, dates_jeux.id_dates_jeux FROM clients, ig, dates_jeux WHERE clients.client_id = :cid AND ig.id = :igid AND dates_jeux.id_dates_jeux = :id_dates_jeux) ');
         $requete->bindValue(':igid', $ID);
-        $requete->bindValue(':cid', $clientid);
+        $requete->bindValue(':cid', $client_id);
         $requete->bindValue(':id_dates_jeux', $id_dates_jeux);
         $requete->execute();
     }
 
     function appelAutresClasses(){
+        require ('gagnantsManager.php');
         $pasDejaGagne= new gagnantsManager();
     }
     
     
-    function GagnePerduBis($clientid) {
+    function GagnePerduBis($client_id) {
         $id_dates_jeux = $this->GetCurrentIG();
         $requete = $this->db->prepare(" SELECT * FROM ig WHERE lotDispo= '1' and DATE(datetime)<=DATE(NOW())");
         //$requete->bindValue(':adresse', $client->getAdresse());
@@ -137,7 +138,7 @@ class IgManager {
              $donneeClient = array();
             $donneeClient['ID'] = $ID;
             $donneeClient['lot'] = $lot;
-            $donneeClient['clientid'] = $clientid;
+            $donneeClient['client_id'] = $client_id;
             var_dump($donneeClient);
             // var_dump($lot);
             // var_dump($ID);
@@ -153,14 +154,14 @@ class IgManager {
            $pasDejaGagne= gagnantsManager::class;
            
           //lance la methode enregistre un gagnant de la classe gagnantsManager
-           $enregistre=$this->enregistreGagnant($clientid);
+           $enregistre=$this->enregistreGagnant($client_id);
            var_dump($enregistre);
            
             //methode permettant de sotcker dans la table gagnants le client_id, le lotID(ouID de ig), la date du gain
 
 //            $requete = $this->db->prepare('INSERT INTO gagnants (client_id, lot_id, id_dates_jeux ) ( SELECT clients.client_id, ig.ID, dates_jeux.id_dates_jeux FROM clients, ig, dates_jeux WHERE clients.client_id = :cid AND ig.id = :igid AND dates_jeux.id_dates_jeux = :id_dates_jeux) ');
 //            $requete->bindValue(':igid', $ID);
-//            $requete->bindValue(':cid', $clientid);
+//            $requete->bindValue(':cid', $client_id);
 //            $requete->bindValue(':id_dates_jeux', $id_dates_jeux);
 //            $requete->execute();
 

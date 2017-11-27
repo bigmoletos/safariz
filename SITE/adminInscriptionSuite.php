@@ -82,6 +82,7 @@ if (isset($_POST['log'])) {
                 $admin = new Admin($form);
                 //on affecte les valeurs  de la fonction addAdmin avec l'objet $admin en argument à l'objet $manager
                 $manager->addAdmin($admin);
+                header("location:pageAdministrateur.php");
             }//fin verif confirmation  
             else {
                 //  echo '<br>Les deux mots de passe que vous avez rentrés ne correspondent pas…<br>';

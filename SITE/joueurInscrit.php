@@ -33,68 +33,68 @@ $form['password'] = $_SESSION['infosClient']['password'];
 
 
 $idclient = $_SESSION['infosClient']['client_id'];
-var_dump($form);
+//var_dump($form);
 //var_dump($_COOKIE);
-
 $LogClient = new Client($form);
 $verificationLog = $manager->clientLogin($LogClient);
 //var_dump($verificationLog);
+//on verifie que le client n'a pas déjà joué aujourd'hui
+$manager->ClientPeutJouerCejour($LogClient);
+//var_dump($manager);
+
+$gagnant = new gagnantsManager($db);
+//test pour  savoir si la participant n'a pas deja gagné auquel cas s'il rejoue il aura le message perdu
+//var_dump($gagnant);
+$pasDejaGagne = $gagnant->pasDejaGagne($idclient);
+
 
 if ($manager->ClientPeutJouerCejour($LogClient)) {
-   // var_dump($manager);
+    // var_dump($manager);
     $messageDejaJoueToday = "</br>Désolé vous avez déjà joué aujourd'hui!, Retentez votre chance demain</br>";
-} else {
+} elseif ($pasDejaGagne) {
 
-    $gagnant= new gagnantsManager($db);
-    //test poure savoir si la participant n'a pas deja gagné auquel cas s'il rejoue il aura le message perdu
-  if( $pasDejaGagne = $gagnant->pasDejaGagne($idclient)){
-      
-      var_dump($pasDejaGagne); 
-       echo "vous avez  déjà gagné ";
-       $statut = "perdu";
-                ($statut = "perdu") ? header("Location:perdu.php") : "";
-                die('header("Location:perdu.php");');
-                exit;
-        $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
-      
-      
-  }
-  }//fin du else de client peutJouerCejour
-  
-   
-
-    if($igmanager = new Igmanager($db)){; //nouvel objet Igmanager avec comme attribut la connexionBdd $db
-    var_dump($igmanager);
+    var_dump($pasDejaGagne);
+    // echo "vous avez  déjà gagné ";
+    $messageDejaGagne = "vous avez  déjà gagné ! vous ne pouvez rejouer ";
+    $statut = "perdu";
+    ($statut = "perdu") ? header("Location:perdu.php") : "";
+    die('header("Location:perdu.php");');
+    exit;
+    $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
+}//fin du else de client peutJouerCejour
+else {
+    if ($igmanager = new Igmanager($db)) {
+        //nouvel objet Igmanager avec comme attribut la connexionBdd $db
+        // var_dump($igmanager);
 
 
 
-    if ($lot = $igmanager->GagnePerdu($idclient)) {
-        // fonction pour donner le nom
+        if ($lot = $igmanager->GagnePerdu($idclient)) {
+            // fonction pour donner le nom
 //echo "Félicitation $cookieprenom $cookienom  vous avez gagné le lot suivant: $lot ";
-        //   header('Location: gagne.php');
+            //   header('Location: gagne.php');
+            //var_dump($lot);
+            $statut = "gagne";
+            //    var_dump($statut);
+            $prenom = $form['prenom'];
+            $nom = $form['nom'];
+            // var_dump($form);
 
-        var_dump($lot);
-        $statut = "gagne";
-        //    var_dump($statut);
-        $prenom = $form['prenom'];
-        $nom = $form['nom'];
-        var_dump($form);
-
-        $LogClient = new Client($form);
-        $verificationLog = $manager->clientLogin($LogClient);
+            $LogClient = new Client($form);
+            $verificationLog = $manager->clientLogin($LogClient);
 
 
-        //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
-        $messageGagne = "Félicitation $prenom $nom  vous avez gagné le lot suivant:</br> $lot ";
-        $cookieMessageGagne = $messageGagne;
-        setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
+            //  $messageGagne = "Félicitation  $prenom  $nom  vous avez gagné le lot suivant:</br> $lot <br/>Vous serez contactez en fin de jeu pour les modalités de retrait de votre gain.<br><br>En attendant, visitez notre site";
+            $messageGagne = "Félicitation $prenom $nom  vous avez gagné le lot suivant:</br> $lot ";
+            $cookieMessageGagne = $messageGagne;
+            setcookie('messageGagne', ' ' . $cookieMessageGagne . ' ', time() + 5 * 60, null, null, false, true);
 
-        ($statut = "gagne") ? header("Location:gagne.php") : "";
-    } else {
-        $statut = "perdu";
-        ($statut = "perdu") ? header("Location:perdu.php") : "";
-        $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
-    }
+            ($statut = "gagne") ? header("Location:gagne.php") : "";
+        } else {
+            $statut = "perdu";
+            ($statut = "perdu") ? header("Location:perdu.php") : "";
+            $messagePerdu = "Désolé vous avez perdu, retentez votre chance demain ";
+        }
 
 
 
@@ -102,7 +102,8 @@ if ($manager->ClientPeutJouerCejour($LogClient)) {
 //$date_debut_jeu=$dates['date_debut_jeu']  ;
 //$date_fin_jeu=$dates['date_fin_jeu'];
 //if ($now >= $date_debut_jeu && $now <= $date_fin_jeu) {
-    $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit" style="color:white;">JOUER</button>';
+        $message = 'Cliquez pour participer à notre jeu Safa\'Riz<br/><br/><a href="jeusafariz.php"><button class="jouer" name="bouton" type="submit" style="color:white;">JOUER</button>';
+    }
 }
 //elseif ($now <= $date_debut_jeu){
 //    $message = "Désolé le jeu n'est pas ouvert actuellement.<br/>Reconnectez-vous à partir du ".$date_debut_jeu;
@@ -146,7 +147,13 @@ if ($manager->ClientPeutJouerCejour($LogClient)) {
                         <div id="messageIndex" class="row">
                             <!--titre-->
                             <div class="col-12">
-                                <h1><?php echo $message; ?></h1>
+                                <h1><?php  echo (isset($messagePerdu)) ? $messagePerdu : "";
+                                    echo (isset($messageGagne)) ? $messageGagne : "";
+                                    echo (isset($messageDejaJoueToday)) ? $messageDejaJoueToday : "";
+                                    echo (isset($messageChampFormulaire)) ? $messageChampFormulaire : "";
+                                    echo (isset($message)) ? $message : ""; 
+                                    
+                                    ?></h1>
                             </div>
                         </div>
 
@@ -156,6 +163,6 @@ if ($manager->ClientPeutJouerCejour($LogClient)) {
             </main><!-- content -->
         </section>
 
-        <?php include("footer.php"); ?>
+<?php include("footer.php"); ?>
     </body>
 </html>

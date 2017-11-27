@@ -192,6 +192,7 @@ Elle verifie que les données du formulaire sont ok et crypte le mot de passe
                     </div>
                 </div>
                 </form>
+                 <a href="adminInscription.php"/>inscription nouvel administrateur</a>
             </div>
         </div>
    <!--</div>-->

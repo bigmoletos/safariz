@@ -6,22 +6,20 @@ session_start();
 //$_POST['pwd']="";
 //$_POST['password']="";
 $admin = "";
-$_SESSION['messageLoginClientKo']="";
-$_SESSION['messageLoginClient']="";
+$_SESSION['messageLoginClientKo'] = "";
+$_SESSION['messageLoginClient'] = "";
+
 //creation du cookie password autopwd date d'expiration dans 5 min
 //$cookiepwd = ' ' . $_POST['pwd'] . ' '; //on créer une variable qui possède le contenu du champ login
 //setcookie('cookiepwd', ' ' . $cookiepwd . ' ', time() + 5 * 60, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
 //creation du cookie login autologin? date d'expiration dans 1an
 //$cookielog = ' ' . $_POST['login'] . ' '; //on créer une variable qui possède le contenu du champ login
 //setcookie('cookielog', ' ' . $cookielog . ' ', time() + 365 * 24 * 3600, null, null, false, true); //on créer un cookie 'autopsd' avec la variable cookiepsd
-//chargement des classes
 //var_dump($_SESSION);
+
+//chargement des classes
 require('chargeurClass.php');
 //chargement de la connexion
-// a enlever si l'autoload fonctionne
-//require ('classes/ClientManager.php');
-//require ('classes/Client.php');
-//header('location:joueurInscrit.php');
 require('connexionBD.php');
 //require('admin.php');
 $db = connexionDB();
@@ -52,8 +50,8 @@ $form = array();
 //var_dump($_POST);
 //
 //recharge la page 
-if( !empty($_POST) )
-  echo '<script>window.location.href("clientLogin.php")</script>';
+if (!empty($_POST))
+    echo '<script>window.location.href("clientLogin.php")</script>';
 
 //if (isset($_POST['accesClient'])) {
 if (isset($_POST['veriflog'])) {
@@ -83,38 +81,37 @@ if (isset($_POST['veriflog'])) {
         // var_dump($_COOKIE);
 
         $_SESSION['infosClient'] = $verificationLog;
-     //    var_dump($_SESSION);
+        //    var_dump($_SESSION);
         // var_dump($_SESSION['infosClient']);
         //    var_dump($hash);
-       
-        
+
+        //verification du mot de passe
         if (password_verify($form['password'], $hash)) {
 
             //   echo "mot de passe ok Bonjour $prenom $nom  nous vous souhaitons bonne chance!</br>";
             $messageLoginClient = "Bonjour $prenom $nom nous vous souhaitons bonne chance aujourd'hui!</br>  ";
             // $cookiemessageLoginClient = $messageLoginClient;
- $_SESSION['messageLoginClientKo']="";
+            $_SESSION['messageLoginClientKo'] = "";
             $_SESSION['messageLoginClient'] = $messageLoginClient;
+            
             //      setcookie('messageLoginClient', ' ' . $cookiemessageLoginClient . ' ', time() + 5 * 60, null, null, false, true);
             //  var_dump($_COOKIE);
             // var_dump($_SESSION);
             // var_dump($cookiemessageLoginClient);
-            //$infosClient = unserialize($_COOKIE['infosClient']);
             //  var_dump($infosClient);
             header('location:joueurInscrit.php');
 //            die('header("location: joueurInscrit.php");');
             exit;
         } else {
-           // echo 'mot de passe incorrect veuillez le ressaisir';
+            // echo 'mot de passe incorrect veuillez le ressaisir';
             $messageLoginClientKo = "mail ou mot de passe incorrect veuillez le ressaisir</br>  ";
             //   $cookiemessageLoginClientKo = $messageLoginClientKo;
 
             $_SESSION['messageLoginClientKo'] = $messageLoginClientKo;
             //      setcookie('messageLoginClientKo', ' ' . $cookiemessageLoginClientKo . ' ', time() + 5 * 60, null, null, false, true);
-          //  var_dump($_SESSION);
+            //  var_dump($_SESSION);
         }
     }
-
 }////fin fonction fomulaire test !! password
 //              }//fin fonction fomulaire isset veriflog
 //var_dump($form);
@@ -221,67 +218,67 @@ if (isset($_POST['veriflog'])) {
 
         <script>
             //function qui change le fond en rouge si erreur de saisie d'un champ
-    function surligne(champ, erreur)
-    {
-        if (erreur)
-            champ.style.backgroundColor = "#fba";
-        else
-            champ.style.backgroundColor = "";
-    }
+            function surligne(champ, erreur)
+            {
+                if (erreur)
+                    champ.style.backgroundColor = "#fba";
+                else
+                    champ.style.backgroundColor = "";
+            }
 
-    //function de verification du champ mail
-    function verifMail(champ)
-    {
-        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-        if (!regex.test(champ.value))
-        {
-            // var messageMail= "Veuillez remplir correctement  le champ mail ";
-            //    alert("Veuillez remplir correctement  le champ mail ");
-            //  document.write(messageMail);
+            //function de verification du champ mail
+            function verifMail(champ)
+            {
+                var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$/;
+                if (!regex.test(champ.value))
+                {
+                    // var messageMail= "Veuillez remplir correctement  le champ mail ";
+                    //    alert("Veuillez remplir correctement  le champ mail ");
+                    //  document.write(messageMail);
 
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            ;
-            return true;
-        }
-    }
+                    return false;
+                } else
+                {
+                    surligne(champ, false);
+                    ;
+                    return true;
+                }
+            }
 //function de verification du champ password
-    function verifPassword(champ)
-    {
-        if (champ.value.length < 3 || champ.value.length > 25)
+            function verifPassword(champ)
+            {
+                if (champ.value.length < 3 || champ.value.length > 25)
 //        var regex = /^[a-zA-Z._ -]{2, 25}$/;
 //        if (!regex.test(champ.value))
-        {
-            surligne(champ, true);
+                {
+                    surligne(champ, true);
 //            str.charAt(0).toUpperCase();
 //           champ=champ.charAt(0).toUpperCase() + champ.substring(1).toLowerCase();
 
-            return false;
-        } else
-        {
-            surligne(champ, false);
-            return true;
-        }
-    }
+                    return false;
+                } else
+                {
+                    surligne(champ, false);
+                    return true;
+                }
+            }
 
-    //verif complete des champs du formulaire
-    function verifForm(f)
-    {
-        var passwordOk = verifPassword(f.password);
-        var mailOk = verifMail(f.mailClient);
+            //verif complete des champs du formulaire
+            function verifForm(f)
+            {
+                var passwordOk = verifPassword(f.password);
+                var mailOk = verifMail(f.mailClient);
 
-        if ( mailOk && passwordOk )
-            return true;
-        else
-        {
-            alert("Veuillez remplir correctement tous les champs");
-            return false;
-        }
-    }
-       
-        //message personnalise champ mail
+                if (mailOk && passwordOk)
+                    return true;
+                else
+                {
+                    alert("Veuillez remplir correctement tous les champs");
+                    return false;
+                }
+            }
+
+            //message personnalise champ mail
 //    var email = document.getElementById("mailClient");
 //    email.addEventListener("keyup", function (event) {
 //        if (email.validity.typeMismatch) {

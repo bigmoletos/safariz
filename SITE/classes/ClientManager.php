@@ -23,40 +23,11 @@ class ClientManager {
         $this->db = $db;
     }
 
-    //methode connexion
-//      function connexion($login) {
-//    $requete = 'SELECT * FROM personnes WHERE login = "'.$login.'"';
-////    global $bd;
-//    $resultat = $bd->query($requete);
-//     
-//      }
-//      
-//  *******************************************
-//    version  de la correction 
-//     protected function add(News $news) {
-//        $requete = $this->db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout, dateModif, image)'
-//                . 'VALUES(:auteur, :titre, :contenu, NOW(), NOW(), :image)');
-//        $requete->bindValue(':titre', $news->titre());
-//        $requete->bindValue(':auteur', $news->auteur());
-//        $requete->bindValue(':contenu', $news->contenu());
-//       $requete->bindValue(':image', $news->image());
-//        $requete->execute();
-//    }
     // méthode add() pour ajouter des enregistrements en base de données (insert)
     //fonction faisant appel à la classe Client, avec un objet $client
     //on passe l'objet client car c'est celui quon passe dans le bdr
     public function addClient(Client $client) {
         try {
-            //on fait le prepare et on l'affecte à la variable $req
-            //on affecte à la variable $req la valeur de l'objet $client ($this->db) puis on prepare les données        
-//                $req =$this->db->prepare('
-//                    select * 
-//                    from Client 
-//                    where 
-//                    and titre = :titre 
-//                    and auteur = :auteur 
-//                    and contenu = :contenu 
-//                    and date_ajout = :date_ajout');
             //pour mettre les date en francais dans la requete
             $this->db->query(" SET lc_time_names = 'fr_FR'");
             //$req = $this->db->prepare("INSERT INTO clients (nom,  prenom, mail, adresse, cp, ville, tel, session_id, newsLetterInscription )"
@@ -89,7 +60,6 @@ class ClientManager {
                 return false;
             }
 
-            //version xxxxxx   
             //puis on fait l'execute     
             //insertion des données dans la base     
         } catch (Exception $e) {
@@ -134,17 +104,13 @@ class ClientManager {
     protected function update(Client $client) {
         //pour mettre les date en francais dans la requete
         //  $requete->query('SET lc_time_names = \'fr_FR\'');
-        $requete = $this->db->prepare('UPDATE clients SET'
-                . ' auteur = :auteur, titre = :titre, contenu = :contenu, date_modif = NOW(), image = :image '
-                . 'WHERE id = :id');
-        $requete->bindValue(':titre', $client->titre());
-        $requete->bindValue(':auteur', $client->auteur());
-        $requete->bindValue(':contenu', $client->contenu());
-        $requete->bindValue(':image', $client->image());
-        $requete->bindValue(':id', $client->id(), PDO::PARAM_INT);
+        $requete = $this->db->prepare('UPDATE clients SET password WHERE password= :password AND client_id = :client_id');
+        $requete->bindValue(':password', $client->password());
+        $requete->bindValue(':client_id', $client->client_id());
         $requete->execute();
     }
 
+    
     //**************************************************   
     // méthode delete() pour pouvoir supprimer des enregistrements de la base de données
 //    public function delete($id) {

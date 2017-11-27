@@ -23,7 +23,7 @@ class gagnantsManager {
 
             $requete = $this->db->prepare('INSERT INTO gagnants (client_id, lot_id, id_dates_jeux ) ( SELECT clients.client_id, ig.ID, dates_jeux.id_dates_jeux FROM clients, ig, dates_jeux WHERE clients.client_id = :cid AND ig.id = :igid AND dates_jeux.id_dates_jeux = :id_dates_jeux) ');
             $requete->bindValue(':igid', $ID);
-            $requete->bindValue(':cid', $clientid);
+            $requete->bindValue(':cid', $client_id);
             $requete->bindValue(':id_dates_jeux', $id_dates_jeux);
             $requete->execute();
         } catch (Exception $e) {
@@ -32,6 +32,7 @@ class gagnantsManager {
     }
 //appel à d'autres classes
       function appelAutresClasses(){
+          require ('IgManager.php');
         $donneeClient= new IgManager();
         
     }
@@ -44,10 +45,10 @@ class gagnantsManager {
     public function pasDejaGagne($client_id) {
 //        $sql = SELECT  mail, DATE(dateInscription) FROM clients WHERE mail='riz@yopmail.com'  AND DATE(dateInscription)='DATE(NOW())'; ou '20017-11-04'
 
-//        $donneeClient = $this->GagnePerdu($clientid);
-        //$clientid = $donneeClient['client_id'];
-       // var_dump($clientid);
-     //   var_dump($donneeClient);
+//        $donneeClient = $this->GagnePerdu($client_id);
+//        $client_id = $donneeClient['client_id'];
+//        var_dump($client_id);
+//        var_dump($donneeClient);
         $requete = $this->db->prepare(" SELECT client_id  FROM gagnants WHERE client_id= :client_id ");
         $requete->bindValue(':client_id', $client_id);
         $requete->execute();

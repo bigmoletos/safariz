@@ -115,7 +115,7 @@ if (isset($_POST['bouton'])) {
                     // cryptage du mot de pwd par un hachage en md5
                     $form['password'] = password_hash($form['password'], PASSWORD_DEFAULT);
                 } else {
-                     echo 'Vos mots de passe sont différents, veuillez les ressaisir';
+//                     echo 'Vos mots de passe sont différents, veuillez les ressaisir';
                     $messageConfirmationMotPasse = "Vos mots de passe sont différents, veuillez les ressaisir ";
                     //  $cookiemessageConfirmationMotPasse = $messageConfirmationMotPasse;
                     //    setcookie('messageConfirmationMotPasse', ' ' . $cookiemessageConfirmationMotPasse . ' ', time() + 5 * 60, null, null, false, true);
